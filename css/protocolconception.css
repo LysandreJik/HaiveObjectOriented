@@ -1,0 +1,140 @@
+.containerliquid{
+	margin-left: 15%;
+	margin-right: 15%;
+	margin-bottom: 10%;
+	margin-top: 1%;
+	position:relative;
+}
+
+
+.containerliquidimagebackground{
+	max-width: 100%;
+    max-height: 100%;
+	width:100%;
+	height:100%;
+}
+
+.setindexto2{
+	z-index: 10;
+}
+
+.canvas{
+	position: absolute;
+}
+
+.canvastopimage{
+	position: absolute;
+}
+
+
+.canvastopimage:hover{
+	opacity:0;
+}
+
+.canvasinfobulle{
+	position: absolute;
+	left:0;
+	transform: translateY(-50%);
+	pointer-events: all;
+}
+
+.canvasdiv{
+	top:-10%;
+	width:100%;
+	height: 40%;
+	text-align: left;
+}
+
+.canvasdivcomponents{
+	margin-left: 5%;
+	margin-bottom: 3%;
+	left:5%;
+	font-family: "Novecento Wide Book";
+	font-size: 0.8vw;
+	width:40%;
+	pointer-events: all;
+}
+
+.canvasdivcomponentsbutton{
+	margin-left: 5%;
+	margin-bottom: 3%;
+	margin-top: 5%;
+	left:5%;
+	pointer-events: all;
+	font-size:8px;
+}
+
+.canvasinfobullebutton{
+	position: absolute;
+	right:15%;
+	transform: translateY(-150%);
+}
+
+.canvasdiv{
+	position:absolute;
+	width:100%;
+	height:100%;
+	pointer-events: none;
+}
+
+.hovertitle{
+	font-family: "Novecento Wide Book";
+	color:#3B3F48;
+	font-size: 4vw;
+}
+
+.errormessage{
+	left: 150%;
+	position: absolute;
+	text-align: right;
+	width: 150%;
+	font-style: italic;
+	color: #D0E1F9;
+}
+
+.warningmessage{
+	left: 150%;
+	position: absolute;
+	text-align: right;
+	width: 150%;
+	font-style: italic;
+	color: rgb(236, 165, 62);
+}
+
+.menu{
+	position: absolute;
+    left: 2%;
+    top: 2%;
+}
+
+.menuitem{
+	border:2px solid #D0E1F9;
+	background-color:transparent;
+	padding:10px 15px;
+	letter-spacing:3px;
+	font-size:12px;
+	text-transform:uppercase;
+	font-weight:400;
+	color:#D0E1F9;
+	display:inline-block;
+	margin-left: 5px;
+}
+
+.menuitem:hover{
+	background-color:#D0E1F9;
+	color:#000;
+	border:2px solid #D0E1F9;
+}
+
+
+.qselect{
+	font-family: "Novecento Wide Book";
+	font-size: 15px;
+	color: #A8BACE;
+	text-align: center;
+	position: relative;
+	top:20%;
+	left:50%;
+	height:15%;
+	transform: translateX(-50%);
+}

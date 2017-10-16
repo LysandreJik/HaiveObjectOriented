@@ -1,0 +1,25 @@
+.liquidcontentmaindiv{
+	padding: 30px;
+}
+
+.liquidcontentmaindivs{
+	margin: 30px;
+	padding: 10px;
+	border-left: solid #53687E;
+    border-width: 4px;
+	text-align: center;
+}
+
+.divgridcontainers{
+	display: grid;
+	grid-template-columns: 30% 30% 30%;
+	grid-template-rows: 25% 25%;
+	margin-top: 50px;
+}
+
+.btnghostcenter {
+	left: 50%;
+	position: absolute;
+	transform: translateX(-50%);
+	top: 20px;
+}

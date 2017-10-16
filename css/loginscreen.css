@@ -1,0 +1,62 @@
+
+.logincontentswrapper{
+	left: 50%;
+	position: absolute;
+	top: 10%;
+}
+
+.logincontents{
+	transform: translateX(-50%);
+	text-align: center;
+	padding: 180px;
+	padding-top: 140px;
+	border: solid 2px #D0E1F9;
+}
+
+.logincontents input[type=text],
+.logincontents input[type=password]{
+	width: 100%;
+	height: 30px;
+}
+
+.createaccountcontents{
+	transform: translateX(-50%);
+	text-align: left;
+	padding: 140px;
+	padding-top: 100px;
+	border: solid 2px #D0E1F9;
+}
+
+.createaccountcontents input[type=text],
+.createaccountcontents input[type=password],
+.logincontents input[type=text],
+.logincontents input[type=password]{
+	width: 100%;
+	height: 30px;
+
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed #83A4C5;
+    outline: none;
+    padding: 0px 0px 0px 0px;
+    font-style: italic;
+	font-size: 1.5vw;
+	margin-bottom: 15px;
+
+	font-family: "Uni";
+	color:#D0E1F9;
+	font-size: 15px;
+
+}
+
+.createaccountcontents input[type=text]:focus,
+.logincontents input:focus,
+{
+    border-bottom: 1px dashed #D9FFA9;
+}
+
+.colorbluesmall{
+	font-family: "Uni";
+	color:#D0E1F9;
+	font-size: 25px;
+}

@@ -1,0 +1,417 @@
+.under{
+	z-index: 1;
+}
+
+.over{
+	z-index: 2;
+}
+
+.ui-draggable-dragging{
+	z-index: 3;
+}
+
+.loadingscreen{
+	width:100%;
+	height:100%;
+	font-size: 30px;
+	background-color: #2C3039;
+	color: #2BB8DB;
+}
+
+.circleprogressbar{
+	width:400px;
+	position: relative;
+	top: 50%;
+	text-align: center;
+	left:50%;
+	transform: translate3d(-50%, -50%, 0);
+}
+
+@-webkit-keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  60% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  100% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+@keyframes breathing {
+  0% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  25% {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+
+  60% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+
+  100% {
+    -webkit-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+}
+
+
+@-webkit-keyframes zoomIn {
+	from {
+    	-webkit-transform: scale(0,0);
+    }
+    to {
+    	-webkit-transform: scale(5,5);
+    }
+}
+
+@-moz-keyframes zoomIn {
+	from {
+    	-webkit-transform: scale(0,0);
+    }
+    to {
+    	-webkit-transform: scale(5,5);
+    }
+}
+
+@-o-keyframes zoomIn {
+	from {
+    	-webkit-transform: scale(0,0);
+    }
+    to {
+    	-webkit-transform: scale(5,5);
+    }
+}
+
+@keyframes zoomIn {
+   from {
+        transform: scale(0,0);
+   }
+   to {
+        transform: scale(5,5);
+   }
+}
+.zoomIn {
+	-webkit-animation-name: zoomIn;
+	-moz-animation-name: zoomIn;
+	-o-animation-name: zoomIn;
+	animation-name: zoomIn;
+}
+
+@keyframes setbackgroundtotransparent {
+	0% {
+		background-color: rgba(0,0,0,0);
+	}
+
+	100% {
+		background-color: rgba(0,0,0,0);
+	}
+}
+
+.setbackgroundtotransparent {
+	animation-name: setbackgroundtotransparent !important;
+}
+
+
+@-webkit-keyframes darkenbackground {
+   from {
+        background-color: #3B3F48;
+   }
+   to {
+        background-color: #1B1F28;
+   }
+}
+
+@keyframes darkenbackground {
+   from {
+        background-color: #3B3F48;
+   }
+   to {
+        background-color: #1B1F28;
+   }
+}
+
+@-webkit-keyframes lightenbackground {
+   from {
+        background-color: #1B1F28;
+   }
+   to {
+        background-color: #3B3F48;
+   }
+}
+
+@keyframes lightenbackground {
+   from {
+        background-color: #1B1F28;
+   }
+   to {
+        background-color: #3B3F48;
+   }
+}
+
+@-webkit-keyframes keepbackgroundlight {
+   from {
+        background-color: #3B3F48;
+   }
+   to {
+        background-color: #3B3F48;
+   }
+}
+
+@keyframes keepbackgroundlight {
+   from {
+        background-color: #3B3F48;
+   }
+   to {
+        background-color: #3B3F48;
+   }
+}
+
+@-webkit-keyframes darkenfilter {
+   from {
+		filter:brightness(100%);
+   }
+   to {
+		filter:brightness(50%);
+   }
+}
+
+@keyframes darkenfilter {
+   from {
+		filter:brightness(100%);
+   }
+   to {
+		filter:brightness(50%);
+   }
+}
+
+@-webkit-keyframes lightenfilter {
+   from {
+		filter:brightness(50%);
+   }
+   to {
+		filter:brightness(100%);
+   }
+}
+
+@keyframes lightenfilter {
+   from {
+		filter:brightness(50%);
+   }
+   to {
+		filter:brightness(100%);
+   }
+}
+
+.setuntouchable{
+	pointer-events: none;
+}
+
+.darkenbackground {
+	animation-name: darkenbackground;
+}
+
+.lightenbackground {
+	animation-name: lightenbackground;
+}
+
+.keepbackgroundlight {
+	animation-name: keepbackgroundlight;
+}
+
+.lightenfilter {
+	animation-name: lightenfilter;
+}
+
+.darkenfilter {
+	animation-name: darkenfilter;
+}
+
+@-webkit-keyframes breathingborder {
+    0%, 100% {border: 0.2vw solid #53687E;}
+	50% {border: 0.2vw solid #fff;}
+}
+
+@keyframes breathingborder {
+	0%, 100% {border: 0.2vw solid #53687E;}
+	50% {border: 0.2vw solid #fff;}
+}
+
+.breathingborder {
+
+    -webkit-animation: breathingborder 1s infinite; /* Safari 4.0 - 8.0 */
+    animation: breathingborder 1s infinite;
+}
+
+.protocols{
+	margin-left: 2%;
+/*	color:#2BB8DB;*/
+	font-size: 50px;
+	text-align: left;
+}
+
+.containerdisplay{
+	margin-top: 10px;
+	margin-bottom: 20%;
+}
+
+.containercenter{
+	display:inline-block;
+    margin: 0 auto;
+}
+
+.addContainer{
+	position: fixed;
+	bottom: 180px;;
+	right: 20px;
+	background: rgba(45,45,45,0.5);
+	border:2px solid #4D648D;
+
+/* Make everything in this div unselectable*/
+			user-select: none;
+	   -moz-user-select: none;
+	 -khtml-user-select: none;
+	-webkit-user-select: none;
+		 -o-user-select: none;
+}
+
+.containers {
+	display:flex;
+	background: rgba(45,45,45,0.3);
+	border:2px solid #4D648D;
+	padding: 5px 5px 5px 5px;
+	margin-right: 1%;
+
+/* Make everything in this div unselectable*/
+			user-select: none;
+	   -moz-user-select: none;
+	 -khtml-user-select: none;
+	-webkit-user-select: none;
+		 -o-user-select: none;
+}
+
+.containerimg{
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+.containerimg:hover{
+
+	-webkit-box-shadow: 0px 0px 20px 0px rgba(208, 225, 249, 0.67);
+	-moz-box-shadow:    0px 0px 20px 0px rgba(208, 225, 249, 0.67);
+	box-shadow:         0px 0px 20px 0px rgba(208, 225, 249, 0.67);
+}
+
+
+.displaynumbercontainers {
+	position: absolute;
+	top: -20px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height:100%;
+	line-height: 110px;
+	text-align:center;
+	color: #fff;
+	visibility: hidden;
+	opacity: 0;
+	font-size: 30px;
+	background: rgba(10, 15, 10, 0.6);
+	/* transition effect. not necessary */
+	transition: opacity .2s, visibility .2s;
+	font-family: "Novecento Wide Book";
+	color:#d0e1f9;
+}
+
+.containerimg:hover .displaynumbercontainers {
+  visibility: visible;
+  opacity: 1;
+}
+
+.displaynumbercontainers_hex {
+	position: absolute;
+	top: 0px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height:100%;
+	line-height: 20px;
+	text-align:center;
+	color: #fff;
+	visibility: hidden;
+	opacity: 0;
+	font-size: 15px;
+	background: rgba(10, 15, 10, 0.6);
+	/* transition effect. not necessary */
+	transition: opacity .2s, visibility .2s;
+	font-family: "Novecento Wide Book";
+	color:#d0e1f9;
+	border:2px solid #d0e1f9;
+}
+
+.canvascontainersontop_hover .displaynumbercontainers_hex {
+	border:2px solid #d0e1f9;
+	visibility: visible;
+	font-size: 15px;
+	opacity: 1;
+}
+
+
+@media (max-width:700px) {
+	.displaynumbercontainers {
+		line-height: 40px;
+		font-size: 10px;
+	}
+}
+
+@media (max-width:900px) {
+	.displaynumbercontainers {
+		line-height: 50px;
+		font-size: 18px;
+	}
+}
+
+@media (max-width:1100px) {
+	.displaynumbercontainers {
+		line-height: 55px;
+		font-size: 22px;
+	}
+}
+
+@media (max-width:1300px) {
+	.displaynumbercontainers {
+		line-height: 60px;
+		font-size: 26px;
+	}
+}
+
+@media (max-width:1600px) {
+	.displaynumbercontainers {
+		line-height: 80px;
+		font-size: 28px;
+	}
+}
+
+.welcome{
+	pointer-events: none;
+}

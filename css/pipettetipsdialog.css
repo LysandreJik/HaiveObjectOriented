@@ -1,0 +1,235 @@
+
+@font-face {
+  font-family: "Novecento Wide Book";
+  src: url("../fonts/hero/Hero.otf");
+}
+
+
+.pipettetipsdialog{
+    width: 40vw;
+	max-width: 300px;
+    font-size: 16px;
+    background: #3B3F48;
+    padding: 30px 30px 15px 30px;
+	padding: 4vw 4vw 2vw 4vw;
+    border: 5px solid #53687E;
+	pointer-events: all;
+}
+
+.pipettetipsdialog input,
+.pipettetipsdialog label
+{
+    font-family: "Novecento Wide Book";
+    font-size: 2vw;
+    color: #A8BACE;
+
+}
+
+.pipettetipsdialog label {
+    display:inline-block;
+	font-family: "Novecento Wide Book";
+}
+
+.pipettetipsdialog label > span{
+    display: inline-block;
+	margin-bottom: 0.4vh;
+}
+
+.pipettetipsdialog input[type=text]
+{
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed #83A4C5;
+    width: 30vw;
+	max-width: 275px;
+    outline: none;
+    padding: 0px 0px 0px 0px;
+    font-style: italic;
+	font-size: 1.5vw;
+}
+
+.pipettetipsdialog input:focus
+{
+    border-bottom: 1px dashed #D9FFA9;
+}
+
+.pipettetipsdialog input[type=submit],
+.pipettetipsdialog input[type=button]{
+    background: #576E86;
+    border: none;
+    padding: 8px 10px 8px 10px;
+    border-radius: 5px;
+    color: #A8BACE;
+}
+.pipettetipsdialog input[type=submit]:hover,
+.pipettetipsdialog input[type=button]:hover{
+	background: #394D61;
+}
+
+.arrowleftdialog {
+	position: absolute;
+	left:-4px;
+	top:40px;
+    border: solid #53687E;
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 3px;
+	transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+/*
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}*/
+
+
+.donate-now {
+     list-style-type:none;
+     padding:0;
+	 right:20px;
+	 margin-top: 5px;
+}
+
+.donate-now li {
+	float:right;
+	margin:0 5px 5px 0;
+
+	width:40px;
+	height:30px;
+	position:relative;
+	background: #576E86;
+    border: none;
+    border-radius: 5px;
+
+}
+
+.donate-now.biglist li {
+	width:105px;
+	height:30px;
+}
+
+.labelmarginbottom{
+	margin-bottom: 0 !important;
+}
+
+.donate-now label, .donate-now input {
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+
+.donate-now input[type="radio"] {
+    opacity:0.011;
+    z-index:100;
+}
+
+.donate-now input[type="radio"]:checked + label {
+    background:#394D61;
+}
+
+.donate-now label {
+     padding:5px;
+	 border: none;
+     border-radius: 5px;
+     cursor:pointer;
+    z-index:90;
+}
+
+.donate-now label:hover {
+     background:#394D61;
+}
+
+@media (min-width:800px){
+	.pipettetipsdialog input,
+	.pipettetipsdialog textarea,
+	.pipettetipsdialog label
+	{
+	    font-family: "Novecento Wide Book";
+	    font-size: 15px;
+	    color: #A8BACE;
+
+	}
+
+	.pipettetipsdialog{
+	    width: 50vw;
+		max-width: 300px;
+	    font-size: 20px;
+	    background: #3B3F48;
+	    padding: 30px 30px 15px 30px;
+	    border: 5px solid #53687E;
+	}
+
+	.pipettetipsdialog input[type=text]
+	{
+		font-size: 15px;
+	}
+}
+
+.pipettetipsdialogcolorselect{
+	background: blue;
+	border: none;
+	border-radius: 5px;
+	float:right;
+	margin:0 5px 5px 0;
+	font-family: "Novecento Wide Book";
+	font-size: 13px;
+	color: #A8BACE;
+	height:40px;
+}
+
+.warning{
+	font-family: "Novecento Wide Book";
+	font-size: 15px;
+	color: #A8BACE;
+	text-align: center;
+	position: relative;
+	top:30%;
+	left:50%;
+	transform: translateX(-50%);
+}
+
+.pipettetipsdialog.warning button{
+    background: #576E86;
+    border: none;
+    padding: 8px 10px 8px 10px;
+    border-radius: 5px;
+    color: #A8BACE;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.pipettetipsdialog.warning button:hover{
+	background: #394D61;
+}
+.warning h5{
+	font-family: "Novecento Wide Book";
+	font-size: 12px;
+	color: #A8BACE;
+	text-align: center;
+		margin: 15px;
+}
+
+.warning span{
+	font-family: "Novecento Wide Book";
+	font-size: 16px;
+	color: #A8BACE;
+	text-align: center;
+
+}

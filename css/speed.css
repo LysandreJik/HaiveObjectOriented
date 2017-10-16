@@ -1,0 +1,171 @@
+.speedbox{
+	visibility:hidden;
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	top: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+
+	font-family: "Novecento Wide Book";
+	font-size: 12px;
+	color: #A8BACE;
+	text-align: center;
+}
+
+.speedbox:target {
+	outline: none;
+	display: block;
+	visibility:visible;
+}
+
+.speedbox div{
+	position:absolute;
+
+	top: 200px;
+	left: 50%;
+	transform: translateX(-50%);
+
+	height:20vh;
+	width: 40vw;
+
+	font-size: 16px;
+	background: #3B3F48;
+
+	padding: 1vw;
+	border: 5px solid #53687E;
+	pointer-events: all;
+}
+
+.speedbox span{
+	font-family: "Novecento Wide Book";
+	font-size: 16px;
+	color: #A8BACE;
+	text-align: center;
+}
+
+.speedbox h5{
+	font-family: "Novecento Wide Book";
+	font-size: 12px;
+	color: #A8BACE;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+.speedbox ul{
+    list-style-type: none;
+    padding: 0;
+    right: 20px;
+    margin-top: 5px;
+	display: -webkit-inline-box;
+}
+
+.speedbox li{
+	margin: 0 5px 5px 0;
+	width: 100px;
+	height: 30px;
+	position: relative;
+	background: #576E86;
+	border: none;
+	border-radius: 5px;
+	padding-top: 7px;
+	font-size: 14px;
+}
+
+.speedbox input[type="radio"] {
+    opacity: 0.011;
+    z-index: 100;
+	margin: 4px 0 0;
+    line-height: normal;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.speedbox button {
+    background: #576E86;
+    border: none;
+    padding: 8px 10px 8px 10px;
+    border-radius: 5px;
+    color: #A8BACE;
+}
+
+.speedbox input[type="radio"]:checked + label {
+    background:#394D61;
+}
+
+.speedbox label {
+	padding:5px;
+	border: none;
+	border-radius: 5px;
+	cursor:pointer;
+	z-index:90;
+}
+
+.speedbox label:hover {
+     background:#394D61;
+}
+
+.speeddialog {
+     list-style-type:none;
+     padding:0;
+	 right:20px;
+	 margin-top: 5px;
+}
+
+.speeddialog li {
+	float:right;
+	margin:0 5px 5px 0;
+
+	width:100px;
+	height:25px;
+	position:relative;
+	background: #576E86;
+    border: none;
+    border-radius: 5px;
+
+}
+
+.speeddialog.biglist li {
+	width:105px;
+	height:30px;
+}
+
+.labelmarginbottom{
+	margin-bottom: 0 !important;
+}
+
+.speeddialog label, .speeddialog input {
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+
+.speeddialog input[type="radio"] {
+    opacity:0.011;
+    z-index:100;
+}
+
+.speeddialog input[type="radio"]:checked + label {
+    background:#394D61;
+}
+
+.speeddialog label {
+     padding:5px;
+	 border: none;
+     border-radius: 5px;
+     cursor:pointer;
+    z-index:90;
+}
+
+.speeddialog label:hover {
+     background:#394D61;
+}

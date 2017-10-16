@@ -1,0 +1,307 @@
+/*
+__/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\\\\\\\_
+ _\/\\\_______\/\\\___/\\\\\\\\\\\\\__\/////\\\///__\/\\\_______\/\\\_\/\\\///////////__
+  _\/\\\_______\/\\\__/\\\/////////\\\_____\/\\\_____\//\\\______/\\\__\/\\\_____________
+   _\/\\\\\\\\\\\\\\\_\/\\\_______\/\\\_____\/\\\______\//\\\____/\\\___\/\\\\\\\\\\\_____
+    _\/\\\/////////\\\_\/\\\\\\\\\\\\\\\_____\/\\\_______\//\\\__/\\\____\/\\\///////______
+     _\/\\\_______\/\\\_\/\\\/////////\\\_____\/\\\________\//\\\/\\\_____\/\\\_____________
+      _\/\\\_______\/\\\_\/\\\_______\/\\\_____\/\\\_________\//\\\\\______\/\\\_____________
+       _\/\\\_______\/\\\_\/\\\_______\/\\\__/\\\\\\\\\\\______\//\\\_______\/\\\\\\\\\\\\\\\_
+        _\///________\///__\///________\///__\///////////________\///________\///////////////__
+
+	HAIVE control test program ver 1.00
+	For Molcure product
+	Base sketch by Lisan
+	http://molcure.com
+	Author: Lysandre Debut
+*/
+
+import React from 'react';
+import { Block } from './protocoldesignblocks/designblock';
+import { MainSeparator } from './protocoldesignblocks/designblock';
+import { SnapSpaceNoMargin } from "./protocoldesignblocks/snap";
+import { ContainerMini } from "./protocoldesignblocks/containermini";
+import { Hoverview } from "./hoverview";
+
+const gv = require('../../const/global');
+const designblocks = require('./protocoldesignblocks/designblock');
+const BlueprintController = require('../controller/blueprintcontroller').BlueprintController;
+const FileManagement = require('../controller/filemanagement').FileManagement;
+const blueprintController = new BlueprintController();
+const fileManagement = new FileManagement();
+let model;
+let controller;
+
+/**
+ * ProtocolDesign React Component. Top level component of the protocol design, which includes : Menu, BluePrintContent, BlockStore, ContainerPage and Hoverview.
+ */
+export class ProtocolDesign extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {disabled:"", blockDropped:"", selectingTip:"none", quantity:"none", wait:false, depositLiquid:"none", depositLiquidSpecs:"none", pipetting:"none", pipettingSelector:'none'};
+		this.setQuantitySelector = this.setQuantitySelector.bind(this);
+		this.setPipettingSelector = this.setPipettingSelector.bind(this);
+		gv.protocolDesignView = this;
+		model = gv.protocolDesignModel;
+		controller = gv.protocolDesignController;
+		blueprintController.setController(controller);
+	}
+
+	componentDidMount(){
+		model.protocolDesignInit();
+	}
+
+	refresh(state, value){
+		if(state == undefined){
+			this.setState({refresh:true});
+		}else{
+			// console.log("Setting state to "+state+" "+value);
+			this.setState({state:value});
+		}
+	}
+
+	getSpeedSelector(){
+        const parent = this;
+        return(
+			<div className="speedbox" id={"speed"}>
+				<div id="warning_div">
+					<span>SPEED</span>
+					<h5>Please select the speed of the operation</h5>
+					<ul id="pipettetipsdialogunit" className="speeddialog">
+					<li>
+						<input type="radio" id="speed_ultraslow" name="amount" onClick={function(){gv.currentlySelectedSpeed="Ultra slow"}}/>
+						<label className="labelmarginbottom" htmlFor="speed_ultraslow">Ultra-slow</label>
+					</li>
+					<li>
+						<input type="radio" id="speed_slow" name="amount" onClick={function(){gv.currentlySelectedSpeed="Slow"}}/>
+						<label className="labelmarginbottom" htmlFor="speed_slow">Slow</label>
+					</li>
+					<li>
+						<input type="radio" id="speed_medium" name="amount" defaultChecked="true" onClick={function(){gv.currentlySelectedSpeed="Medium"}}/>
+						<label className="labelmarginbottom" htmlFor="speed_medium">Medium</label>
+					</li>
+					<li>
+						<input type="radio" id="speed_fast" name="amount" onClick={function(){gv.currentlySelectedSpeed="Fast"}}/>
+						<label className="labelmarginbottom" htmlFor="speed_fast">Fast</label>
+					</li>
+					<li>
+						<input type="radio" id="speed_ultrafast" name="amount" onClick={function(){gv.currentlySelectedSpeed="Ultra fast"}}/>
+						<label className="labelmarginbottom" htmlFor="speed_ultrafast">Ultra-fast</label>
+					</li>
+					</ul>
+
+					<br></br>
+
+					<button value="Validate" onClick={
+						function(){
+							parent.state.blockDropped.setSpeed(gv.currentlySelectedSpeed);
+							parent.setState({pipetting:"none", pipettingSelector:"none", selectingTip:'none', quantity:"none", blockDropped:'', receiveBlockDroppedNumber:'', disabled:'_'});
+							window.location="#_";
+							controller.timeline.addEmptyBlocks();
+							gv.protocolDesignController.droppedBlock = undefined;
+						}
+					}>Ok</button>
+				</div>
+			</div>
+		);
+	}
+
+	setQuantitySelector(tip){
+		this.setState({quantity:tip});
+	}
+
+	setPipettingSelector(tip){
+		this.setState({pipettingSelector:tip});
+		setTimeout(function(){window.location="#pipetting"},10);
+	}
+
+	render(){
+		return(
+			<section className="vbox ">
+				<section className="scrollable wrapper">
+					<div id="maincontent" className="row">
+						<Menu/>
+						<ContainersPage blockDropped={controller.clickOnContainer.bind(this)} disabled={this.state.disabled}/>
+						<BlueprintContent warning={this.props.warning} blockDropped={controller.blockDropped.bind(this)}/>
+						<BlockStore />
+						<Hoverview />
+						{this.getSpeedSelector()}
+					</div>
+				</section>
+			</section>
+		);
+	}
+}
+
+/**
+ * The Menu React Component. Displays the 4 clickable buttons on the window's top-right
+ */
+class Menu extends React.Component{
+	render(){
+		return(
+			<div className="menu">
+				<button className="menuitem" onClick={gv.protocolDesignController.createNewTimeline}>New</button>
+				<button className="menuitem">Save</button>
+				<button className="menuitem">Open</button>
+				<button className="menuitem" onClick={fileManagement.export}>Export</button>
+			</div>
+		);
+	}
+}
+
+/**
+ * The ContainersPage React Component. Displays all the containers currently selected for the Haive.
+ */
+class ContainersPage extends React.Component{
+	constructor(props){
+		super(props);
+		this.state = {hovered:"_"};
+		this.mouseMovement = this.mouseMovement.bind(this);
+	}
+
+	componentDidMount(){
+		window.addEventListener("mousemove", this.mouseMovement);
+		this.setState({loaded:true});
+	}
+
+	componentWillUnmount(){
+		//window.removeEventListener("mousemouve", this.mouseMovement)
+		window.removeEventListener("mousemove", this.mouseMovement);
+	}
+
+	mouseMovement(e){
+		let mouseX = e.pageX;
+		let mouseY = e.pageY;
+		let temp_state = -1;
+		let miniContainerArray = [];
+		for(let i = 0; i < gv.currentlySelectedHaive.getContainers().length; i++){
+			miniContainerArray.push([i, document.getElementById('mini_container_'+i).getBoundingClientRect()]);
+		}
+
+		for (let i = 0; i < miniContainerArray.length; i++) {
+			if(mouseX > miniContainerArray[i][1].left && mouseX < miniContainerArray[i][1].right && mouseY > miniContainerArray[i][1].top && mouseY < miniContainerArray[i][1].bottom){
+				temp_state = miniContainerArray[i][0];
+			}
+		}
+
+		if(this.state.hovered != temp_state){
+			if(!this.props.disabled.includes(temp_state)){
+				this.setState({hovered:temp_state});
+			}else{
+				this.setState({hovered:-1});
+			}
+		}
+	}
+
+	render(){
+        const parent = this;
+        return(
+			<div id="containerspage" className="containerspage">
+				{gv.currentlySelectedHaive.getContainers().map(function(container, index){
+					return <ContainerMini id={"mini_container_"+index} key={index} blockDropped={parent.props.blockDropped} hover={parent.state.hovered} container={container} />;
+				})}
+			</div>
+		);
+	}
+}
+
+/**
+ * The BlueprintContent React Component. Contains the Timeline.
+ */
+class BlueprintContent extends React.Component{
+	constructor(props){
+		super(props);
+		this.state={updated:false};
+	}
+
+	componentDidMount(){
+		controller.blueprintMounted(this);
+	}
+
+	componentDidUpdate(){
+		controller.blueprintUpdated(this);
+		controller.timeline.setErrors();
+	}
+
+	render(){
+		return(
+			<div id="blueprint" className="gridcontent blueprint">
+				<SnappedItems/>
+				<ContextMenu context="snaptothis"/>
+				<ContextMenu context="blueprintdroppedblock"/>
+				<div id="cntnrunavailable">
+					<ul id="itemsunavailable">
+						<li>No possible action</li>
+					</ul>
+				</div>
+			</div>
+		);
+	}
+}
+
+/**
+ * Snappes items of the BlueprintContent
+ */
+class SnappedItems extends React.Component{
+	render(){
+		return (
+			<div>
+				  {controller.timeline.getBlocks().map(function(block, index){
+					  return block.getType() != "empty" ? <Block id={"dropped_"+index} key={index} block={block} dropped={true} openedContextMenu={blueprintController.openedContextMenu}/> : <SnapSpaceNoMargin id={index} key={index} openedContextMenu={blueprintController.openedContextMenu}/>;
+				  })}
+			</div>
+		);
+	}
+}
+
+/**
+ * Context Menu which varies from where the right click was done.
+ */
+class ContextMenu extends React.Component{
+	render(){
+		if(this.props.context=="snaptothis"){
+			return(
+				<div id='snaptothis_context'>
+					<ul id='items'>
+						<li onClick={blueprintController.paste}>Paste</li>
+					</ul>
+				</div>
+			);
+		}else if(this.props.context=="blueprintdroppedblock"){
+			return(
+				<div id='droppedblocks_context'>
+					<ul id='items'>
+						<li onClick={blueprintController.copyDroppedBlock}>Copy</li>
+						<li onClick={blueprintController.paste}>Paste</li>
+						<li onClick={blueprintController.deleteDroppedBlock}>Delete</li>
+						<li onClick={blueprintController.removeDroppedBlock}>Delete and remove space</li>
+						<li onClick={blueprintController.modifyDroppedBlock}>Modify</li>
+					</ul>
+				</div>
+			);
+		}else{
+			return(
+				<div></div>
+			);
+		}
+	}
+}
+
+/**
+ * Block store component
+ */
+class BlockStore extends React.Component{
+	componentDidMount(){
+		controller.designblockDraggable();
+	}
+
+	render(){
+		return(
+			<div id="blockstore" className="blockstore">
+				<MainSeparator text="DESIGN BLOCKS"/>
+				<Block block={model.getEndBlock()}/>
+				{designblocks.getDesignBlocks(model)}
+			</div>
+		);
+	}
+}
