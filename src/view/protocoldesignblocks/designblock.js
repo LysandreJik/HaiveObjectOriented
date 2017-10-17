@@ -44,18 +44,34 @@ export class Block extends React.Component{
 	}
 
 	render(){
-		return(
-			<div id={"designblock_"+this.props.id} style={{"backgroundColor":this.props.block.getColor()}} className={"designblock"+ (this.props.dropped == true ? "dropped" : "")}>
+	    if(this.props.block.getType() == "megablock"){
+            return(
+                <div id={"designblock_"+this.props.id} style={{"backgroundColor":this.props.block.getColor()}} className={"designblock"+ (this.props.dropped == true ? "dropped" : "")+" designmegablockdropped"}>
 				<span className="designblocktext" style={{"color":this.props.block.getForegroundColor()}}>
 					{this.props.block.getText()}
-					<br></br>
-					{this.props.block.getLiquidQuantity() != undefined ? this.props.block.getLiquidQuantity()[0]+this.props.block.getLiquidQuantity()[1] : ""}
+                    <br></br>
+                    {this.props.block.getLiquidQuantity() != undefined ? this.props.block.getLiquidQuantity()[0]+this.props.block.getLiquidQuantity()[1] : ""}
 				</span>
 
-				{this.props.block.isError() ? <span className="errormessage animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
-				{this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessage animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
-			</div>
-		);
+                    {this.props.block.isError() ? <span className="errormessage animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
+                    {this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessage animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
+                </div>
+            );
+        }else{
+            return(
+                <div id={"designblock_"+this.props.id} style={{"backgroundColor":this.props.block.getColor()}} className={"designblock"+ (this.props.dropped == true ? "dropped" : "")}>
+				<span className="designblocktext" style={{"color":this.props.block.getForegroundColor()}}>
+					{this.props.block.getText()}
+                    <br></br>
+                    {this.props.block.getLiquidQuantity() != undefined ? this.props.block.getLiquidQuantity()[0]+this.props.block.getLiquidQuantity()[1] : ""}
+				</span>
+
+                    {this.props.block.isError() ? <span className="errormessage animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
+                    {this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessage animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
+                </div>
+            );
+        }
+
 	}
 }
 

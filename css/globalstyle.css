@@ -137,17 +137,32 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 
 .designblockdropped{
-	position: relative;
-	left:50%;
-	width:8vw;
-	height:8vh;
-	background-color: #3B3F48;
-	border: 0.2vw solid #53687E;
-	transform: translateX(-50%);
+    position: relative;
+    left:50%;
+    width:8vw;
+    height:8vh;
+    background-color: #3B3F48;
+    border: 0.2vw solid #53687E;
+    transform: translateX(-50%);
 
-	margin-top:1vw;
-	margin-bottom: 1vw;
-	text-align: center;
+    margin-top:1vw;
+    margin-bottom: 1vw;
+    text-align: center;
+
+}
+
+.designmegablockdropped{
+    position: relative;
+    left:50%;
+    width:8vw;
+    height:12vh;
+    background-color: #3B3F48;
+    border: 0.2vw solid #53687E;
+    transform: translateX(-50%);
+
+    margin-top:1vw;
+    margin-bottom: 1vw;
+    text-align: center;
 
 }
 

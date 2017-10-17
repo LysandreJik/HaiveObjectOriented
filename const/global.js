@@ -118,6 +118,7 @@ export var protocolConceptionController;
 export var protocolDesignModel;
 export var protocolDesignView;
 export var protocolDesignController;
+export var protocolDesignBlueprintcontentView;
 
 export var mainApp;
 export var mainAppController;

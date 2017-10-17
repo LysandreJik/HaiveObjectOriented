@@ -1,11 +1,7 @@
 .containerliquid{
-	margin-left: 15%;
-	margin-right: 15%;
-	margin-bottom: 10%;
-	margin-top: 1%;
-	position:relative;
+    margin: 1% 15% 10%;
+    position:relative;
 }
-
 
 .containerliquidimagebackground{
 	max-width: 100%;
@@ -137,4 +133,35 @@
 	left:50%;
 	height:15%;
 	transform: translateX(-50%);
+}
+
+.itemSelector{
+    position: absolute;
+    border:2px dotted #D0E1F9;
+}
+
+.selectionOptions{
+    position: absolute;
+    top:2%;
+    left: 2%;
+    padding: 2%;
+    text-align: left;
+    color:#D0E1F9;
+    background: #3B3F48;
+    border: 5px solid #53687E;
+    min-width: 20%;
+}
+
+.selectionOption{
+    border: none;
+    border-radius: 5px;
+    padding: 5%;
+    background: #3B3F48;
+}
+
+.selectionOption:hover{
+    border: none;
+    border-radius: 5px;
+    padding: 5%;
+    background: #53687E;
 }

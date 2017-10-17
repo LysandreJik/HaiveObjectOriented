@@ -67,7 +67,71 @@ export class Block{
 		if(this.errortext == undefined){
 			this.errortext = "";
 		}
+
+		if(this.type == "megablock"){
+            this.blocks = args.blocks;
+
+            if(this.blocks == undefined){
+                this.blocks = [];
+            }
+        }
+
+		this.selected = false;
 	}
+
+    /**
+     * Returns the index of this block on the timeline.
+     * @returns {number}
+     */
+	getIndex(){
+	    return gv.protocolDesignController.timeline.getIndexOf(this);
+    }
+
+    /**
+     * MEGABLOCK ONLY
+     * Returns all the blocks contained in the megablock
+     * @returns {*|Array}
+     */
+    getBlocks(){
+        return this.blocks;
+    }
+
+    /**
+     * MEGABLOCK ONLY
+     * Add a block to the blocks array of this megablock
+     * @param block
+     */
+    addBlock(block){
+        block.setSelected(false);
+        this.blocks.push(block);
+    }
+
+    /**
+     * MEGABLOCK ONLY
+     * Add an array of blocks to the block array of this megablock.
+     * @param blocks
+     */
+    addBlocks(blocks){
+        for(let i = 0; i < blocks.length; i++){
+            this.addBlock(blocks[i]);
+        }
+    }
+
+    /**
+     * This is the getter for the boolean "selected". Returns true if the block is currently selected by the user, false otherwise.
+     * @returns {boolean|*}
+     */
+	isSelected(){
+	    return this.selected;
+    }
+
+    /**
+     * This is the setter for the boolean "selected". Returns true if the block is currently selected by the user, false otherwise.
+     * @param selected Boolean
+     */
+    setSelected(selected){
+	    this.selected = selected;
+    }
 
     /**
      * This is the getter for the "dirtyingTip". This boolean is used to know if a block is dirtying a chip, hence making it unusable for the future.
@@ -98,11 +162,18 @@ export class Block{
      * @returns {*} Hexadecimal string color
      */
 	getColor(){
+
+	    if(this.isSelected()){
+	        return "#FFF";
+        }
+
 		if(this.getType() == "START_BLOCK"){
 			return "#88FF88";
 		}else if(this.getType() == "END_BLOCK"){
 			return "#FF8888";
-		}
+		}else if(this.getType() == "megablock"){
+		    return "#FF7B00";
+        }
 
 		if(this.isError()){
 			return "#97323D";
@@ -132,7 +203,9 @@ export class Block{
 			return "#000";
 		}else if(this.getType() == "END_BLOCK"){
 			return "#000";
-		}else{
+		}else if(this.getType() == "megablock"){
+		    return "#000";
+        }else{
 			return "#D0E1F9";
 		}
 	}

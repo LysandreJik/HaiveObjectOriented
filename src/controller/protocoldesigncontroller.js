@@ -32,6 +32,12 @@ export class ProtocolDesignController{
 		this.timeline = new Timeline();
 		this.droppedBlock="";
 		this.cancelGetLiquid = this.cancelGetLiquid.bind(this);
+        this.blueprintMounted = this.blueprintMounted.bind(this);
+        this.blueprintUnmounted = this.blueprintUnmounted.bind(this);
+		this.mouseIsDown = false;
+		this.x1y1 = [-1,-1];
+		this.draggingBlock = false;
+
 	}
 
     /**
@@ -49,7 +55,17 @@ export class ProtocolDesignController{
 	blueprintMounted(that){
 		this.designblockdroppedDraggable();
 		this.snaptothisDroppable(that, that.props.blockDropped);
+        this.x1y1 = [-1,-1];
+		window.addEventListener("mousemove", this.mouseMove);
+        window.addEventListener("mousedown", this.mouseDown);
+        window.addEventListener("mouseup", this.mouseUp);
 	}
+
+	blueprintUnmounted(){
+        window.removeEventListener("mousemove", this.mouseMove);
+        window.removeEventListener("mousedown", this.mouseDown);
+        window.removeEventListener("mouseup", this.mouseUp);
+    }
 
     /**
 	 * Everytime the blueprint is updated, reattaches the drag and drop items.
@@ -59,6 +75,136 @@ export class ProtocolDesignController{
 		this.designblockdroppedDraggable();
 		this.snaptothisDroppable(that, that.props.blockDropped);
 	}
+
+    /**
+     * Method called when the mouse is moving. It is mainly used to detect when the mouse is dragged accross the blueprint, in order to select blocks.
+     * @param e
+     */
+	mouseMove(e){
+	    if((e.target.id == "blueprint" || $(e.target).parents("#blueprint").length) && this.mouseIsDown && !gv.protocolDesignController.draggingBlock){
+
+	        const blueprint = document.getElementById("blueprint");
+	        const blueprintInfo = blueprint.getBoundingClientRect();
+
+            if(this.x1y1 == undefined){
+                this.x1y1 = [-1,-1];
+            }
+
+	        if(e.pageX > blueprintInfo.left && e.pageX < blueprintInfo.right && e.pageY > blueprintInfo.top && e.pageY < blueprintInfo.bottom){
+                if(this.x1y1[0] == -1){
+                    this.x1y1 = [e.pageX, e.pageY];
+                }
+
+                gv.protocolDesignBlueprintcontentView.showRectangle(this.x1y1[0]-blueprintInfo.left, this.x1y1[1]-blueprintInfo.top, e.pageX-blueprintInfo.left, e.pageY-blueprintInfo.top);
+            }
+
+
+            if(this.x1y1[0] != -1){
+                let blocks = gv.protocolDesignController.timeline.getBlocks();
+                let HTMLElementPositions = [];
+
+                for(let i = 0; i < blocks.length; i++){
+                    if(blocks[i].getType() != "empty"){
+                        let HTMLElementPosition = document.getElementById("designblock_dropped_"+i);
+                        HTMLElementPositions.push([
+                            document.getElementById("blueprint").getBoundingClientRect().left + HTMLElementPosition.offsetLeft - HTMLElementPosition.getBoundingClientRect().width/2,
+                            document.getElementById("blueprint").getBoundingClientRect().top + HTMLElementPosition.offsetTop,
+                            HTMLElementPosition.getBoundingClientRect().width,
+                            HTMLElementPosition.getBoundingClientRect().height,
+                            blocks[i]
+                        ]);
+                    }
+                }
+
+                let x = Math.min(this.x1y1[0], e.pageX);
+                let y = Math.min(this.x1y1[1], e.pageY);
+                let x2 = Math.max(this.x1y1[0], e.pageX);
+                let y2 = Math.max(this.x1y1[1], e.pageY);
+
+                let currentSelection = [];
+
+                for(let i = 0; i < HTMLElementPositions.length; i++){
+                    let r = HTMLElementPositions[i];
+                    if(x < r[0]+r[2] && x2 > r[0] && y < r[1]+r[3] && y2 > r[1]){
+                        r[4].setSelected(true);
+                        currentSelection.push(r[4]);
+                    }else{
+                        r[4].setSelected(false);
+                    }
+
+
+
+                    gv.protocolDesignView.refresh();
+                }
+
+                if((e.target.id == "blueprint" || $(e.target).parents("#blueprint").length) && (e.target.id != "selectionOptions" && e.target.id != "selectionOption")){
+                    gv.protocolDesignModel.clearSelection();
+                }
+                if(currentSelection.length > 0){
+                    for(let i = 0; i < currentSelection.length; i++){
+                        gv.protocolDesignModel.addToSelection(currentSelection[i]);
+                    }
+                    gv.protocolDesignBlueprintcontentView.showOptions();
+                }else{
+
+                    gv.protocolDesignBlueprintcontentView.hideOptions();
+                }
+            }
+        }
+    }
+
+    /**
+     * Method called when the mouse is down during the protocol design phase. Used mainly as a setter for the beginning of the drag.
+     * @param e
+     */
+    mouseDown(e){
+	    this.mouseIsDown = true;
+	    if((e.target.id == "blueprint" || $(e.target).parents("#blueprint").length) && (e.target.id != "selectionOptions" && e.target.id != "selectionOption")){
+            gv.protocolDesignModel.clearSelection();
+        }
+        setTimeout(function(){gv.protocolDesignBlueprintcontentView.hideOptions();}, 100);
+        gv.protocolDesignView.refresh();
+    }
+
+    /**
+     * Method called when the mouse is released during the protocol design phase. Used mainly to find the end of the drag, and act upon it.
+     * @param e
+     */
+    mouseUp(e){
+        this.mouseIsDown = false;
+        this.x1y1 = [-1,-1];
+
+        gv.protocolDesignBlueprintcontentView.hideRetangle();
+        gv.protocolDesignView.refresh();
+    }
+
+    /**
+     * Groups all the current selected blocks into one big block.
+     * @param parent
+     */
+    defineSingleBlock(parent){
+        console.log("Defining single block with name", parent);
+        let megablock = new Block({type:"megablock"});
+        megablock.addBlocks(gv.protocolDesignModel.getSelection());
+        megablock.setText(parent);
+
+        let lowestBlockIndex = this.timeline.getBlocks().length;
+
+        for(let i = 0; i < gv.protocolDesignModel.getSelection().length; i++){
+            if(gv.protocolDesignModel.getSelection()[i].getIndex() < lowestBlockIndex){
+                lowestBlockIndex = gv.protocolDesignModel.getSelection()[i].getIndex();
+            }
+
+            this.timeline.removeBlock(gv.protocolDesignModel.getSelection()[i].getIndex());
+        }
+
+        this.timeline.addBlock(megablock, lowestBlockIndex);
+
+        console.log(megablock);
+        window.location = "#_";
+
+        gv.protocolDesignView.refresh();
+    }
 
     /**
 	 * When a "get liquid" block (or a block with a similar purpose
@@ -403,19 +549,29 @@ export class ProtocolDesignController{
 		this.getSpeed();
 	}
 
+
     /**
 	 * Attaches the draggable component to the draggable blocks.
      */
 	designblockdroppedDraggable(){
 
 		let designBlockDropped = $(".designblockdropped");
+		const parent = this;
 
 		designBlockDropped.draggable({
 			containment:".blueprint",
 			scroll:true,
 			revert:"invalid",
 			snapMode: "inner",
-			snapTolerance: 25
+			snapTolerance: 25,
+
+            start:function(){
+                parent.draggingBlock = true;
+            },
+
+            stop:function(){
+                parent.draggingBlock = false;
+            }
 		});
 
 	}
@@ -469,6 +625,9 @@ export class ProtocolDesignController{
      * @param first_iteration
      */
 	designblockDraggable(){
+
+        const parent = this;
+
 		$(".designblock").draggable({
 			containment:".scrollable",
 			scroll:true,
@@ -477,7 +636,17 @@ export class ProtocolDesignController{
 			snap:".snaptothis",
 			snapMode: "inner",
 			snapTolerance: 25,
-			revert:"invalid"
+			revert:"invalid",
+
+            start:function(){
+			    console.log("started dragging a block");
+                parent.draggingBlock = true;
+            },
+
+            stop:function(){
+                console.log("stopped dragging a block")
+                parent.draggingBlock = false;
+            }
 		});
 
 	}

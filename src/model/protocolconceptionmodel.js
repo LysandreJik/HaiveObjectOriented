@@ -20,7 +20,8 @@ const gv = require('../../const/global');
 
 export class ProtocolConceptionModel{
 	constructor(){
-		gv.ProtocolConceptionModel = this;
+		gv.protocolConceptionModel = this;
+
 	}
 
     /**
@@ -29,22 +30,40 @@ export class ProtocolConceptionModel{
      * @param container
      * @param key
      */
-	clickedOnTip(parent, container, key){
-		const x = Math.floor(key/this.getContainerWidthAndHeight(container)[1]);
+    clickedOnTip(parent, container, key){
+        const x = Math.floor(key/this.getContainerWidthAndHeight(container)[1]);
         const y = key%this.getContainerWidthAndHeight(container)[1];
-		if(container.isTipContainer()){
-			if(container.getTip(x,y).isFull()){
-				container.getTip(x,y).setFull(false);
-				container.getTip(x,y).setColor("");
-			}else{
-				container.getTip(x,y).setFull(true);
-				container.getTip(x,y).setColor("blue");
-			}
-			parent.setState({selected:"none"});
-		}else if(container.isLiquidContainer()){
-			parent.setState({selected:container.getTip(x,y)});
-		}
-	}
+        if(container.isTipContainer()){
+            if(container.getTip(x,y).isFull()){
+                container.getTip(x,y).setFull(false);
+                container.getTip(x,y).setColor("");
+            }else{
+                container.getTip(x,y).setFull(true);
+                container.getTip(x,y).setColor("blue");
+            }
+            parent.setState({selected:"none"});
+        }else if(container.isLiquidContainer()){
+            parent.setState({selected:container.getTip(x,y)});
+        }
+    }
+
+    /**
+     * Method called when a drag is done on the protocol conception part.
+     * @param parent
+     * @param container
+     * @param key
+     */
+    setTip(parent, container, key){
+        const x = Math.floor(key/this.getContainerWidthAndHeight(container)[1]);
+        const y = key%this.getContainerWidthAndHeight(container)[1];
+        if(container.isTipContainer()){
+            container.getTip(x,y).setFull(true);
+            container.getTip(x,y).setColor("blue");
+            parent.setState({selected:"none"});
+        }else if(container.isLiquidContainer()){
+            parent.setState({selected:container.getTip(x,y)});
+        }
+    }
 
     /**
      * Resets the "selected" state of the ProtocolConception view.
@@ -109,7 +128,7 @@ export class ProtocolConceptionModel{
 		if(container.getType() == "P200 normal chip" || container.getType() == "P20 normal chip" || container.getType() == "P1000 normal chip" || container.getType() == "P1000 long chip"){
 			return [8,12];
 		}else if(container.getType() == "15 screw tubes"){
-			return [3,5];
+			return [3   ,5];
 		}else if(container.getType() == "20 magnetic beads"){
 			return [4,5];
 		}else if(container.getType() == "6 falcon stand"){

@@ -26,11 +26,12 @@ const gv = require('../../const/global');
 export class Hoverview extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {disabled:"", blockDropped:"", selectingTip:"none", quantity:"none", wait:false, depositLiquid:"none", depositLiquidSpecs:"none", pipetting:"none", pipettingSelector:'none'};
+		this.state = {disabled:"", blockDropped:"", selectingTip:"none", quantity:"none", wait:false, depositLiquid:"none", depositLiquidSpecs:"none", pipetting:"none", pipettingSelector:'none', mergeGroup:false};
 		this.getLiquid = this.getLiquid.bind(this);
 		this.getQuantitySelector = this.getQuantitySelector.bind(this);
 		this.setQuantitySelector = this.setQuantitySelector.bind(this);
 		this.setPipettingSelector = this.setPipettingSelector.bind(this);
+		this.mergeGroup = this.mergeGroup.bind(this);
 		gv.hoverview = this;
 	}
 
@@ -96,6 +97,12 @@ export class Hoverview extends React.Component{
 		setTimeout(function(){window.location="#wait"},10);
 	}
 
+	mergeGroup(){
+	    this.clearAll();
+	    this.setState({mergeGroup:true});
+        setTimeout(function(){window.location="#merge"},10);
+    }
+
 	render(){
 		if(this.state.selectingTip != "none"){
 			return <TipSelect container={this.state.selectingTip} selected={this.getQuantitySelector} that={this}/>;
@@ -104,8 +111,6 @@ export class Hoverview extends React.Component{
 		if(this.state.depositLiquid != "none"){
 			return <DepositLiquid container={this.state.depositLiquid} block={gv.protocolDesignController.droppedBlock} parent={this}/>;
 		}
-
-		console.log("Depositliquidspecs : ", this.state.depositLiquidSpecs);
 
 		if(this.state.depositLiquidSpecs != "none"){
 			return <DepositLiquidNew parent={this} container={this.state.depositLiquidSpecs[1]} tip={this.state.depositLiquidSpecs[0]} block={gv.protocolDesignController.droppedBlock}/>;
@@ -123,13 +128,37 @@ export class Hoverview extends React.Component{
 			return <TipSelect container={this.state.pipetting} selected={this.getPipettingSelector} that={this}/>;
 		}
 
-		console.log("wait state : ",this.state.wait);
+		if(this.state.mergeGroup == true){
+		    return <MergeGroup/>;
+        }
+
 		if(this.state.wait != ""){
 			return <Wait block={this.state.wait}/>;
 		}
 
 		return <div></div>;
 	}
+}
+
+/**
+ * Component which allows the user to specify the information of the group he just created.
+ */
+class MergeGroup extends React.Component{
+    render(){
+        return(
+            <div className="lightbox" id="merge">
+                <div id="warning_div" className="pipettetipsdialog warning">
+                    <span>Merge the selected blocks in a single block</span>
+                    <label htmlFor="field1" style={{"margin":"20px"}}>
+                        <span id="waitspan">Please enter a name for this block</span>
+                        <input id="wait_textfield" type="text" name="field1" required="true"/>
+                    </label>
+                    <button onClick={() => gv.protocolDesignController.defineSingleBlock($("#wait_textfield").val())}>Ok</button>
+                    <button onClick={function(){window.location="#_"}}>Cancel</button>
+                </div>
+            </div>
+        );
+    }
 }
 
 /**

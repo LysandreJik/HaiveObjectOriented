@@ -48,6 +48,22 @@ export class Timeline{
 	}
 
     /**
+     * TODO:comment
+     * @returns {Array}
+     */
+	getNonEmptyBlocks(){
+	    let blocks = [];
+
+	    for(let i = 0; i < this.blocks.length; i++){
+	        if(this.blocks[i].getType() != "empty"){
+	            blocks.push(this.blocks[i]);
+            }
+        }
+
+        return blocks;
+    }
+
+    /**
      * Return a specific block from its index
      * @param index Index of the block (int)
      * @returns {*} Block object

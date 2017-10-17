@@ -165,7 +165,6 @@ class ContainersPage extends React.Component{
 	}
 
 	componentWillUnmount(){
-		//window.removeEventListener("mousemouve", this.mouseMovement)
 		window.removeEventListener("mousemove", this.mouseMovement);
 	}
 
@@ -211,7 +210,14 @@ class ContainersPage extends React.Component{
 class BlueprintContent extends React.Component{
 	constructor(props){
 		super(props);
-		this.state={updated:false};
+		this.state={updated:false, show:false};
+		gv.protocolDesignBlueprintcontentView = this;
+
+
+		this.showRectangle = this.showRectangle.bind(this);
+		this.hideRetangle = this.hideRetangle.bind(this);
+		this.showOptions = this.showOptions.bind(this);
+		this.hideOptions = this.hideOptions.bind(this);
 	}
 
 	componentDidMount(){
@@ -222,6 +228,33 @@ class BlueprintContent extends React.Component{
 		controller.blueprintUpdated(this);
 		controller.timeline.setErrors();
 	}
+
+	componentWillUnmount(){
+	    controller.blueprintUnmounted(this);
+    }
+
+    showRectangle(x1, y1, x2, y2){
+
+	    let x = Math.min(x1, x2);
+	    let y = Math.min(y1, y2);
+
+	    let width = Math.abs(x1-x2);
+	    let height = Math.abs(y1-y2);
+
+	    this.setState({show:[x,y,width,height]});
+    }
+
+    hideRetangle(){
+        this.setState({show:false});
+    }
+
+    showOptions(){
+        this.setState({options:true});
+    }
+
+    hideOptions(){
+        this.setState({options:false});
+    }
 
 	render(){
 		return(
@@ -234,18 +267,20 @@ class BlueprintContent extends React.Component{
 						<li>No possible action</li>
 					</ul>
 				</div>
+                {this.state.show != false ? <SelectingSquare pos={this.state.show}/> : ""}
+                {this.state.options == true ? <SelectionOptions/> : ""}
 			</div>
 		);
 	}
 }
 
 /**
- * Snappes items of the BlueprintContent
+ * Snapped items of the BlueprintContent
  */
 class SnappedItems extends React.Component{
 	render(){
 		return (
-			<div>
+			<div id={"snappeditems"}>
 				  {controller.timeline.getBlocks().map(function(block, index){
 					  return block.getType() != "empty" ? <Block id={"dropped_"+index} key={index} block={block} dropped={true} openedContextMenu={blueprintController.openedContextMenu}/> : <SnapSpaceNoMargin id={index} key={index} openedContextMenu={blueprintController.openedContextMenu}/>;
 				  })}
@@ -255,10 +290,43 @@ class SnappedItems extends React.Component{
 }
 
 /**
+ * The square that appears when the user left clicks on the blueprint to select some blocks
+ */
+class SelectingSquare extends React.Component{
+    render(){
+        return(
+            <div className="itemSelector" style={{"width":this.props.pos[2]+"px", "height":this.props.pos[3]+"px", "top":this.props.pos[1]+"px", "left":this.props.pos[0]+"px"}}>
+
+            </div>
+        );
+    }
+}
+
+/**
+ * The options that are displayed upon selection on the Blueprint.
+ */
+class SelectionOptions extends React.Component{
+    render(){
+        return(
+            <div id={"selectionOptions"} className="selectionOptions animated fadeInLeft">
+                <span id="selectionOption" className="selectionOption" >COPY GROUP</span>
+                <br></br><br></br>
+                <span id="selectionOption" className="selectionOption">PASTE GROUP</span>
+                <br></br><br></br>
+                <span id="selectionOption" className="selectionOption">DELETE GROUP</span>
+                <br></br><br></br>
+                <span id="selectionOption" className="selectionOption" onClick={blueprintController.mergeInOneGroup}>MERGE IN ONE BLOCK</span>
+            </div>
+        )
+    }
+}
+
+/**
  * Context Menu which varies from where the right click was done.
  */
 class ContextMenu extends React.Component{
 	render(){
+
 		if(this.props.context=="snaptothis"){
 			return(
 				<div id='snaptothis_context'>
@@ -268,6 +336,7 @@ class ContextMenu extends React.Component{
 				</div>
 			);
 		}else if(this.props.context=="blueprintdroppedblock"){
+		    let blockObject = blueprintController.controller.timeline.getBlock(blueprintController.getSelectedItemContextMenu().split('_')[blueprintController.getSelectedItemContextMenu().split('_').length-1]);
 			return(
 				<div id='droppedblocks_context'>
 					<ul id='items'>
@@ -276,6 +345,7 @@ class ContextMenu extends React.Component{
 						<li onClick={blueprintController.deleteDroppedBlock}>Delete</li>
 						<li onClick={blueprintController.removeDroppedBlock}>Delete and remove space</li>
 						<li onClick={blueprintController.modifyDroppedBlock}>Modify</li>
+                        {blockObject != undefined ? (blockObject.getType() == "megablock" ? <li onClick={blueprintController.splitMegablock}>Split into multiple blocks</li> : "") : ""}
 					</ul>
 				</div>
 			);

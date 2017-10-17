@@ -29,6 +29,7 @@ export class ProtocolDesignModel{
 		this.containers = [];
 		this.currentlySelectedDimension = "mL";
 		this.currentlySelectedSpeed = "sm";
+        this.selection = [];
 		this.designBlocks = [
 			["Tip",
 				[new Block({
@@ -62,6 +63,29 @@ export class ProtocolDesignModel{
 			],
 		]
 	}
+
+    /**
+     * Returns the currently selected items.
+     * @returns {Array}
+     */
+    getSelection(){
+        return this.selection;
+    }
+
+    /**
+     * Add an item to the current selection.
+     * @param item
+     */
+    addToSelection(item){
+        this.selection.push(item);
+    }
+
+    /**
+     * Clears the current selection
+     */
+    clearSelection(){
+        this.selection = [];
+    }
 
     /**
      * Returns a Block object, according to its category and its index inside said category

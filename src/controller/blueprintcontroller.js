@@ -31,6 +31,7 @@ export class BlueprintController{
 		this.deleteDroppedBlock = this.deleteDroppedBlock.bind(this);
 		this.removeDroppedBlock = this.removeDroppedBlock.bind(this);
 		this.openedContextMenu = this.openedContextMenu.bind(this);
+		this.splitMegablock= this.splitMegablock.bind(this);
 	}
 
     /**
@@ -154,4 +155,30 @@ export class BlueprintController{
 	openedContextMenu(id){
 		this.setSelectedItemContextMenu(id);
 	}
+
+    /**
+     * Merging the selected group.
+     */
+	mergeInOneGroup(){
+	    if(gv.protocolDesignModel.getSelection().length < 1){
+	        throw new Error("Need at least one object selected !");
+        }
+        console.log("Called");
+        gv.hoverview.mergeGroup();
+    }
+
+    /**
+     * Split the selected block into multiple smaller blocks.
+     */
+    splitMegablock(){
+        let blockObject = this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
+        let blocks = blockObject.getBlocks();
+
+        for(var i = 0; i < blocks.length; i++){
+            this.controller.timeline.addBlock(blocks[i], blockObject.getIndex()+i);
+        }
+
+        this.controller.timeline.removeBlock(blockObject.getIndex());
+        gv.protocolDesignView.refresh();
+    }
 }
