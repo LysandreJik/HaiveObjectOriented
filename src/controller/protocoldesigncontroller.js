@@ -92,10 +92,10 @@ export class ProtocolDesignController{
 
 	        if(e.pageX > blueprintInfo.left && e.pageX < blueprintInfo.right && e.pageY > blueprintInfo.top && e.pageY < blueprintInfo.bottom){
                 if(this.x1y1[0] == -1){
-                    this.x1y1 = [e.pageX, e.pageY];
+                    this.x1y1 = [e.pageX, e.pageY+blueprint.scrollTop];
                 }
 
-                gv.protocolDesignBlueprintcontentView.showRectangle(this.x1y1[0]-blueprintInfo.left, this.x1y1[1]-blueprintInfo.top, e.pageX-blueprintInfo.left, e.pageY-blueprintInfo.top);
+                gv.protocolDesignBlueprintcontentView.showRectangle(this.x1y1[0]-blueprintInfo.left, this.x1y1[1]-blueprintInfo.top, e.pageX-blueprintInfo.left, e.pageY-blueprintInfo.top+blueprint.scrollTop);
             }
 
 
@@ -116,18 +116,25 @@ export class ProtocolDesignController{
                     }
                 }
 
+                if((e.target.id == "blueprint" || $(e.target).parents("#blueprint").length) && (e.target.id != "selectionOptions" && e.target.id != "selectionOption")){
+                    gv.protocolDesignModel.clearSelection();
+                }
+
                 let x = Math.min(this.x1y1[0], e.pageX);
-                let y = Math.min(this.x1y1[1], e.pageY);
+                let y = Math.min(this.x1y1[1], e.pageY+blueprint.scrollTop);
                 let x2 = Math.max(this.x1y1[0], e.pageX);
-                let y2 = Math.max(this.x1y1[1], e.pageY);
+                let y2 = Math.max(this.x1y1[1], e.pageY+blueprint.scrollTop);
 
                 let currentSelection = [];
 
                 for(let i = 0; i < HTMLElementPositions.length; i++){
                     let r = HTMLElementPositions[i];
                     if(x < r[0]+r[2] && x2 > r[0] && y < r[1]+r[3] && y2 > r[1]){
-                        r[4].setSelected(true);
-                        currentSelection.push(r[4]);
+                        if(r[4].isSelectable()){
+                            r[4].setSelected(true);
+                            currentSelection.push(r[4]);
+                        }
+
                     }else{
                         r[4].setSelected(false);
                     }
@@ -137,9 +144,7 @@ export class ProtocolDesignController{
                     gv.protocolDesignView.refresh();
                 }
 
-                if((e.target.id == "blueprint" || $(e.target).parents("#blueprint").length) && (e.target.id != "selectionOptions" && e.target.id != "selectionOption")){
-                    gv.protocolDesignModel.clearSelection();
-                }
+
                 if(currentSelection.length > 0){
                     for(let i = 0; i < currentSelection.length; i++){
                         gv.protocolDesignModel.addToSelection(currentSelection[i]);

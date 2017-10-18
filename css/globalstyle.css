@@ -66,7 +66,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	top:10%;
 	left:5%;
 	width: 13%;
-	height: 78%;
+	height: 71.5%;
 	border: 0.2vw solid #53687E;
 	max-height: 80%;
 	display: block;
@@ -95,7 +95,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	left:25%;
 
 	width: 45%;
-	height: 80%;
+	height: 75%;
 	border: 0.2vw solid #53687E;
 	overflow-y: auto;
 }
@@ -104,7 +104,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	position: absolute;
 	top:10%;
 	left:75%;
-	height:80%;
+	height:75%;
 	right:5%;
 	border: 0.2vw solid #53687E;
 	padding: 0;
@@ -119,6 +119,13 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	right:5%;
 	background-color:#D0E1F9;
 	border: 0.2vw solid #53687E;
+}
+
+.runbutton{
+    position: absolute;
+    left: 45%;
+    width:10%;
+    bottom: 5%;
 }
 
 .designblock{

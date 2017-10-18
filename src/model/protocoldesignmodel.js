@@ -84,6 +84,9 @@ export class ProtocolDesignModel{
      * Clears the current selection
      */
     clearSelection(){
+        for(let i = 0; i < this.selection.length; i++){
+            this.selection[i].setSelected(false);
+        }
         this.selection = [];
     }
 

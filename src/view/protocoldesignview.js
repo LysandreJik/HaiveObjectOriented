@@ -125,12 +125,23 @@ export class ProtocolDesign extends React.Component{
 						<BlueprintContent warning={this.props.warning} blockDropped={controller.blockDropped.bind(this)}/>
 						<BlockStore />
 						<Hoverview />
+                        <RunInterface/>
 						{this.getSpeedSelector()}
 					</div>
 				</section>
 			</section>
 		);
 	}
+}
+
+class RunInterface extends React.Component{
+    render(){
+        return(
+            <div id={"runinterface"}>
+                <button className={"runbutton menuitem"}>START THE PROTOCOL</button>
+            </div>
+        );
+    }
 }
 
 /**
@@ -309,11 +320,9 @@ class SelectionOptions extends React.Component{
     render(){
         return(
             <div id={"selectionOptions"} className="selectionOptions animated fadeInLeft">
-                <span id="selectionOption" className="selectionOption" >COPY GROUP</span>
+                <span id="selectionOption" className="selectionOption" onClick={blueprintController.copySelectedBlocks}>COPY GROUP</span>
                 <br></br><br></br>
-                <span id="selectionOption" className="selectionOption">PASTE GROUP</span>
-                <br></br><br></br>
-                <span id="selectionOption" className="selectionOption">DELETE GROUP</span>
+                <span id="selectionOption" className="selectionOption" onClick={blueprintController.deleteSelectionBlocks}>DELETE GROUP</span>
                 <br></br><br></br>
                 <span id="selectionOption" className="selectionOption" onClick={blueprintController.mergeInOneGroup}>MERGE IN ONE BLOCK</span>
             </div>

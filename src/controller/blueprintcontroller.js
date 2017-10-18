@@ -32,6 +32,8 @@ export class BlueprintController{
 		this.removeDroppedBlock = this.removeDroppedBlock.bind(this);
 		this.openedContextMenu = this.openedContextMenu.bind(this);
 		this.splitMegablock= this.splitMegablock.bind(this);
+		this.deleteSelectionBlocks = this.deleteSelectionBlocks.bind(this);
+		this.copySelectedBlocks = this.copySelectedBlocks;
 	}
 
     /**
@@ -180,5 +182,37 @@ export class BlueprintController{
 
         this.controller.timeline.removeBlock(blockObject.getIndex());
         gv.protocolDesignView.refresh();
+    }
+
+    copySelectedBlocks(){
+        let blocks = gv.protocolDesignModel.getSelection();
+        this.blocksCopyTimeline = blocks;
+    }
+
+    deleteSelectionBlocks(){
+        let blocks = gv.protocolDesignModel.getSelection();
+
+        for(let i = 0; i < blocks.length; i++){
+            let block = blocks[i];
+
+            if(block.getType() == "get tip"){
+                block.getContainer().unbookTip();
+                block.clearError();
+            }else if(block.getType() == "get liquid"){
+                block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
+            }else if(block.getType() == "deposit liquid"){
+                if(block.isDirtyingTip()){
+                    block.getTip().emptyAndClean();
+                }else{
+                    block.getTip().removeLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
+                }
+            }
+
+            this.controller.timeline.removeBlock(this.controller.timeline.getIndexOf(block));
+            this.controller.timeline.addEmptyBlocks();
+
+        }
+
+        gv.protocolConceptionView.refresh();
     }
 }

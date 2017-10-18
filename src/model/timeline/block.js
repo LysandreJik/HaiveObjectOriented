@@ -80,6 +80,18 @@ export class Block{
 	}
 
     /**
+     * Returns true if the block is selectable, false otherwise. This prevents user from making multiple copies of the start and end blocks.
+     * @returns {boolean}
+     */
+	isSelectable(){
+	    if(this.getType() == "START_BLOCK" || this.getType() == "END_BLOCK"){
+	        return false;
+        }else{
+	        return true;
+        }
+    }
+
+    /**
      * Returns the index of this block on the timeline.
      * @returns {number}
      */
@@ -315,7 +327,8 @@ export class Block{
 			liquidQuantity:this.liquidQuantity,
 			speed:this.speed,
 			error:this.error,
-			warning:this.warning
+			warning:this.warning,
+            blocks:this.blocks
 		});
 	}
 
