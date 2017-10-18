@@ -292,6 +292,11 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	z-index: 50;
 }
 
+.droppedblocks_context_greyed_out{
+    color:#999;
+    font-style: italic;
+}
+
 #snaptothis_context{
 	display:none;
 	position:fixed;
@@ -309,7 +314,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 }
 
 
-#items :hover{
+.itemscontext:hover{
 	color: white;
 	background:#284570;
 	border-radius:2px;

@@ -84,11 +84,7 @@ export class Block{
      * @returns {boolean}
      */
 	isSelectable(){
-	    if(this.getType() == "START_BLOCK" || this.getType() == "END_BLOCK"){
-	        return false;
-        }else{
-	        return true;
-        }
+	    return !(this.getType() == "START_BLOCK" || this.getType() == "END_BLOCK");
     }
 
     /**

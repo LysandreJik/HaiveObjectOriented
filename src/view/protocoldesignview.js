@@ -340,7 +340,7 @@ class ContextMenu extends React.Component{
 			return(
 				<div id='snaptothis_context'>
 					<ul id='items'>
-						<li onClick={blueprintController.paste}>Paste</li>
+						<li className={blueprintController.blockCopyTimeline != undefined ? "itemscontext" : "droppedblocks_context_greyed_out"} onClick={blueprintController.paste}>Paste</li>
 					</ul>
 				</div>
 			);
@@ -349,11 +349,11 @@ class ContextMenu extends React.Component{
 			return(
 				<div id='droppedblocks_context'>
 					<ul id='items'>
-						<li onClick={blueprintController.copyDroppedBlock}>Copy</li>
-						<li onClick={blueprintController.paste}>Paste</li>
-						<li onClick={blueprintController.deleteDroppedBlock}>Delete</li>
-						<li onClick={blueprintController.removeDroppedBlock}>Delete and remove space</li>
-						<li onClick={blueprintController.modifyDroppedBlock}>Modify</li>
+						<li className={"itemscontext"} onClick={blueprintController.copyDroppedBlock}>Copy</li>
+						<li className={blueprintController.blockCopyTimeline != undefined ? "itemscontext" : "droppedblocks_context_greyed_out"} onClick={blueprintController.paste}>Paste</li>
+						<li className={"itemscontext"} onClick={blueprintController.deleteDroppedBlock}>Delete</li>
+						<li className={"itemscontext"} onClick={blueprintController.removeDroppedBlock}>Delete and remove space</li>
+						<li className={"itemscontext"} onClick={blueprintController.modifyDroppedBlock}>Modify</li>
                         {blockObject != undefined ? (blockObject.getType() == "megablock" ? <li onClick={blueprintController.splitMegablock}>Split into multiple blocks</li> : "") : ""}
 					</ul>
 				</div>

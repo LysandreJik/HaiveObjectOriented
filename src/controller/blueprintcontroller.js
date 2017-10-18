@@ -83,7 +83,7 @@ export class BlueprintController{
 	paste(){
 		let parent = this;
 		console.log(this.blockCopyTimeline);
-		if(this.blockCopyTimeline.getType() != "empty" && this.blockCopyTimeline != undefined){
+		if(this.blockCopyTimeline.getType() != "empty" && this.blockCopyTimeline != undefined && this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]).getType() != "START_BLOCK"){
 			this.controller.timeline.setBlock(this.blockCopyTimeline, this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
 
 
@@ -108,22 +108,25 @@ export class BlueprintController{
 	removeDroppedBlock(){
 		let block = this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
 
-		if(block.getType() == "get tip"){
-			block.getContainer().unbookTip();
-			block.clearError();
-		}else if(block.getType() == "get liquid"){
-			block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
-		}else if(block.getType() == "deposit liquid"){
-			if(block.isDirtyingTip()){
-				block.getTip().emptyAndClean();
-			}else{
-				block.getTip().removeLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
-			}
-		}
+		if(block.getType() != "START_BLOCK"){
+            if(block.getType() == "get tip"){
+                block.getContainer().unbookTip();
+                block.clearError();
+            }else if(block.getType() == "get liquid"){
+                block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
+            }else if(block.getType() == "deposit liquid"){
+                if(block.isDirtyingTip()){
+                    block.getTip().emptyAndClean();
+                }else{
+                    block.getTip().removeLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
+                }
+            }
 
-		this.controller.timeline.removeBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
-		this.controller.timeline.addEmptyBlocks();
-		gv.protocolDesignView.refresh();
+            this.controller.timeline.removeBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
+            this.controller.timeline.addEmptyBlocks();
+            gv.protocolDesignView.refresh();
+        }
+
 	}
 
     /**
@@ -132,22 +135,24 @@ export class BlueprintController{
 	deleteDroppedBlock(){
 		let block = this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
 
-		if(block.getType() == "get tip"){
-			block.getContainer().unbookTip();
-			block.clearError();
-		}else if(block.getType() == "get liquid"){
-			block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
-		}else if(block.getType() == "deposit liquid"){
-			if(block.isDirtyingTip()){
-				block.getTip().emptyAndClean();
-			}else{
-				block.getTip().removeLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
-			}
-		}
+        if(block.getType() != "START_BLOCK"){
+            if(block.getType() == "get tip"){
+                block.getContainer().unbookTip();
+                block.clearError();
+            }else if(block.getType() == "get liquid"){
+                block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
+            }else if(block.getType() == "deposit liquid"){
+                if(block.isDirtyingTip()){
+                    block.getTip().emptyAndClean();
+                }else{
+                    block.getTip().removeLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
+                }
+            }
 
-		this.controller.timeline.setBlock(new Block(), this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
-		this.controller.timeline.addEmptyBlocks();
-		gv.protocolDesignView.refresh();
+            this.controller.timeline.setBlock(new Block(), this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
+            this.controller.timeline.addEmptyBlocks();
+            gv.protocolDesignView.refresh();
+        }
 	}
 
     /**
