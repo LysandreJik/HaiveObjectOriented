@@ -464,7 +464,7 @@ export class Block{
     }
 
     /**
-     * Sets a comment for this block
+     * Sets a comment for this block that the user defined
      * @param comment
      */
     setComment(comment){

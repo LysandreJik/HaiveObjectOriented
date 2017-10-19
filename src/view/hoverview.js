@@ -179,7 +179,9 @@ export class Hoverview extends React.Component{
 	}
 }
 
-
+/**
+ * The component which allows the user to write down notes.
+ */
 class Notes extends React.Component{
 
     componentDidMount(){

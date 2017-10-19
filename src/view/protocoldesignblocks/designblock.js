@@ -62,6 +62,10 @@ export class Block extends React.Component{
         this.setState({big:false});
     }
 
+    /**
+     * Returns the block object
+     * @returns {XML}
+     */
 	getBlock(){
         if(this.state.big){
             return(
