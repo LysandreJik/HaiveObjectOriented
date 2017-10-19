@@ -1,0 +1,43 @@
+.startblueprint{
+    position: absolute;
+    top:10%;
+    left:25%;
+    text-align: center;
+
+    width: 45%;
+    height: 5%;
+    border: 0.2vw solid #53687E;
+    background: #88FF88;
+    color:#000;
+    overflow-y: auto;
+}
+
+.stopblueprint{
+    position: absolute;
+    top:80%;
+    left:25%;
+    text-align: center;
+
+    width: 45%;
+    height: 5%;
+    border: 0.2vw solid #53687E;
+    background: #FF8888;
+    color:#000;
+    overflow-y: auto;
+}
+
+.moredetailbutton{
+    position: absolute;
+    right: 4%;
+    bottom:5px;
+}
+
+.designblockshowfullinfo{
+    height:auto;
+    width:16vw;
+}
+
+.circle-plus {height:6em; width:6em; font-size:0.2vw /*Will change icon size*/;}
+.circle-plus .circle {position: relative; width: 4.5em; height: 4.5em; border-radius: 100%; border: solid .8em #DFDAD7;}
+.circle-plus .circle .horizontal {position: absolute; background-color: #DFDAD7; width: 2.4em; height: .7em; top: 1.9em; left: 1.05em;}
+.circle-plus .circle .vertical {position: absolute; background-color: #DFDAD7; width: .7em; height: 2.4em; top: 1.05em; left: 1.9em;}

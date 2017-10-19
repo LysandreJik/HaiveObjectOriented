@@ -120,9 +120,12 @@ export class ProtocolDesign extends React.Component{
 			<section className="vbox ">
 				<section className="scrollable wrapper">
 					<div id="maincontent" className="row">
+
 						<Menu/>
 						<ContainersPage blockDropped={controller.clickOnContainer.bind(this)} disabled={this.state.disabled}/>
 						<BlueprintContent warning={this.props.warning} blockDropped={controller.blockDropped.bind(this)}/>
+                        <span className={"startblueprint"}>START</span>
+                        <span className={"stopblueprint"}>END</span>
 						<BlockStore />
 						<Hoverview />
                         <RunInterface/>
@@ -280,6 +283,7 @@ class BlueprintContent extends React.Component{
 				</div>
                 {this.state.show != false ? <SelectingSquare pos={this.state.show}/> : ""}
                 {this.state.options == true ? <SelectionOptions/> : ""}
+
 			</div>
 		);
 	}
@@ -380,7 +384,6 @@ class BlockStore extends React.Component{
 		return(
 			<div id="blockstore" className="blockstore">
 				<MainSeparator text="DESIGN BLOCKS"/>
-				<Block block={model.getEndBlock()}/>
 				{designblocks.getDesignBlocks(model)}
 			</div>
 		);

@@ -26,12 +26,15 @@ export class Block extends React.Component{
 	constructor(props){
 		super(props);
 		this.contextMenu = this.contextMenu.bind(this);
+		this.state = {big:false};
+		this.displayFullInfo = this.displayFullInfo.bind(this);
+		this.hideFullInfo = this.hideFullInfo.bind(this);
 	}
 
 	componentDidMount(){
-		if(this.props.dropped == true){
-			$('#designblock_'+this.props.id).bind("contextmenu", this.contextMenu);
-		}
+		if(this.props.dropped == true) {
+            $('#designblock_' + this.props.id).bind("contextmenu", this.contextMenu);
+        }
 	}
 
 	contextMenu(e){
@@ -43,36 +46,110 @@ export class Block extends React.Component{
 		$("#droppedblocks_context").fadeIn(0,startFocusOut());
 	}
 
-	render(){
-	    if(this.props.block.getType() == "megablock"){
-            return(
-                <div id={"designblock_"+this.props.id} style={{"backgroundColor":this.props.block.getColor()}} className={"designblock"+ (this.props.dropped == true ? "dropped" : "")+" designmegablockdropped"}>
-				<span className="designblocktext" style={{"color":this.props.block.getForegroundColor()}}>
-					{this.props.block.getText()}
-                    <br></br>
-                    {this.props.block.getLiquidQuantity() != undefined ? this.props.block.getLiquidQuantity()[0]+this.props.block.getLiquidQuantity()[1] : ""}
-				</span>
+	displayFullInfo(){
+        document.querySelector('#designblock_'+this.props.id).classList.toggle('designblockshowfullinfo');
+        document.querySelector('#designblock_'+this.props.id).classList.toggle('animated');
+        document.querySelector('#designblock_'+this.props.id).classList.toggle('speed-ultrafast');
+        document.querySelector('#designblock_'+this.props.id).classList.toggle('pulse');
+	    this.setState({big:true});
+    }
 
+    hideFullInfo(){
+        document.querySelector('#designblock_'+this.props.id).classList.toggle('designblockshowfullinfo');
+        document.querySelector('#designblock_'+this.props.id).classList.toggle('animated');
+        document.querySelector('#designblock_'+this.props.id).classList.toggle('speed-ultrafast');
+        document.querySelector('#designblock_'+this.props.id).classList.toggle('pulse');
+        this.setState({big:false});
+    }
+
+	getBlock(){
+        if(this.state.big){
+            return(
+                <div id={"designblock_"+this.props.id} style={{"backgroundColor":this.props.block.getColor(), "left":"calc(50% - 8vw)"}} className={"designblock"+ (this.props.dropped == true ? "dropped" : "")+(this.props.block.getType() == "megablock" ? " designmegablockdropped" : "")}>
+				<span className="designblocktext" style={{"color":this.props.block.getForegroundColor()}}>
+					{
+					    this.props.block.getExtendedText().map(function(text, index){
+                        return <div key={index}><span>{text}</span><br></br></div>
+                        })
+					}
+				</span>
+                    <br></br>
+                    <br></br>
+                    {this.props.id.substring(0,1) == "d" ? <MoreInfo more={false} display={this}/> : ""}
                     {this.props.block.isError() ? <span className="errormessage animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
                     {this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessage animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
                 </div>
             );
         }else{
             return(
-                <div id={"designblock_"+this.props.id} style={{"backgroundColor":this.props.block.getColor()}} className={"designblock"+ (this.props.dropped == true ? "dropped" : "")}>
+                <div id={"designblock_"+this.props.id} style={{"backgroundColor":this.props.block.getColor(), "left":"calc(50% - 4vw)"}} className={"designblock"+ (this.props.dropped == true ? "dropped" : "")+(this.props.block.getType() == "megablock" ? " designmegablockdropped" : "")}>
 				<span className="designblocktext" style={{"color":this.props.block.getForegroundColor()}}>
 					{this.props.block.getText()}
                     <br></br>
                     {this.props.block.getLiquidQuantity() != undefined ? this.props.block.getLiquidQuantity()[0]+this.props.block.getLiquidQuantity()[1] : ""}
 				</span>
-
+                    <br></br>
+                    <br></br>
+                    {this.props.id.substring(0,1) == "d" ? <MoreInfo more={true} display={this}/> : ""}
                     {this.props.block.isError() ? <span className="errormessage animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
                     {this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessage animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
                 </div>
             );
         }
 
+    }
+
+	render(){
+        return this.getBlock();
 	}
+}
+
+/**
+ * The button which allows the user to display more information about the component
+ */
+export class MoreInfo extends React.Component{
+    constructor(props){
+        super(props);
+        this.showMoreInfo = this.showMoreInfo.bind(this);
+        this.showLessInfo = this.showLessInfo.bind(this);
+    }
+
+    showMoreInfo(){
+        this.props.display.displayFullInfo();
+    }
+
+    showLessInfo(){
+        this.props.display.hideFullInfo();
+    }
+
+    render(){
+        if(this.props.more == true){
+            return(
+                <div id={"moreinfo"} className={"moredetailbutton"} onClick={this.showMoreInfo}>
+                    <div className="circle-plus">
+                        <div className="circle">
+                            <div className="horizontal"></div>
+                            <div className="vertical"></div>
+                        </div>
+                    </div>
+                </div>
+
+            );
+        }else{
+            return(
+
+                <div id={"moreinfo"} className={"moredetailbutton"} onClick={this.showLessInfo}>
+                    <div className="circle-plus">
+                        <div className="circle">
+                            <div className="horizontal"></div>
+                        </div>
+                    </div>
+                </div>
+
+            );
+        }
+
+    }
 }
 
 /**

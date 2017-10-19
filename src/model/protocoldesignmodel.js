@@ -188,7 +188,7 @@ export class ProtocolDesignModel{
         $(document).bind("contextmenu", this.contextMenu);
 
 		this.containerContents = [[], [], [], [], [], []];
-		gv.dropped_blocks = ["START_BLOCK_VALUE","",""];
+		gv.dropped_blocks = ["","",""];
 
 		for(let i = 0; i < containers.length; i++){
 			if(containers[i].isLiquidContainer()){

@@ -31,6 +31,7 @@ export class Hoverview extends React.Component{
 		this.getQuantitySelector = this.getQuantitySelector.bind(this);
 		this.setQuantitySelector = this.setQuantitySelector.bind(this);
 		this.setPipettingSelector = this.setPipettingSelector.bind(this);
+		this.getPipettingSelector = this.getPipettingSelector.bind(this);
 		this.mergeGroup = this.mergeGroup.bind(this);
 		gv.hoverview = this;
 	}
@@ -212,7 +213,6 @@ class DepositLiquid extends React.Component{
 
 					<div className="divgrid">
 						{this.props.container.getLiquidTips().map(function(block, index){
-							console.log(block, block.isViscous());
 							return (
 								<div key={index} className={"divfullinfo"} onClick={
 										function(){

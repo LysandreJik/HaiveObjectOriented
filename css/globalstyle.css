@@ -94,8 +94,11 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	top:10%;
 	left:25%;
 
+    padding-top:3%;
+    padding-bottom: 3%;
+
 	width: 45%;
-	height: 75%;
+	height: 59%;
 	border: 0.2vw solid #53687E;
 	overflow-y: auto;
 }
@@ -132,7 +135,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	position: relative;
 	left:28%;
 	width:8vw;
-	height:8vh;
+    height:auto;
 	background-color: #3B3F48;
 	border: 0.2vw solid #53687E;
 
@@ -140,21 +143,23 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	margin-bottom: 1vw;
 	text-align: center;
 
+    padding-top:1vw;
+
 }
 
 
 .designblockdropped{
     position: relative;
-    left:50%;
     width:8vw;
-    height:8vh;
+    height:auto;
     background-color: #3B3F48;
     border: 0.2vw solid #53687E;
-    transform: translateX(-50%);
 
     margin-top:1vw;
     margin-bottom: 1vw;
     text-align: center;
+
+    padding-top:1vw;
 
 }
 
@@ -171,11 +176,11 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
     margin-bottom: 1vw;
     text-align: center;
 
+    padding-top:1vw;
+
 }
 
 .designblocktext{
-	position: relative;
-	top:25%;
 	color:#D0E1F9
 }
 

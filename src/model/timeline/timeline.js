@@ -27,7 +27,7 @@ export class Timeline{
 		if(args != undefined){
 			this.blocks = args;
 		}else{
-			this.blocks = [new Block({type:"START_BLOCK", text:"START"}), new Block(), new Block()];
+			this.blocks = [new Block(), new Block(), new Block()];
 		}
 
 		this.initialTipContents = [];
@@ -148,12 +148,20 @@ export class Timeline{
      * Method always makes sure there are two empty blocks at the end of the timeline.
      */
 	addEmptyBlocks(){
+
+	    while(this.blocks.length < 3){
+	        this.blocks.push(new Block());
+        }
+
+        console.log(this.blocks.length);
+
 		while(this.blocks[this.blocks.length-2].getType() != "empty" || this.blocks[this.blocks.length-1].getType() != "empty"){
 			this.blocks.push(new Block());
 		}
 
 		if(this.blocks[this.blocks.length-1].getType() == "empty" || this.blocks[this.blocks.length-2].getType() == "empty"){
-			while(this.blocks[this.blocks.length-3].getType() == "empty"){
+		    console.log(this.blocks);
+			while(this.blocks[this.blocks.length-3].getType() == "empty" && this.blocks.length > 3){
 				this.blocks.pop();
 			}
 		}

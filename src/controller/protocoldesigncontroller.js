@@ -367,11 +367,6 @@ export class ProtocolDesignController{
 			blockObject = blockObj;
 		}
 
-		if(blockObject == null){
-			blockObject = gv.protocolDesignModel.getEndBlock();
-			console.log(blockObject);
-		}
-
 
 		gv.currentlySelectedDimension = "mL";
 
@@ -610,10 +605,6 @@ export class ProtocolDesignController{
 						let category = ui.draggable.prop('id').split('_')[ui.draggable.prop('id').split('_').length-2];
 						let index = ui.draggable.prop('id').split('_')[ui.draggable.prop('id').split('_').length-1];
 						let blockObject = gv.protocolDesignModel.getBlockFromCategoryAndIndex(category, index);
-
-						if(blockObject == null){
-							blockObject = gv.protocolDesignModel.getEndBlock();
-						}
 
 						controller.timeline.overrideBlock(blockObject.getClone(), dropBlockIndex);
 						blockDroppedFunc($('#'+ui.draggable.prop('id')), event.target.id);

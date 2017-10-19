@@ -16,6 +16,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	Author: Lysandre Debut
 */
 
+import React from 'react';
 const gv = require('../../../const/global');
 
 /**
@@ -366,6 +367,30 @@ export class Block{
 	}
 
     /**
+     * Returns every detail about the block
+     */
+	getExtendedText(){
+        let text = [];
+        text.push(this.getText());
+        text.push("Type of the operation : "+this.getType());
+        if(this.getType() == "get tip"){
+            text.push("Container : "+this.getContainer().getType());
+            text.push("Container name : "+this.getContainer().getName());
+        }else if(this.getType() == "dsposit tip"){
+            text.push("Container : "+this.getContainer().getType());
+            text.push("Container name : "+this.getContainer().getName());
+        }else if(this.getType() == "get liquid"){
+            text.push("Container : "+this.getContainer().getType());
+            text.push("Container name : "+this.getContainer().getName());
+            text.push("Tip : "+this.getTip().getX()+":"+this.getTip().getY());
+            text.push("Liquid : "+this.getTip().getLiquid()+", "+this.getLiquidQuantity()[0]+this.getLiquidQuantity()[1]);
+        }
+
+        return text;
+
+    }
+
+    /**
      * If a tip is concerned by the block, it has to be set using this setter. Some block do not use this, so attention is required.
      * @param tip Tip object
      */
@@ -415,4 +440,6 @@ export class Block{
 	getContainer(){
 		return this.container;
 	}
+
+
 }
