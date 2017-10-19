@@ -80,21 +80,63 @@
 }
 
 .errormessage{
-	left: 150%;
-	position: absolute;
-	text-align: right;
-	width: 150%;
-	font-style: italic;
-	color: #D0E1F9;
+    left: 150%;
+    position: absolute;
+    top:25%;
+    text-align: right;
+    width: 150%;
+    font-style: italic;
+    color: rgb(255, 50, 50);
+}
+
+.errormessagebig{
+    left: 130%;
+    position: absolute;
+    top:25%;
+    text-align: right;
+    width: 50%;
+    font-style: italic;
+    color: rgb(255, 50, 50);
 }
 
 .warningmessage{
-	left: 150%;
-	position: absolute;
-	text-align: right;
-	width: 150%;
-	font-style: italic;
-	color: rgb(236, 165, 62);
+    left: 150%;
+    position: absolute;
+    top:25%;
+    text-align: right;
+    width: 150%;
+    font-style: italic;
+    color: rgb(236, 165, 62);
+}
+
+warningmessagebig{
+    left: 130%;
+    position: absolute;
+    top:25%;
+    text-align: right;
+    width: 50%;
+    font-style: italic;
+    color: rgb(236, 165, 62);
+}
+
+.comment{
+    left: -200%;
+    position: absolute;
+    top:25%;
+    text-align: left;
+    width: 150%;
+    font-style: italic;
+    color: #D0E1F9;
+}
+
+.commentbig{
+    left: -75%;
+    position: absolute;
+    top:25%;
+    text-align: left;
+    width: 50%;
+    font-style: italic;
+    color: #D0E1F9;
 }
 
 .menu{

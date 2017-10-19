@@ -17,7 +17,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 import React from 'react';
-
+const gv = require('../../../const/global');
 /**
  * The Block React Component. Every block on the timeline or on the right side of the timeline on the protocol design screen is made from this component.
  */
@@ -75,9 +75,11 @@ export class Block extends React.Component{
 				</span>
                     <br></br>
                     <br></br>
+                    {this.props.id.substring(0,1) == "d" ? <div onClick={() => gv.hoverview.displayNotes(this.props.block)}><a><i  className={"fa fa-edit editfiles"}></i></a></div> : ""}
                     {this.props.id.substring(0,1) == "d" ? <MoreInfo more={false} display={this}/> : ""}
-                    {this.props.block.isError() ? <span className="errormessage animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
-                    {this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessage animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
+                    {this.props.block.isError() ? <span className="errormessagebig animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
+                    {this.props.block.getComment() != undefined ? <span className={"commentbig animated fadeInLeft"}>{this.props.block.getComment()}</span> : ""}
+                    {this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessagebig animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
                 </div>
             );
         }else{
@@ -90,8 +92,10 @@ export class Block extends React.Component{
 				</span>
                     <br></br>
                     <br></br>
+                    {this.props.id.substring(0,1) == "d" ? <div onClick={() => gv.hoverview.displayNotes(this.props.block)}><a><i  className={"fa fa-edit editfiles"}></i></a></div> : ""}
                     {this.props.id.substring(0,1) == "d" ? <MoreInfo more={true} display={this}/> : ""}
                     {this.props.block.isError() ? <span className="errormessage animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
+                    {this.props.block.getComment() != undefined ? <span className={"comment animated fadeInLeft"}>{this.props.block.getComment()}</span> : ""}
                     {this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessage animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
                 </div>
             );

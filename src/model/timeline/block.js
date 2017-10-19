@@ -47,6 +47,7 @@ export class Block{
 			this.warning = args.warning;
 			this.liquidQuantity = args.liquidQuantity;
 			this.dirtyingTip = args.dirtyingTip;
+			this.comment = args.comment;
 		}
 
 		if(this.speed == undefined){
@@ -76,6 +77,12 @@ export class Block{
                 this.blocks = [];
             }
         }
+
+        if(this.comment == undefined){
+		    this.comment = "";
+        }
+
+
 
 		this.selected = false;
 	}
@@ -346,7 +353,8 @@ export class Block{
 			speed:this.speed,
 			error:this.error,
 			warning:this.warning,
-            blocks:this.blocks
+            blocks:this.blocks,
+            comment:this.comment
 		});
 	}
 
@@ -373,6 +381,12 @@ export class Block{
         let text = [];
         text.push(this.getText());
         text.push("Type of the operation : "+this.getType());
+        if(this.getComment() != undefined && this.getComment() != ""){
+            text.push("Comment : "+this.getComment());
+        }else{
+            text.push("This block is not commented.");
+        }
+
         if(this.getType() == "get tip"){
             text.push("Container : "+this.getContainer().getType());
             text.push("Container name : "+this.getContainer().getName());
@@ -441,5 +455,19 @@ export class Block{
 		return this.container;
 	}
 
+    /**
+     * Returns the user-set comment for this block
+     * @returns {*}
+     */
+	getComment(){
+	    return this.comment;
+    }
 
+    /**
+     * Sets a comment for this block
+     * @param comment
+     */
+    setComment(comment){
+	    this.comment = comment;
+    }
 }

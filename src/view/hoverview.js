@@ -26,24 +26,42 @@ const gv = require('../../const/global');
 export class Hoverview extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {disabled:"", blockDropped:"", selectingTip:"none", quantity:"none", wait:false, depositLiquid:"none", depositLiquidSpecs:"none", pipetting:"none", pipettingSelector:'none', mergeGroup:false};
+		this.state = {disabled:"",
+            blockDropped:"",
+            selectingTip:"none",
+            quantity:"none",
+            wait:false,
+            depositLiquid:"none",
+            depositLiquidSpecs:"none",
+            pipetting:"none",
+            pipettingSelector:'none',
+            mergeGroup:false,
+            notes:false
+        };
 		this.getLiquid = this.getLiquid.bind(this);
+		this.clearAll = this.clearAll.bind(this);
 		this.getQuantitySelector = this.getQuantitySelector.bind(this);
 		this.setQuantitySelector = this.setQuantitySelector.bind(this);
 		this.setPipettingSelector = this.setPipettingSelector.bind(this);
 		this.getPipettingSelector = this.getPipettingSelector.bind(this);
+		this.displayNotes = this.displayNotes.bind(this);
 		this.mergeGroup = this.mergeGroup.bind(this);
 		gv.hoverview = this;
 	}
 
 	clearAll() {
         this.setState({
-            selectingTip: "none",
-            depositLiquid: "none",
-            depositLiquidSpecs: "none",
-            quantity: "none",
-            pipettingSelector: "none",
-            pipetting: "none"
+            disabled:"",
+            blockDropped:"",
+            selectingTip:"none",
+            quantity:"none",
+            wait:false,
+            depositLiquid:"none",
+            depositLiquidSpecs:"none",
+            pipetting:"none",
+            pipettingSelector:'none',
+            mergeGroup:false,
+            notes:false
         });
     }
 
@@ -110,6 +128,12 @@ export class Hoverview extends React.Component{
         setTimeout(function(){window.location="#merge"},10);
     }
 
+    displayNotes(block){
+        this.clearAll();
+        this.setState({notes:block});
+        setTimeout(function(){window.location="#notes"}, 10);
+    }
+
 	render(){
 		if(this.state.selectingTip != "none"){
 			return <TipSelect container={this.state.selectingTip} selected={this.getQuantitySelector} that={this}/>;
@@ -147,8 +171,44 @@ export class Hoverview extends React.Component{
 			return <Wait block={this.state.wait}/>;
 		}
 
+		if(this.state.notes != false){
+		    return <Notes super={this} block={this.state.notes}/>
+        }
+
 		return <div></div>;
 	}
+}
+
+
+class Notes extends React.Component{
+
+    componentDidMount(){
+        document.getElementById("notestextarea").value = this.props.block.getComment();
+    }
+
+    render(){
+        let parent = this;
+        return(
+            <div className="lightbox" id="notes">
+                <textarea id="notestextarea" className={"notes"}>
+
+                </textarea>
+                <div className={"notesbuttonscontainer"}>
+                    <button className={"btnghostdarker notesbuttons"} onClick={
+                        function(){
+                            parent.props.block.setComment(document.getElementById("notestextarea").value);
+                            console.log(parent.props.block);
+                            parent.props.super.clearAll();
+                            window.location="#_";
+                            gv.protocolDesignView.refresh();
+                        }
+                    }>Save and exit</button>
+                    <button className={"btnghostdarker notesbuttons"} onClick={function(){parent.props.super.clearAll();window.location="#_"}}>Discard and exit</button>
+                </div>
+
+            </div>
+        )
+    }
 }
 
 /**

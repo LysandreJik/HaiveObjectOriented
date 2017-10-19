@@ -28,7 +28,7 @@
 
 .moredetailbutton{
     position: absolute;
-    right: 4%;
+    right: 5px;
     bottom:5px;
 }
 
@@ -37,7 +37,37 @@
     width:16vw;
 }
 
-.circle-plus {height:6em; width:6em; font-size:0.2vw /*Will change icon size*/;}
+.circle-plus {height:6em; width:6em; font-size:0.15vw /*Will change icon size*/;}
 .circle-plus .circle {position: relative; width: 4.5em; height: 4.5em; border-radius: 100%; border: solid .8em #DFDAD7;}
 .circle-plus .circle .horizontal {position: absolute; background-color: #DFDAD7; width: 2.4em; height: .7em; top: 1.9em; left: 1.05em;}
 .circle-plus .circle .vertical {position: absolute; background-color: #DFDAD7; width: .7em; height: 2.4em; top: 1.05em; left: 1.9em;}
+
+.editfiles{
+    font-size: 1vw;
+    position: absolute;
+    left: 10px;
+    bottom:3px;
+}
+
+.notes{
+    position: absolute;
+    left:10%;
+    top:10%;
+    background: url(../images/background/notes.png) repeat;
+    width: 80%;
+    height: 80%;
+    font: normal 14px verdana;
+    line-height: 25px;
+    padding: 2px 10px;
+    border: solid 3px #222225;
+}
+
+.notesbuttonscontainer{
+    position: absolute;
+    right:10%;
+    bottom:11%;
+}
+
+.notesbuttons{
+    margin-left: 10px;
+}
