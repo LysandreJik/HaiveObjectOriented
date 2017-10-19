@@ -28,6 +28,7 @@ export class ProtocolConceptionController{
      */
 	constructor(){
 		gv.protocolConceptionController = this;
+        gv.protocolConceptionController.saveContainersDebug();
 	}
 
     /**
@@ -57,6 +58,15 @@ export class ProtocolConceptionController{
 
 	}
 
+	saveContainersDebug(){
+        let containers = gv.currentlySelectedHaive.getContainers();
+        console.log(containers);
+        gv.containersAtTimelineStart = [];
+        for(let i = 0; i < containers.length; i++){
+            gv.containersAtTimelineStart.push(containers[i].getClone());
+        }
+    }
+
     /**
      * Save the containers to the global variable "containersAtTimelineStart".
      */
@@ -68,7 +78,6 @@ export class ProtocolConceptionController{
 			gv.containersAtTimelineStart.push(containers[i].getClone());
 		}
 
-		console.log("Arrs : ", gv.containersAtTimelineStart);
 		gv.navbarModel.setActiveSection("Protocol Design");
 	}
 }

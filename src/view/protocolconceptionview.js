@@ -30,7 +30,7 @@ export class AddLiquids extends React.Component{
 		super(props);
 		this.state = {containerSelected:"none"};
 		gv.protocolConceptionView = this;
-		model = gv.ProtocolConceptionModel;
+		model = gv.protocolConceptionModel;
 	}
 
 	refresh(state, value){
@@ -112,17 +112,22 @@ class ContainersHover extends React.Component{
  * Component displayed when a user clicks on a Tip to add a liquid to it.
  */
 class PipetteTipsDialog extends React.Component{
+    constructor(props){
+        super(props);
+        this.changeSelectColor = this.changeSelectColor.bind(this);
+    }
+
 	componentDidMount(){
-	    const liquidTypeDialog = $("#liquidtype_pipettetipsdialog");
-        liquidTypeDialog.val(this.props.chip.getLiquid());
-        liquidTypeDialog.val(this.props.chip.getLiquidAmount());
+        $("#liquidtype_pipettetipsdialog").val(this.props.chip.getLiquid());
+        $("#liquidamount_pipettetipsdialog").val(this.props.chip.getLiquidAmount());
+
 		if(this.props.chip.getColor() != ""){
-            liquidTypeDialog.val(this.props.chip.getColor());
+            $("#pipettetipsdialogcolorselect").val(this.props.chip.getColor());
 			this.changeSelectColor();
 		}
 
 		this.props.chip.isViscous() ? "" : $("#v_A").trigger("click");
-		this.props.chip.getAmountUnit() == "uL" ? "" : $("#a25").trigger("click");
+		this.props.chip.getAmountUnit() == "uL" ? "" : $("#a50").trigger("click");
 
 		document.getElementById('content').addEventListener('click', this.props.keepFocus);
 
@@ -157,11 +162,11 @@ class PipetteTipsDialog extends React.Component{
 
 					<ul id="pipettetipsdialogunit" className="donate-now">
 					<li>
-						<input type="radio" id="a25" name="amount" onClick={function(){parent.props.chip.setAmountUnit("uL");console.log("Set amount unit to ul for", parent.props.chip)}}/>
+						<input type="radio" id="a25" name="amount" defaultChecked={parent.props.chip.getAmountUnit() == "uL"} onClick={function(){parent.props.chip.setAmountUnit("uL");console.log("Set amount unittyutyu to ul for", parent.props.chip)}}/>
 						<label className="labelmarginbottom" htmlFor="a25">uL</label>
 					</li>
 					<li>
-						<input type="radio" id="a50" name="amount" defaultChecked="true" onClick={function(){parent.props.chip.setAmountUnit("mL");console.log("Set amount unit to ml for", parent.props.chip)}}/>
+						<input type="radio" id="a50" name="amount" defaultChecked={parent.props.chip.getAmountUnit() == "mL"} onClick={function(){parent.props.chip.setAmountUnit("mL");console.log("Set amount unit to ml for", parent.props.chip)}}/>
 						<label className="labelmarginbottom" htmlFor="a50">mL</label>
 					</li>
 					</ul>
@@ -194,6 +199,7 @@ class PipetteTipsDialog extends React.Component{
 
 	changeSelectColor(){
 		const x = document.getElementById("pipettetipsdialogcolorselect").value;
+		console.log(x);
     	if(x == 'Orange'){
 			document.getElementById("pipettetipsdialogcolorselect").style.backgroundColor = "orange";
 			document.getElementById("pipettetipsdialogcolorselect").style.color = "white";
@@ -257,17 +263,14 @@ class PipetteTips extends React.Component{
 
 	mouseDown(e){
 		this.mouseIsDown = true;
-		console.log("Mouse down at "+e.pageX+" "+e.pageY);
 	}
 
 	mouseUp(e){
 		this.mouseIsDown = false;
-		console.log("Mouse up at "+e.pageX+" "+e.pageY);
 
 		if(e.target.id != "hexagonhover" && e.target.id != "tips" && e.target.id != "infobulle" && !$(e.target).parents("#pipettetipdialog").length && !$(e.target).parents("#tips").length && e.target.id != "pipettetipdialog"){
 			this.setNoneSelected();
 			window.location = "#_";
-			console.log(e.target.id);
 		}
 	}
 
@@ -281,7 +284,6 @@ class PipetteTips extends React.Component{
 		if(e.target.id != "hexagonhover" && e.target.id != "cthover" && e.target.id != "tips" && e.target.id != "infobulle" && !$(e.target).parents("#pipettetipdialog").length && !$(e.target).parents("#tips").length && e.target.id != "pipettetipdialog"){
 			this.setNoneSelected();
 			window.location = "#_";
-			console.log(e.target.id);
 		}
 	}
 

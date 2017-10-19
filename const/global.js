@@ -90,6 +90,7 @@ export var hexs = [
 ];
 
 export var containersAtTimelineStart = [];
+export var blueprintController;
 
 export var loginController;
 export var hoverview;

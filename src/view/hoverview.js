@@ -97,9 +97,15 @@ export class Hoverview extends React.Component{
 		setTimeout(function(){window.location="#wait"},10);
 	}
 
-	mergeGroup(){
-	    this.clearAll();
-	    this.setState({mergeGroup:true});
+    mergeGroup(){
+        this.clearAll();
+        this.setState({mergeGroup:true});
+        setTimeout(function(){window.location="#merge"},10);
+    }
+
+    renameGroup(){
+        this.clearAll();
+        this.setState({renameGroup:true});
         setTimeout(function(){window.location="#merge"},10);
     }
 
@@ -128,8 +134,12 @@ export class Hoverview extends React.Component{
 			return <TipSelect container={this.state.pipetting} selected={this.getPipettingSelector} that={this}/>;
 		}
 
-		if(this.state.mergeGroup == true){
-		    return <MergeGroup/>;
+        if(this.state.mergeGroup == true){
+            return <MergeGroup/>;
+        }
+
+        if(this.state.renameGroup == true){
+            return <MergeGroup rename={true}/>;
         }
 
 		if(this.state.wait != ""){
@@ -145,6 +155,7 @@ export class Hoverview extends React.Component{
  */
 class MergeGroup extends React.Component{
     render(){
+        let parent = this;
         return(
             <div className="lightbox" id="merge">
                 <div id="warning_div" className="pipettetipsdialog warning">
@@ -153,7 +164,14 @@ class MergeGroup extends React.Component{
                         <span id="waitspan">Please enter a name for this block</span>
                         <input id="wait_textfield" type="text" name="field1" required="true"/>
                     </label>
-                    <button onClick={() => gv.protocolDesignController.defineSingleBlock($("#wait_textfield").val())}>Ok</button>
+                    <button onClick={function(){
+                        if(parent.props.rename == true){
+                            gv.protocolDesignController.renameMegablock($("#wait_textfield").val())
+                        }else{
+                            gv.protocolDesignController.defineSingleBlock($("#wait_textfield").val())
+                        }
+
+                    }}>Ok</button>
                     <button onClick={function(){window.location="#_"}}>Cancel</button>
                 </div>
             </div>

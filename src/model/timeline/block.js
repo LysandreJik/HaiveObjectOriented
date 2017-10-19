@@ -121,8 +121,29 @@ export class Block{
      */
     addBlocks(blocks){
         for(let i = 0; i < blocks.length; i++){
-            this.addBlock(blocks[i]);
+            this.addBlock(blocks[i].getClone());
         }
+    }
+
+    /**
+     * MEGABLOCK ONLY
+     * Returns every block inside the megablock. If a block inside this megablock is another megablock, it will apply this function again to get the blocks inside the latter megablock.
+     */
+    getBlocksRecursively(){
+        let blocks = [];
+
+        for(let i = 0; i < this.getBlocks().length; i++){
+            if(this.getBlocks()[i].getType() != "megablock"){
+                blocks.push(this.getBlocks()[i]);
+            }else{
+                const megablock = this.getBlocks()[i].getBlocksRecursively()
+                for(let j = 0; j < megablock.length; j++){
+                    blocks.push(megablock[j]);
+                }
+            }
+        }
+
+        return blocks;
     }
 
     /**

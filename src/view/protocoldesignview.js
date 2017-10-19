@@ -341,6 +341,7 @@ class ContextMenu extends React.Component{
 				<div id='snaptothis_context'>
 					<ul id='items'>
 						<li className={blueprintController.blockCopyTimeline != undefined ? "itemscontext" : "droppedblocks_context_greyed_out"} onClick={blueprintController.paste}>Paste</li>
+                        <li className={blueprintController.blocksCopyTimeline != undefined ? "itemscontext" : "droppedblocks_context_greyed_out"} onClick={blueprintController.pasteGroup}>Paste group</li>
 					</ul>
 				</div>
 			);
@@ -351,6 +352,7 @@ class ContextMenu extends React.Component{
 					<ul id='items'>
 						<li className={"itemscontext"} onClick={blueprintController.copyDroppedBlock}>Copy</li>
 						<li className={blueprintController.blockCopyTimeline != undefined ? "itemscontext" : "droppedblocks_context_greyed_out"} onClick={blueprintController.paste}>Paste</li>
+                        <li className={blueprintController.blocksCopyTimeline != undefined ? "itemscontext" : "droppedblocks_context_greyed_out"} onClick={blueprintController.pasteGroup}>Paste group</li>
 						<li className={"itemscontext"} onClick={blueprintController.deleteDroppedBlock}>Delete</li>
 						<li className={"itemscontext"} onClick={blueprintController.removeDroppedBlock}>Delete and remove space</li>
 						<li className={"itemscontext"} onClick={blueprintController.modifyDroppedBlock}>Modify</li>

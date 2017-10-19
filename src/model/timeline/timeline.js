@@ -240,14 +240,15 @@ export class Timeline{
      * TODO: This method is starting to be quite big. It should be split. A lot of errors and warnings are missing as well.
      */
 	setErrors(){
-		for(let i = 0; i < this.blocks.length; i++){
+        const extendedTimeline = this.getExtendedTimeline();
+		for(let i = 0; i < extendedTimeline.length; i++){
 
-			if(this.blocks[i].getType() == "deposit liquid" && this.blocks[i].getLiquidQuantity() != undefined){
-				this.blocks[i].clearError();
+			if(extendedTimeline[i].getType() == "deposit liquid" && extendedTimeline[i].getLiquidQuantity() != undefined){
+				extendedTimeline[i].clearError();
 
-                let quantity = this.blocks[i].getLiquidQuantity()[0];
+                let quantity = extendedTimeline[i].getLiquidQuantity()[0];
                 let heldQuantity = +this.getCurrentlyHeldLiquidQuantity(i)[0];
-				if(this.blocks[i].getLiquidQuantity()[1] == "mL"){
+				if(extendedTimeline[i].getLiquidQuantity()[1] == "mL"){
 					quantity *= 1000;
 				}
 
@@ -256,67 +257,89 @@ export class Timeline{
 				}
 
 				if(heldQuantity < quantity){
-					this.blocks[i].callError();
+					extendedTimeline[i].callError();
 					if(this.getCurrentlyHeldLiquidQuantity(i)[2] != ""){
-						this.blocks[i].setErrorText(this.getCurrentlyHeldLiquidQuantity(i)[2]);
+						extendedTimeline[i].setErrorText(this.getCurrentlyHeldLiquidQuantity(i)[2]);
 					}else{
-						this.blocks[i].setErrorText('Not enough liquid to deposit !');
+						extendedTimeline[i].setErrorText('Not enough liquid to deposit !');
 					}
 				}else if(heldQuantity == quantity){
-					this.blocks[i].callWarning();
-					this.blocks[i].setWarningText("Just enough liquid !");
+					extendedTimeline[i].callWarning();
+					extendedTimeline[i].setWarningText("Just enough liquid !");
 				}
-			}else if(this.blocks[i].getType() == "deposit tip"){
-				this.blocks[i].clearError();
-				this.blocks[i].clearWarning();
+			}else if(extendedTimeline[i].getType() == "deposit tip"){
+				extendedTimeline[i].clearError();
+				extendedTimeline[i].clearWarning();
 
                 let getTipIndex = this.getNthIndexOf("get tip", i);
                 let depositTipIndex = this.getNthIndexOf("deposit tip", i-1);
 
 				if((depositTipIndex > getTipIndex && depositTipIndex != i) || getTipIndex == -1){
-					this.blocks[i].callError();
-					this.blocks[i].setErrorText("No tip selected !");
-				}else if(this.blocks[i].getContainer() != undefined && this.getBlock(getTipIndex).getContainer() != undefined){
-					if(this.getBlock(getTipIndex).getContainer().getType() != this.blocks[i].getContainer().getType()){
-						this.blocks[i].callWarning();
-						this.blocks[i].setWarningText("Wrong container selected !");
+					extendedTimeline[i].callError();
+					extendedTimeline[i].setErrorText("No tip selected !");
+				}else if(extendedTimeline[i].getContainer() != undefined && this.getBlock(getTipIndex).getContainer() != undefined){
+					if(this.getBlock(getTipIndex).getContainer().getType() != extendedTimeline[i].getContainer().getType()){
+						extendedTimeline[i].callWarning();
+						extendedTimeline[i].setWarningText("Wrong container selected !");
 					}
 
 				}
-			}else if(this.blocks[i].getType() == "get tip"){
-				this.blocks[i].clearError();
+			}else if(extendedTimeline[i].getType() == "get tip"){
+				extendedTimeline[i].clearError();
 
                 let getTipIndex = this.getNthIndexOf("get tip", i-1);
                 let depositTipIndex = this.getNthIndexOf("deposit tip", i);
 
 
 				if(getTipIndex > depositTipIndex && getTipIndex != i){
-					this.blocks[i].callError();
-					this.blocks[i].setErrorText("Tip already selected !");
+					extendedTimeline[i].callError();
+					extendedTimeline[i].setErrorText("Tip already selected !");
 				}
-			}else if(this.blocks[i].getType() == "get liquid" && this.blocks[i].getTip() != undefined){
-				this.blocks[i].clearError();
-				this.blocks[i].clearWarning();
+			}else if(extendedTimeline[i].getType() == "get liquid" && extendedTimeline[i].getTip() != undefined){
+				extendedTimeline[i].clearError();
+				extendedTimeline[i].clearWarning();
 
                 let startIndex = this.getNthIndexOf("get tip", i);
                 let droppedTip = this.getNthIndexOf("deposit tip", i);
 
-				if(+this.blocks[i].getTip().getLiquidAmount() < 0){
-					this.blocks[i].callError();
-					this.blocks[i].setErrorText("Not enough liquid !");
-				}else if(this.blocks[i].getTip().getLiquidAmount() == 0){
-					this.blocks[i].callWarning();
-					this.blocks[i].clearError();
-					this.blocks[i].setWarningText("Just enough liquid !");
+				if(+extendedTimeline[i].getTip().getLiquidAmount() < 0){
+					extendedTimeline[i].callError();
+					extendedTimeline[i].setErrorText("Not enough liquid !");
+				}else if(extendedTimeline[i].getTip().getLiquidAmount() == 0){
+					extendedTimeline[i].callWarning();
+					extendedTimeline[i].clearError();
+					extendedTimeline[i].setWarningText("Just enough liquid !");
 				}
 
 				if(droppedTip > startIndex || startIndex == -1){
-					this.blocks[i].callError();
-					this.blocks[i].setErrorText("No tip selected !");
+					extendedTimeline[i].callError();
+					extendedTimeline[i].setErrorText("No tip selected !");
 				}
 			}
 		}
 	}
+
+
+    /**
+     * Returns a timeline that contains ALL of the blocks, spread out, ignoring the "megablocks". It will look inside the megablocks and give an index to those blocks.
+     * For example, if the timeline was : 'get tip', 'megablock:{'get liquid', 'wait'}', 'deposit tip", it would return : [get tip, get liquid, wait, deposit tip], with each item being a Block object.
+     */
+	getExtendedTimeline(){
+        let blocks = [];
+
+        for(let i = 0; i < this.getBlocks().length; i++){
+            if(this.getBlocks()[i].getType() != "megablock"){
+                blocks.push(this.getBlocks()[i]);
+            }else{
+                const megablock = this.getBlocks()[i].getBlocksRecursively()
+                for(let j = 0; j < megablock.length; j++){
+                    blocks.push(megablock[j]);
+                }
+            }
+        }
+
+        return blocks;
+    }
 
     /**
      * Gets the tip currently held. If there is no tip held, returns null.
@@ -325,16 +348,19 @@ export class Timeline{
      * @returns {*} String container type.
      */
 	getCurrentlyHeldTipContainer(n){
+	    const extendedTimeline = this.getExtendedTimeline();
+	    console.log("Extended timeline :",extendedTimeline);
+
 		if(n == undefined){
-			n = this.blocks.length-1;
+			n = extendedTimeline.length-1;
 		}
 
         let startIndex = this.getNthIndexOf("get tip", n);
 
-		if(this.blocks[startIndex] == undefined){
+		if(extendedTimeline[startIndex] == undefined){
 			return null;
 		}else{
-			return this.blocks[startIndex].getContainer().getType();
+			return extendedTimeline[startIndex].getContainer().getType();
 		}
 	}
 
@@ -346,8 +372,9 @@ export class Timeline{
      * @returns {*} Array [liquidQuantity (int), liquidQuantityUnit (String:"uL" or "mL")
      */
 	getCurrentlyHeldLiquidQuantity(n){
+        const extendedTimeline = this.getExtendedTimeline();
 		if(n == undefined){
-			n = this.blocks.length-1;
+			n = extendedTimeline.length-1;
 		}
 
         let liquids = 0;
@@ -364,20 +391,20 @@ export class Timeline{
 		}
 
 		for (let i = startIndex; i < n; i++) {
-			if(this.blocks[i].getType() == "get liquid"){
-				if(this.blocks[i].getLiquidQuantity()[1] == "mL"){
-					liquids += this.blocks[i].getLiquidQuantity()[0]*1000;
+			if(extendedTimeline[i].getType() == "get liquid"){
+				if(extendedTimeline[i].getLiquidQuantity()[1] == "mL"){
+					liquids += extendedTimeline[i].getLiquidQuantity()[0]*1000;
 				}else{
-					liquids += this.blocks[i].getLiquidQuantity()[0];
+					liquids += extendedTimeline[i].getLiquidQuantity()[0];
 				}
 			}
 
-			if(this.blocks[i].getType() == "deposit liquid"){
-				if(this.blocks[i].getLiquidQuantity() != undefined){
-					if(this.blocks[i].getLiquidQuantity()[1] == "mL"){
-						liquids -= this.blocks[i].getLiquidQuantity()[0]*1000;
+			if(extendedTimeline[i].getType() == "deposit liquid"){
+				if(extendedTimeline[i].getLiquidQuantity() != undefined){
+					if(extendedTimeline[i].getLiquidQuantity()[1] == "mL"){
+						liquids -= extendedTimeline[i].getLiquidQuantity()[0]*1000;
 					}else{
-						liquids -= this.blocks[i].getLiquidQuantity()[0];
+						liquids -= extendedTimeline[i].getLiquidQuantity()[0];
 					}
 				}
 			}
@@ -397,8 +424,9 @@ export class Timeline{
      * @returns {*} Int, index of closest inferior block.
      */
 	getNthIndexOf(type, n){
+        const extendedTimeline = this.getExtendedTimeline();
 		for (let i = n; i >= 0 ; i--) {
-			if(this.blocks[i].getType() == type){
+			if(extendedTimeline[i].getType() == type){
 				return i;
 			}
 		}
@@ -412,8 +440,9 @@ export class Timeline{
      * @returns {boolean} Return true if liquid is held, false otherwise.
      */
 	isLiquidHeld(n){
+        const extendedTimeline = this.getExtendedTimeline();
 		if(n == undefined){
-			n = this.blocks.length;
+			n = extendedTimeline.length;
 		}
 
         let liquids = 0;
@@ -430,19 +459,19 @@ export class Timeline{
 		}
 
 		for (let i = startIndex; i < n; i++) {
-			if(this.blocks[i].getType() == "get liquid"){
-				if(this.blocks[i].getLiquidQuantity()[1] == "mL"){
-					liquids += this.blocks[i].getLiquidQuantity()[0]*1000;
+			if(extendedTimeline[i].getType() == "get liquid"){
+				if(extendedTimeline[i].getLiquidQuantity()[1] == "mL"){
+					liquids += extendedTimeline[i].getLiquidQuantity()[0]*1000;
 				}else{
-					liquids += this.blocks[i].getLiquidQuantity()[0];
+					liquids += extendedTimeline[i].getLiquidQuantity()[0];
 				}
 			}
 
-			if(this.blocks[i].getType() == "deposit liquid"){
-				if(this.blocks[i].getLiquidQuantity()[1] == "mL"){
-					liquids -= this.blocks[i].getLiquidQuantity()[0]*1000;
+			if(extendedTimeline[i].getType() == "deposit liquid"){
+				if(extendedTimeline[i].getLiquidQuantity()[1] == "mL"){
+					liquids -= extendedTimeline[i].getLiquidQuantity()[0]*1000;
 				}else{
-					liquids -= this.blocks[i].getLiquidQuantity()[0];
+					liquids -= extendedTimeline[i].getLiquidQuantity()[0];
 				}
 			}
 		}

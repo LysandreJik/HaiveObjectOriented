@@ -164,10 +164,12 @@ export class ProtocolDesignController{
      */
     mouseDown(e){
 	    this.mouseIsDown = true;
+
 	    if((e.target.id == "blueprint" || $(e.target).parents("#blueprint").length) && (e.target.id != "selectionOptions" && e.target.id != "selectionOption")){
             gv.protocolDesignModel.clearSelection();
+            gv.protocolDesignBlueprintcontentView.hideOptions();
         }
-        setTimeout(function(){gv.protocolDesignBlueprintcontentView.hideOptions();}, 100);
+
         gv.protocolDesignView.refresh();
     }
 
@@ -209,6 +211,10 @@ export class ProtocolDesignController{
         window.location = "#_";
 
         gv.protocolDesignView.refresh();
+    }
+
+    renameMegablock(title){
+        gv.blueprintController.getSelectedItemContextMenu();
     }
 
     /**
@@ -275,7 +281,7 @@ export class ProtocolDesignController{
 				text:"GET LIQUID :\u00a0"+tip.getLiquid(),
 				type:"get liquid",
 				tip:tip,
-				liquidQuantity:[currentQuantity, gv.currentlySelectedDimension]
+				liquidQuantity:[currentQuantity/1000, gv.currentlySelectedDimension]
 			}), this.timeline.getIndexOf(this.droppedBlock));
 			let q = maxQuantity-currentQuantity;
 			if(q / 1000 > 0){

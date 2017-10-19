@@ -80,20 +80,24 @@ export class ProtocolConceptionModel{
      */
 	setLiquid(tip, func){
 	    const liquidTypeVal = $('#liquidtype_pipettetipsdialog').val();
-	    const liquidAmountPipette = $("#liquidamount_pipettetipsdialogspan");
+
+        const liquidAmountPipette = $('#liquidamount_pipettetipsdialog').val();
+	    const textField = $("#liquidamount_pipettetipsdialogspan");
+
+	    console.log(liquidTypeVal, textField);
 
 		//Checks if the liquid name is specified and if the liquid amount contains only digits and 0 or 1 comma or dot;
 		if(liquidTypeVal != "" && !liquidTypeVal.includes(':')){
-			if(/^\d*[,.]\d+$/.test(liquidTypeVal) || /^\d+$/.test(liquidTypeVal)){
+			if(/^\d*[,.]\d+$/.test(liquidAmountPipette) || /^\d+$/.test(liquidAmountPipette)){
 				tip.setLiquid(liquidTypeVal);
-				tip.setLiquidAmount(liquidTypeVal);
+				tip.setLiquidAmount(liquidAmountPipette);
 				tip.setColor(document.getElementById("pipettetipsdialogcolorselect").value);
 				func();
 			}else{
-                liquidAmountPipette.text("Amount of liquid - Please enter a valid amount");
+                textField.text("Amount of liquid - Please enter a valid amount");
 			}
 		}else{
-            liquidAmountPipette.text("Type of liquid - Please enter a name");
+            textField.text("Type of liquid - Please enter a name");
 		}
 	}
 
