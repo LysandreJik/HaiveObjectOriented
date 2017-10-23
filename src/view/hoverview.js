@@ -410,15 +410,15 @@ class Pipetting extends React.Component{
 	render(){
         const parent = this;
 
-        let type = "mL";
+        let pos = "ag";
         $("#depositliquid_name").val(parent.props.tip.getLiquid());
 		return(
 
 			<div className="lightbox" id={"pipetting"}>
-				<form id="pipettetipdialog" className="pipettetipsdialog warning" method="post">
+				<form id="pipettetipdialog" className="pipettetipsdialog pipettingdialog warning" method="post">
 
 					<label htmlFor="field1">
-						<span id="liquidtype_pipettetipsdialogspan">Specify a new name for the liquid</span><input id="depositliquid_name" type="text" name="field1" required="true" defaultValue={parent.props.tip.getLiquid()}/>
+						<span id="liquidnamepipetting">Specify a new name for the liquid</span><input style={{"width":"20vw"}} id="depositliquid_name" type="text" name="field1" required="true" defaultValue={parent.props.tip.getLiquid()}/>
 					</label>
 
 					<ul className="donate-now biglist">
@@ -432,28 +432,44 @@ class Pipetting extends React.Component{
 					</li>
 					</ul>
 
-					<label htmlFor="field2">
-						<span id="liquidamount_pipettetipsdialogspan">{"Amount of liquid to add (Max:"+gv.protocolDesignController.timeline.getCurrentlyHeldLiquidQuantity()[0]+gv.protocolDesignController.timeline.getCurrentlyHeldLiquidQuantity()[1]+")"}</span><input id="depositliquid_amount" type="text" name="field2" required="true" />
+                    <label htmlFor="field2">
+                        <span id="tippositionpipetting">{"Position of the tip while pipetting (in mm)"}</span><input style={{"width":"20vw"}} id="tippos_val" type="text" name="field2" required="true" />
 
-						<ul id="pipettetipsdialogunit" className="donate-now">
-						<li>
-							<input type="radio" id="a25" name="amount" onClick={function(){type="uL";console.log("Set amount unit to ul for", parent.props.tip)}}/>
-							<label className="labelmarginbottom" htmlFor="a25">uL</label>
-						</li>
-						<li>
-							<input type="radio" id="a50" name="amount" defaultChecked="true" onClick={function(){type="mL";console.log("Set amount unit to ml for", parent.props.tip)}}/>
-							<label className="labelmarginbottom" htmlFor="a50">mL</label>
-						</li>
-						</ul>
-					</label>
+                        <ul id="pipettetipsdialogunit" className="donate-now">
+                            <li style={{"width":"130px"}}>
+                                <input type="radio" id="bs" name="amount" onClick={function(){pos="bs";}}/>
+                                <label className="labelmarginbottom" htmlFor="bs">BELOW SURFACE</label>
+                            </li>
+                            <li style={{"width":"130px"}}>
+                                <input type="radio" id="ag" name="amount" defaultChecked="true" onClick={function(){pos="ag";}}/>
+                                <label className="labelmarginbottom" htmlFor="ag">ABOVE GROUND</label>
+                            </li>
+                        </ul>
+                    </label>
+
+                    <label htmlFor="field3">
+                        <span id="nprcent">{"Redial pipette to n% of total liquid. n = "}</span><input style={{"width":"20vw"}} id="nprcent_val" type="text" name="field2" required="true" />
+                        <span id="xprcent">{"Mix with x% of total liquid. x = "}</span><input style={{"width":"20vw"}} id="xprcent_val" type="text" name="field2" required="true" />
+                    </label>
 
 					<label>
 						<input type="button" value="Validate" onClick={
 								function(){
-									if(/^\d*[,.]\d+$/.test($('#depositliquid_amount').val()) || /^\d+$/.test($('#depositliquid_amount').val())){
-										gv.protocolDesignController.definePipetting(parent, type);
+                                    let n = $('#nprcent_val').val();
+                                    let x = $('#xprcent_val').val();
+                                    
+									if((/^\d*[,.]\d+$/.test(n) || /^\d+$/.test(n)) && n > 0 && n < 100){
+                                        if((/^\d*[,.]\d+$/.test(x) || /^\d+$/.test(x)) && x > 0 && x < 100){
+                                            if(/^\d*[,.]\d+$/.test($('#tippos_val').val()) || /^\d+$/.test($('#tippos_val').val())){
+                                                gv.protocolDesignController.definePipetting(parent, pos);
+                                            }else{
+                                                $('#tippos_val').val("Only numbers are accepted");
+                                            }
+                                        }else{
+                                            $('#xprcent_val').val("Only numbers between 0 and 100 are accepted");
+                                        }
 									}else{
-										$('#liquidamount_pipettetipsdialogspan').val("Amount of liquid to add - Only numbers are accepted")
+										$('#nprcent_val').val("Only numbers between 0 and 100 are accepted");
 									}
 								}
 							}/>{"\u00a0\u00a0\u00a0"}

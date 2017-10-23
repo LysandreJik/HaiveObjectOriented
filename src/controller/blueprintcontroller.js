@@ -256,6 +256,7 @@ export class BlueprintController{
 	        throw new Error("Need at least one object selected !");
         }
         console.log("Called");
+        gv.protocolDesignBlueprintcontentView.resetBlocks();
         gv.hoverview.mergeGroup();
     }
 
@@ -272,6 +273,7 @@ export class BlueprintController{
 
         gv.protocolDesignBlueprintcontentView.hideOptions();
         this.controller.timeline.removeBlock(blockObject.getIndex());
+        gv.protocolDesignBlueprintcontentView.resetBlocks();
         gv.protocolDesignView.refresh();
     }
 

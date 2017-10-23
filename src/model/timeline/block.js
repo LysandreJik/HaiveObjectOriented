@@ -48,6 +48,7 @@ export class Block{
 			this.liquidQuantity = args.liquidQuantity;
 			this.dirtyingTip = args.dirtyingTip;
 			this.comment = args.comment;
+			this.args = args.args;
 		}
 
 		if(this.speed == undefined){
@@ -86,6 +87,22 @@ export class Block{
 
 		this.selected = false;
 	}
+
+    /**
+     * Get the "args" variable
+     * @returns {*}
+     */
+	getArgs(){
+	    return this.args;
+    }
+
+    /**
+     * Sets the "args" variable
+     * @param args
+     */
+    setArgs(args){
+	    this.args = args;
+    }
 
     /**
      * Returns true if the block is selectable, false otherwise. This prevents user from making multiple copies of the start and end blocks.
@@ -354,7 +371,8 @@ export class Block{
 			error:this.error,
 			warning:this.warning,
             blocks:this.blocks,
-            comment:this.comment
+            comment:this.comment,
+            args:this.args
 		});
 	}
 
@@ -379,27 +397,45 @@ export class Block{
      */
 	getExtendedText(){
         let text = [];
-        text.push(this.getText());
-        text.push("Type of the operation : "+this.getType());
+        text.push([this.getText()]);
+        text.push(["Type of the operation : "+this.getType()]);
         if(this.getComment() != undefined && this.getComment() != ""){
-            text.push("Comment : "+this.getComment());
-        }else{
-            text.push("This block is not commented.");
+            text.push(["Comment : "+this.getComment()]);
         }
-
         if(this.getType() == "get tip"){
-            text.push("Container : "+this.getContainer().getType());
-            text.push("Container name : "+this.getContainer().getName());
+            text.push(["Container : "+this.getContainer().getType()]);
+            text.push(["Container name : "+this.getContainer().getName()]);
         }else if(this.getType() == "dsposit tip"){
-            text.push("Container : "+this.getContainer().getType());
-            text.push("Container name : "+this.getContainer().getName());
+            text.push(["Container : "+this.getContainer().getType()]);
+            text.push(["Container name : "+this.getContainer().getName()]);
         }else if(this.getType() == "get liquid"){
-            text.push("Container : "+this.getContainer().getType());
-            text.push("Container name : "+this.getContainer().getName());
-            text.push("Tip : "+this.getTip().getX()+":"+this.getTip().getY());
-            text.push("Liquid : "+this.getTip().getLiquid()+", "+this.getLiquidQuantity()[0]+this.getLiquidQuantity()[1]);
+            text.push(["Container : "+this.getContainer().getType()]);
+            text.push(["Container name : "+this.getContainer().getName()]);
+            text.push(["Tip : "+this.getTip().getX()+":"+this.getTip().getY()]);
+            text.push(["Liquid : "+this.getTip().getLiquid()+", "+this.getLiquidQuantity()[0]+this.getLiquidQuantity()[1]]);
+        }else if(this.getType() == "pipetting"){
+            if(this.args.position[1] == "bs"){
+                text.push(["Getting liquid from below the surface : "+this.args.position[0]+" mm."]);
+            }else{
+                text.push(["Getting liquid from above the ground : "+this.args.position[0]+" mm."]);
+            }
+            text.push(["Redial pipette to "+this.args.n+"% of total liquid."]);
+            text.push(["Using "+this.args.x+"% of the liquid to mix it up."]);
+        }else if(this.getType() == "megablock"){
+            for(let i = 0; i < this.getBlocks().length; i++){
+                let textTemp = [];
+                textTemp.push(this.getBlocks()[i].getText());
+
+                if(this.getBlocks()[i].getComment() != undefined){
+                    textTemp.push(this.getBlocks()[i].getComment());
+                }
+
+                text.push("");
+                text.push(textTemp);
+            }
         }
 
+        console.log(text);
         return text;
 
     }

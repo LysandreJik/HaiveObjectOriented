@@ -163,9 +163,10 @@ export class ProtocolDesignController{
      * @param e
      */
     mouseDown(e){
-	    this.mouseIsDown = true;
+
 
 	    if((e.target.id == "blueprint" || $(e.target).parents("#blueprint").length) && (e.target.id != "selectionOptions" && e.target.id != "selectionOption")){
+            this.mouseIsDown = true;
             gv.protocolDesignModel.clearSelection();
             gv.protocolDesignBlueprintcontentView.hideOptions();
         }
@@ -213,6 +214,11 @@ export class ProtocolDesignController{
         gv.protocolDesignView.refresh();
     }
 
+    /**
+     * TODO
+     * Method called to rename the megablock.
+     * @param title
+     */
     renameMegablock(title){
         gv.blueprintController.getSelectedItemContextMenu();
     }
@@ -532,6 +538,35 @@ export class ProtocolDesignController{
      * @param type is the unit of the liquid quantity (uL or mL)
      */
 	definePipetting(parent, type){
+
+	    window.locaiton = "#_";
+	    let tip = parent.props.tip;
+
+	    tip.setLiquid($("#depositliquid_name").val());
+	    let qty = this.timeline.getCurrentlyHeldLiquidQuantity(gv.protocolDesignController.droppedBlock.getIndex());
+	    console.log("Index : ", gv.protocolDesignController.droppedBlock.getIndex());
+	    console.log("Qty : ", qty);
+	    tip.addLiquid(qty[0], qty[1]);
+	    tip.setColor(document.getElementById("pipettetipsdialogcolorselect").value);
+
+        this.timeline.setBlock(new Block({
+            text:"PIPETTING :\u00a0"+parent.props.tip.getLiquid(),
+            type:"pipetting",
+            tip:parent.props.tip,
+            liquidQuantity:[qty[0], qty[1]],
+            args:{
+                position:[$('#tippos_val').val(), type],
+                n:$('#nprcent_val').val(),
+                x:$('#xprcent_val').val()
+            }
+        }), this.timeline.getIndexOf(parent.props.block));
+
+	    gv.protocolDesignView.refresh();
+
+	    this.lightenLiquidContainers();
+	    this.getSpeed();
+
+	    /*
 		let emptyTip = true;
 		if(parent.props.tip.getLiquidAmount() == 0 || parent.props.tip.getLiquidAmount() == ""){
 			emptyTip = false;
@@ -552,7 +587,7 @@ export class ProtocolDesignController{
 			dirtyingTip:!emptyTip
 		}), this.timeline.getIndexOf(parent.props.block));
 		this.lightenLiquidContainers();
-		this.getSpeed();
+		this.getSpeed();*/
 	}
 
 

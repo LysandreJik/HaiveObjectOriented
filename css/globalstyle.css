@@ -165,13 +165,10 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 .designmegablockdropped{
     position: relative;
-    left:50%;
     width:8vw;
     height:12vh;
     background-color: #3B3F48;
     border: 0.2vw solid #53687E;
-    transform: translateX(-50%);
-
     margin-top:1vw;
     margin-bottom: 1vw;
     text-align: center;

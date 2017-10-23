@@ -121,7 +121,7 @@ export class ProtocolDesign extends React.Component{
 				<section className="scrollable wrapper">
 					<div id="maincontent" className="row">
 
-						<Menu/>
+
 						<ContainersPage blockDropped={controller.clickOnContainer.bind(this)} disabled={this.state.disabled}/>
 						<BlueprintContent warning={this.props.warning} blockDropped={controller.blockDropped.bind(this)}/>
                         <span className={"startblueprint"}>START</span>
@@ -129,6 +129,7 @@ export class ProtocolDesign extends React.Component{
 						<BlockStore />
 						<Hoverview />
                         <RunInterface/>
+                        <Menu/>
 						{this.getSpeedSelector()}
 					</div>
 				</section>
@@ -155,7 +156,7 @@ class Menu extends React.Component{
 		return(
 			<div className="menu">
 				<button className="menuitem" onClick={gv.protocolDesignController.createNewTimeline}>New</button>
-				<button className="menuitem">Save</button>
+				<button className="menuitem" onClick={gv.protocolDesignBlueprintcontentView.resetBlocks}>Save</button>
 				<button className="menuitem">Open</button>
 				<button className="menuitem" onClick={fileManagement.export}>Export</button>
 			</div>
@@ -224,7 +225,7 @@ class ContainersPage extends React.Component{
 class BlueprintContent extends React.Component{
 	constructor(props){
 		super(props);
-		this.state={updated:false, show:false};
+		this.state={updated:false, show:false, resetBlocks:false};
 		gv.protocolDesignBlueprintcontentView = this;
 
 
@@ -232,6 +233,8 @@ class BlueprintContent extends React.Component{
 		this.hideRetangle = this.hideRetangle.bind(this);
 		this.showOptions = this.showOptions.bind(this);
 		this.hideOptions = this.hideOptions.bind(this);
+		this.resetResetBlocks = this.resetResetBlocks.bind(this);
+		this.resetBlocks = this.resetBlocks.bind(this);
 	}
 
 	componentDidMount(){
@@ -270,17 +273,24 @@ class BlueprintContent extends React.Component{
         this.setState({options:false});
     }
 
+    resetBlocks(){
+        console.log("Set ultimate parent state to ", this.state.resetBlocks);
+        this.setState({resetBlocks:this.resetResetBlocks});
+        console.log("Set ultimate parent state to ", this.state.resetBlocks);
+
+    }
+
+    resetResetBlocks(){
+        this.setState({resetBlocks:false});
+    }
+
 	render(){
 		return(
 			<div id="blueprint" className="gridcontent blueprint">
-				<SnappedItems/>
+				<SnappedItems resetBlocks={this.state.resetBlocks}/>
 				<ContextMenu context="snaptothis"/>
 				<ContextMenu context="blueprintdroppedblock"/>
-				<div id="cntnrunavailable">
-					<ul id="itemsunavailable">
-						<li>No possible action</li>
-					</ul>
-				</div>
+
                 {this.state.show != false ? <SelectingSquare pos={this.state.show}/> : ""}
                 {this.state.options == true ? <SelectionOptions/> : ""}
 
@@ -294,10 +304,11 @@ class BlueprintContent extends React.Component{
  */
 class SnappedItems extends React.Component{
 	render(){
+	    const parent = this;
 		return (
 			<div id={"snappeditems"}>
 				  {controller.timeline.getBlocks().map(function(block, index){
-					  return block.getType() != "empty" ? <Block id={"dropped_"+index} key={index} block={block} dropped={true} openedContextMenu={blueprintController.openedContextMenu}/> : <SnapSpaceNoMargin id={index} key={index} openedContextMenu={blueprintController.openedContextMenu}/>;
+					  return block.getType() != "empty" ? <Block resetBlocks={parent.props.resetBlocks} id={"dropped_"+index} key={index} block={block} dropped={true} openedContextMenu={blueprintController.openedContextMenu}/> : <SnapSpaceNoMargin id={index} key={index} openedContextMenu={blueprintController.openedContextMenu}/>;
 				  })}
 			</div>
 		);
@@ -360,7 +371,7 @@ class ContextMenu extends React.Component{
 						<li className={"itemscontext"} onClick={blueprintController.deleteDroppedBlock}>Delete</li>
 						<li className={"itemscontext"} onClick={blueprintController.removeDroppedBlock}>Delete and remove space</li>
 						<li className={"itemscontext"} onClick={blueprintController.modifyDroppedBlock}>Modify</li>
-                        {blockObject != undefined ? (blockObject.getType() == "megablock" ? <li onClick={blueprintController.splitMegablock}>Split into multiple blocks</li> : "") : ""}
+                        <li className={blockObject != undefined ? (blockObject.getType() == "megablock" ? "itemscontext" : "droppedblocks_context_greyed_out") : "droppedblocks_context_greyed_out"} onClick={blueprintController.splitMegablock}>Split into multiple blocks</li>
 					</ul>
 				</div>
 			);

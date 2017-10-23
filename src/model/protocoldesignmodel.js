@@ -185,7 +185,7 @@ export class ProtocolDesignModel{
 	protocolDesignInit(){
         const containers = gv.currentlySelectedHaive.getContainers();
 
-        $(document).bind("contextmenu", this.contextMenu);
+        //$(document).bind("contextmenu", this.contextMenu);
 
 		this.containerContents = [[], [], [], [], [], []];
 		gv.dropped_blocks = ["","",""];

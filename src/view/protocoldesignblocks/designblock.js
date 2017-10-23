@@ -37,11 +37,23 @@ export class Block extends React.Component{
         }
 	}
 
+	componentDidUpdate(){
+	    console.log("Reset blocks ",this.props.resetBlocks);
+	    if(this.props.resetBlocks != false && this.props.resetBlocks != undefined){
+	        if(this.state.big == true){
+	            this.hideFullInfo();
+	            this.props.resetBlocks();
+            }
+        }
+    }
+
 	contextMenu(e){
 		e.preventDefault();
+        this.props.openedContextMenu("designblock_"+this.props.id);
+        gv.protocolDesignView.refresh();
+
 		$("#droppedblocks_context").css("left",e.pageX);
 		$("#droppedblocks_context").css("top",e.pageY);
-		this.props.openedContextMenu("designblock_"+this.props.id);
 		// $("#droppedblocks_context").hide(100);
 		$("#droppedblocks_context").fadeIn(0,startFocusOut());
 	}
@@ -73,7 +85,19 @@ export class Block extends React.Component{
 				<span className="designblocktext" style={{"color":this.props.block.getForegroundColor()}}>
 					{
 					    this.props.block.getExtendedText().map(function(text, index){
-                        return <div key={index}><span>{text}</span><br></br></div>
+					        console.log(text, text.length);
+					        if(text.length > 1){
+					            return(
+					                <div className={"bigblocksmallblock"} key={index}>
+                                        {text.map(function(textTemp, index2){
+                                            return <div key={index2}><span>{textTemp}</span></div>
+                                        })}
+                                    </div>
+                                );
+                            }else{
+                                return <div key={index}><span>{text}</span><br></br></div>
+                            }
+
                         })
 					}
 				</span>

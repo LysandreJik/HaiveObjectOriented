@@ -16,6 +16,11 @@
 	pointer-events: all;
 }
 
+.pipettingdialog{
+    width: 70vw;
+    max-width: 500px;
+}
+
 .pipettetipsdialog input,
 .pipettetipsdialog label
 {
@@ -33,6 +38,7 @@
 .pipettetipsdialog label > span{
     display: inline-block;
 	margin-bottom: 0.4vh;
+    margin-top: 1vh;
 }
 
 .pipettetipsdialog input[type=text]
@@ -60,6 +66,7 @@
     padding: 8px 10px 8px 10px;
     border-radius: 5px;
     color: #A8BACE;
+    margin-top: 1vh;
 }
 .pipettetipsdialog input[type=submit]:hover,
 .pipettetipsdialog input[type=button]:hover{
@@ -177,10 +184,25 @@
 	    border: 5px solid #53687E;
 	}
 
+    .pipettingdialog{
+        width: 70vw;
+        max-width: 500px;
+        text-align: left !important;
+    }
+
 	.pipettetipsdialog input[type=text]
 	{
 		font-size: 15px;
 	}
+}
+
+.bigblocksmallblock{
+    width: 80%;
+    left: 10%;
+    border: 2px solid #576E86;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    position: relative;
 }
 
 .pipettetipsdialogcolorselect{

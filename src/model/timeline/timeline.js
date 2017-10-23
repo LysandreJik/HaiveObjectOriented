@@ -323,7 +323,25 @@ export class Timeline{
 					extendedTimeline[i].callError();
 					extendedTimeline[i].setErrorText("No tip selected !");
 				}
-			}
+			}else if(extendedTimeline[i].getType() == "pipetting"){
+			    if(extendedTimeline[i].getLiquidQuantity() != undefined){
+                    let liquidQuantity = extendedTimeline[i].getLiquidQuantity()[0];
+                    if(extendedTimeline[i].getLiquidQuantity()[1] == "mL"){
+                        liquidQuantity *= 1000;
+                    }
+
+                    let currentlyHeld = this.getCurrentlyHeldLiquidQuantity(i);
+                    let currentlyHeldVal = currentlyHeld[0];
+                    if(currentlyHeld[1] == "mL"){
+                        currentlyHeldVal *= 1000;
+                    }
+
+                    if(liquidQuantity > currentlyHeldVal){
+                        extendedTimeline[i].callError();
+                        extendedTimeline[i].setErrorText("Not enough liquid !");
+                    }
+                }
+            }
 		}
 	}
 
@@ -399,7 +417,7 @@ export class Timeline{
 		}
 
 		for (let i = startIndex; i < n; i++) {
-			if(extendedTimeline[i].getType() == "get liquid"){
+			if(extendedTimeline[i].getType() == "get liquid" && extendedTimeline[i].getLiquidQuantity() != undefined){
 				if(extendedTimeline[i].getLiquidQuantity()[1] == "mL"){
 					liquids += extendedTimeline[i].getLiquidQuantity()[0]*1000;
 				}else{
@@ -416,6 +434,10 @@ export class Timeline{
 					}
 				}
 			}
+
+			if(extendedTimeline[i].getType() == "pipetting"){
+			    liquids = 0;
+            }
 		}
 
 		if(liquids / 1000 > 1){

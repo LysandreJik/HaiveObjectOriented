@@ -28,16 +28,14 @@ export class CreateAccount extends React.Component{
 		return(
 			<div className="logincontentswrapper animated fadeIn">
 				<div className="createaccountcontents">
-					<span className="colorbluesmall">First name</span><br></br>
-					<input id="user" type="text" name="username"></input><br></br>
-					<span className="colorbluesmall">Last name</span><br></br>
+					<span className="colorbluesmall">Username</span><br></br>
 					<input id="user" type="text" name="username"></input><br></br>
 					<span className="colorbluesmall">Email address</span><br></br>
-					<input id="user" type="text" name="username"></input><br></br>
+					<input id="user" type="text" name="email"></input><br></br>
 					<span className="colorbluesmall">PASSWORD</span><br></br>
 					<input id="pass" type="password" name="password"></input>
 					<span className="colorbluesmall">CONFIRM PASSWORD</span><br></br>
-					<input id="pass" type="password" name="password"></input>
+					<input id="pass" type="password" name="passwordconfirm"></input>
 
 					<br></br>
 					<br></br>
@@ -59,7 +57,7 @@ export class Login extends React.Component{
 		return(
 			<div className="logincontentswrapper animated fadeIn">
 				<div className="logincontents">
-					<span className="colorblue">USERNAME</span><br></br>
+					<span className="colorblue">EMAIL ADDRESS</span><br></br>
 					<input id="user" type="text" name="username"></input><br></br>
 					<span className="colorblue">PASSWORD</span><br></br>
 					<input id="pass" type="password" name="password"></input>
