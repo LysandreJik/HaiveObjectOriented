@@ -497,7 +497,9 @@ export class ProtocolDesignController{
      * @param type is the unit of the liquid quantity (uL or mL)
      * @param newLiquid is a boolean which is true if the "Add liquid to new test tube" option is seleted, false otherwise.
      */
-	defineDepositLiquid(parent, type, newLiquid){
+
+    defineDepositLiquid(parent, type, newLiquid){
+        console.log(type);
 		let tip;
 
 		if(newLiquid == false){

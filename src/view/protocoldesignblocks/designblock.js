@@ -38,7 +38,6 @@ export class Block extends React.Component{
 	}
 
 	componentDidUpdate(){
-	    console.log("Reset blocks ",this.props.resetBlocks);
 	    if(this.props.resetBlocks != false && this.props.resetBlocks != undefined){
 	        if(this.state.big == true){
 	            this.hideFullInfo();

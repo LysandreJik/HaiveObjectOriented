@@ -504,6 +504,7 @@ class DepositLiquidNew extends React.Component{
 		if(this.props.tip == "new"){
 			this.tip = this.props.container.getEmptyUncontaminatedTips()[0];
 		}
+		this.type = "mL";
 		this.changeSelectColor = this.changeSelectColor.bind(this);
 	}
 
@@ -541,7 +542,6 @@ class DepositLiquidNew extends React.Component{
 
 	render(){
         const parent = this;
-        let type = "mL";
         if(this.props.tip != "new"){
 			$("#depositliquid_name").val(parent.props.tip.getLiquid());
 			return(
@@ -568,11 +568,11 @@ class DepositLiquidNew extends React.Component{
 
 							<ul id="pipettetipsdialogunit" className="donate-now">
 							<li>
-								<input type="radio" id="a25" name="amount" onClick={function(){type="uL";console.log("Set amount unit to ul for", parent.props.tip)}}/>
+								<input type="radio" id="a25" name="amount" defaultChecked={parent.type == "uL"} onClick={function(){parent.type="uL";console.log("Set amount unit to "+parent.type+" for", parent.props.tip)}}/>
 								<label className="labelmarginbottom" htmlFor="a25">uL</label>
 							</li>
 							<li>
-								<input type="radio" id="a50" name="amount" defaultChecked="true" onClick={function(){type="mL";console.log("Set amount unit to ml for", parent.props.tip)}}/>
+								<input type="radio" id="a50" name="amount" defaultChecked={parent.type == "mL"} onClick={function(){parent.type="mL";console.log("Set amount unit to "+parent.type+" for", parent.props.tip)}}/>
 								<label className="labelmarginbottom" htmlFor="a50">mL</label>
 							</li>
 							</ul>
@@ -581,8 +581,9 @@ class DepositLiquidNew extends React.Component{
 						<label>
 							<input type="button" value="Validate" onClick={
 									function(){
+									    console.log(parent.type);
 										if(/^\d*[,.]\d+$/.test($('#depositliquid_amount').val()) || /^\d+$/.test($('#depositliquid_amount').val())){
-											gv.protocolDesignController.defineDepositLiquid(parent, type, false);
+											gv.protocolDesignController.defineDepositLiquid(parent, parent.type, false);
 											gv.protocolDesignController.lightenLiquidContainers();
 										}else{
 											$('#liquidamount_pipettetipsdialogspan').val("Amount of liquid to add - Only numbers are accepted")
@@ -592,7 +593,14 @@ class DepositLiquidNew extends React.Component{
 						</label>
 
 						<label>
-							<input type="button" value="Cancel" onClick={function(){window.location="#_";gv.protocolDesignController.timeline.removeBlock(gv.protocolDesignController.timeline.getIndexOf(parent.props.block));gv.protocolDesignView.refresh()}}/>
+							<input type="button" value="Cancel" onClick={
+							    function(){
+							        window.location="#_";
+							        gv.protocolDesignController.timeline.removeBlock(gv.protocolDesignController.timeline.getIndexOf(parent.props.block));
+                                    gv.protocolDesignController.lightenLiquidContainers();
+                                    gv.protocolDesignView.setState({disabled:""});
+							        gv.protocolDesignView.refresh();
+							    }}/>
 						</label>
 
 						<select id="pipettetipsdialogcolorselect" className="pipettetipsdialogcolorselect" defaultValue="blue" onChange={this.changeSelectColor}>

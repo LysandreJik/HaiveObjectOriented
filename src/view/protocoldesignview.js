@@ -274,9 +274,7 @@ class BlueprintContent extends React.Component{
     }
 
     resetBlocks(){
-        console.log("Set ultimate parent state to ", this.state.resetBlocks);
         this.setState({resetBlocks:this.resetResetBlocks});
-        console.log("Set ultimate parent state to ", this.state.resetBlocks);
 
     }
 
