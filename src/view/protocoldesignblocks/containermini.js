@@ -25,42 +25,7 @@ export class ContainerMini extends React.Component{
 
 	constructor(props){
 		super(props);
-		this.resizeNestedDiv = this.resizeNestedDiv.bind(this);
 		this.getFilledTips = this.getFilledTips.bind(this);
-	}
-
-	componentDidMount(){
-        const parent = this;
-        window.addEventListener("resize", this.resizeNestedDiv);
-        const checkExist = setInterval(function () {
-            if ($('#img' + parent.props.id).length) {
-                if ($('#img' + parent.props.id).width() > 0) {
-                    parent.resizeNestedDiv();
-                    clearInterval(checkExist);
-                }
-            }
-        }, 100);
-    }
-
-	componentDidUpdate(){
-		this.resizeNestedDiv();
-	}
-
-	componentWillUnmount(){
-		window.removeEventListener("resize", this.resizeNestedDiv);
-	}
-
-	resizeNestedDiv(){
-        const parent = this;
-
-        let canvaselement = document.getElementById('nested'+parent.props.id);
-		let imgelement =  $('#img'+parent.props.id);
-		let imgelementspecs = imgelement.position();
-
-		canvaselement.style.left = (imgelementspecs.left+5)+"px";
-		canvaselement.style.top = (imgelementspecs.top+5)+"px";
-		canvaselement.style.width = (imgelement.width()-10)+"px";
-		canvaselement.style.height = (imgelement.height()-10)+"px";
 	}
 
 	getFilledTips(loc){
@@ -97,8 +62,7 @@ export class ContainerMini extends React.Component{
 	render(){
 		return(
 			<div id={this.props.id} className="containerspagediv">
-				<img  id={"img"+this.props.id} className="containerspageimg" src={'images/containers/'+ (this.props.hover == this.props.id.substring(15) ? 'container_small_hover.png' : 'container_small.png')} />
-				<div id={"nested"+this.props.id} className="containgerspagenesteddiv" onClick={() => this.props.blockDropped(this.props.id)}>
+                <div id={"nested"+this.props.id} className="containgerspagenesteddiv" onMouseDown={() => this.props.blockDropped(this.props.id)}>
 					{this.props.container.isLiquidContainer() ? "LIQUID CONTAINER" : (this.props.container.isTipContainer() ? "CHIP CONTAINER" : "")}
 					<br></br>
 					{this.props.container.isLiquidContainer() ? this.getFilledTips("miniature") : this.props.container.isTipContainer() ? this.props.container.getNumberOfFullTips() > 1 ? this.props.container.getNumberOfFullTips()+" CHIPS LEFT" : this.props.container.getNumberOfFullTips()+" CHIP LEFT" :""}
@@ -106,8 +70,9 @@ export class ContainerMini extends React.Component{
 					{this.props.container.getType()}
 					{this.props.hover == this.props.id.substring(15) ? this.props.container.isLiquidContainer()  ? this.getFilledTips("detail") : "" : ""}
 					<br></br>
-					{/*this.props.container.getName()*/}
+
 				</div>
+
 			</div>
 		);
 	}

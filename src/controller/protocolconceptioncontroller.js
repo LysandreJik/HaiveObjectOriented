@@ -53,7 +53,8 @@ export class ProtocolConceptionController{
 		console.log("Created a new timeline");
 		gv.protocolDesignController.timeline.blocks = [new Block({type:"START_BLOCK", text:"START"}), new Block(), new Block()];
 		gv.currentlySelectedHaive.setContainers(gv.containersAtTimelineStart);
-		gv.navbarModel.setActiveSection("Protocol Design");
+		window.location="#_";
+		gv.myAssets.setSelected(3);
 		gv.protocolDesignView.refresh();
 
 	}
@@ -78,6 +79,7 @@ export class ProtocolConceptionController{
 			gv.containersAtTimelineStart.push(containers[i].getClone());
 		}
 
-		gv.navbarModel.setActiveSection("Protocol Design");
+        window.location="#_";
+        gv.myAssets.setSelected(3)
 	}
 }

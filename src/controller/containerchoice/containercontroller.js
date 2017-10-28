@@ -99,7 +99,7 @@ export class ContainerSelectController{
 		setTimeout(function(){
 			gv.containerView.setState({animationDone:"true"});
 			$("#divanim").remove();
-		}, 1500);
+		}, 500);
 	}
 
     /**
@@ -169,11 +169,11 @@ export class ContainerSelectController{
      */
 	addLiquidToContainers(){
 		if(!gv.currentlySelectedHaive.containsLiquidContainer()){
-			gv.mainAppController.hoverMisc("warninglackofliquidcontainers", function(){window.location='#_';gv.navbarModel.setActiveSection('Protocol Conception')});
+			gv.mainAppController.hoverMisc("warninglackofliquidcontainers", function(){window.location='#_';gv.myAssets.setSelected(2.1);});
 		}else if(!gv.currentlySelectedHaive.containsTipContainer()){
-			gv.mainAppController.hoverMisc("warninglackofchipcontainers", function(){window.location='#_';gv.navbarModel.setActiveSection('Protocol Conception')});
+			gv.mainAppController.hoverMisc("warninglackofchipcontainers", function(){window.location='#_';gv.myAssets.setSelected(2.1);});
 		}else{
-			gv.navbarModel.setActiveSection('Protocol Conception');
+			gv.myAssets.setSelected(2.1);
 		}
 
 	}

@@ -115,6 +115,7 @@ class Containers extends React.Component{
 				<a id={"golink"+gv.acceptedContainerTypes.indexOf(containerType)}>
 					<div className="containercenter animated speed-ultrafast pulse">
 						<div id={"container_"+gv.acceptedContainerTypes.indexOf(containerType)} className="containerimg">
+                            <span>{containerType}</span><br></br>
 							<img id={"img"+"golink"+gv.acceptedContainerTypes.indexOf(containerType)} src={"images/containers/container_main_images/"+(containerType).replace(/ /g,'_')+".png"} width={containerImgBaseSize*ratio} draggable="false"/>
 							<h1 className="displaynumbercontainers">{containers.length}</h1>
 						</div>

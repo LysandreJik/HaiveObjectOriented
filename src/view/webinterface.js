@@ -17,7 +17,9 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 import React from 'react';
-import { Warning } from './warningview';
+
+import {Warning} from "./warningview";
+import {HaiveSelector} from "./dashboard/haiveselector";
 
 const WebInterfaceController = require('../controller/webinterfacecontroller').WebInterfaceController;
 	const gv = require('../../const/global');
@@ -64,11 +66,13 @@ export class App extends React.Component{
 
 	render(){
 		// console.log("Refreshed app");
+
 		if(gv.loginDone){
 			return(
 				<section className="hbox stretch bg">
 					{webInterfaceController.getNavbarView()}
 					<section id="content" style={{"width":"100%"}}>{webInterfaceController.getFocusedPage()}</section>
+
 					{this.state.hover != 'none' ? <Warning agree={this.state.hoverFunc} type={this.state.hover}/> : ""}
 				</section>
 			);

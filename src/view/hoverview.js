@@ -596,9 +596,12 @@ class DepositLiquidNew extends React.Component{
 							<input type="button" value="Cancel" onClick={
 							    function(){
 							        window.location="#_";
+							        console.log("yeah");
 							        gv.protocolDesignController.timeline.removeBlock(gv.protocolDesignController.timeline.getIndexOf(parent.props.block));
                                     gv.protocolDesignController.lightenLiquidContainers();
                                     gv.protocolDesignView.setState({disabled:""});
+                                    gv.protocolDesignController.droppedBlock = "";
+                                    gv.hoverview.clearAll();
 							        gv.protocolDesignView.refresh();
 							    }}/>
 						</label>
@@ -618,7 +621,7 @@ class DepositLiquidNew extends React.Component{
 		}else{
             const container = this.props.container;
             console.log(container);
-
+            var type = "mL";
 
 			return(
 				<div className="lightbox" id={"depositliquid"}>
@@ -668,7 +671,16 @@ class DepositLiquidNew extends React.Component{
 						</label>
 
 						<label>
-							<input type="button" value="Cancel" onClick={function(){window.location="#_";gv.protocolDesignController.timeline.removeBlock(gv.protocolDesignController.timeline.getIndexOf(parent.props.block));gv.protocolDesignView.refresh()}}/>
+							<input type="button" value="Cancel" onClick={
+							    function(){
+							        window.location="#_";
+							        gv.protocolDesignController.timeline.removeBlock(gv.protocolDesignController.timeline.getIndexOf(parent.props.block));
+                                    gv.protocolDesignController.lightenLiquidContainers();
+                                    gv.protocolDesignView.setState({disabled:""});
+                                    gv.protocolDesignController.droppedBlock = "";
+                                    gv.hoverview.clearAll();
+                                    gv.protocolDesignView.refresh();
+							    }}/>
 						</label>
 
 						<select id="pipettetipsdialogcolorselect" className="pipettetipsdialogcolorselect" defaultValue="blue" onChange={this.changeSelectColor}>

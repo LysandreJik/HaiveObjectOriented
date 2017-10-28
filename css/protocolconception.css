@@ -183,9 +183,9 @@ warningmessagebig{
 }
 
 .selectionOptions{
-    position: fixed;
-    top:17%;
-    left: 28.5%;
+    position: absolute;
+    top: 10%;
+    left: 2%;
     padding: 1%;
     text-align: left;
     color:#D0E1F9;

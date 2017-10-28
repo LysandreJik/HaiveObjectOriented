@@ -1,0 +1,52 @@
+
+.myassetsbar{
+    position: absolute;
+    left:2%;
+    right:2%;
+    top:2%;
+    height: 5%;
+    border: 2px solid #334;
+    background-color: #4B4F58;
+}
+
+.maincontent{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.myassetsbarbuttons {
+    border:2px solid #75aaff;
+    background-color:transparent;
+    height:100%;
+    width:33.3333%;
+    letter-spacing:3px;
+    font-size:12px;
+    text-transform:uppercase;
+    font-weight:400;
+    color:#75aaff;
+    display:inline-block;
+}
+
+.myassetsbarbuttons:hover {
+    background-color:#75aaff;
+    color:#fff;
+    border:2px solid #75aaff;
+}
+
+.myassetsbarbuttonselected {
+    background-color:#95caff;
+    color:#fff;
+    border:2px solid #75aaff;
+}
+
+.myassetsmaincontent{
+    position: absolute;
+    left:2%;
+    right:2%;
+    top:9%;
+    height: 88%;
+    border: 2px solid #334;
+    background-color: #4B4F58;
+    overflow: scroll;
+}

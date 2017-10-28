@@ -1,0 +1,57 @@
+.haivedispenser{
+    position: absolute;
+    left:2%;
+    right:2%;
+    top:2%;
+    height: 150px;
+    border: 2px solid #334;
+    background-color: #3B3F48;
+}
+
+.haiveblueprint{
+    position: absolute;
+    left:2%;
+    right:2%;
+    top:calc(4% + 150px);
+    height: calc(94% - 150px);
+    border: 2px solid #334;
+    background-color: #3B3F48;
+    overflow: scroll;
+}
+
+.blueprintgrid{
+    background-color: #4B4F58;
+
+    background-image:linear-gradient(0deg,
+        transparent 24%,
+        rgba(208, 225, 249, .05) 25%,
+        rgba(208, 225, 249, .05) 26%,
+        transparent 27%,
+        transparent 74%,
+        rgba(208, 225, 249, .05) 75%,
+        rgba(208, 225, 249, .05) 76%,
+        transparent 77%,
+        transparent),
+
+    linear-gradient(90deg,
+            transparent 24%,
+            rgba(208, 225, 249, .05) 25%,
+            rgba(208, 225, 249, .05) 26%,
+            transparent 27%,
+            transparent 74%,
+            rgba(208, 225, 249, .05) 75%,
+            rgba(208, 225, 249, .05) 76%,
+            transparent 77%,
+            transparent);
+
+    background-size:50px 50px;
+}
+
+.blueprintul{
+    list-style-type: none;
+}
+
+.haivestoreul{
+    width: 100%;
+    list-style-type: none;
+}

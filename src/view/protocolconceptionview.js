@@ -71,7 +71,7 @@ export class AddLiquids extends React.Component{
 				{this.protocolDesignHasStarted() ?
 					<div className="btnghostcenter">
 						<button style={{"margin":"2px"}} className="btnghost" onClick={function(){gv.mainAppController.hoverMisc("warningCreatingNewTimeline", function(){gv.protocolConceptionController.createNewTimeline()});}}>START A NEW PROTOCOL DESIGN</button>
-						<button style={{"margin":"2px"}} className="btnghost" onClick={() => gv.navbarModel.setActiveSection("Protocol Design")}>CONTINUE THE PROTOCOL DESIGN</button>
+						<button style={{"margin":"2px"}} className="btnghost" onClick={() => gv.myAssets.setSelected(3)}>CONTINUE THE PROTOCOL DESIGN</button>
 					</div>
 				:
 					<button className="btnghost btnghostcenter" onClick={gv.protocolConceptionController.saveContainers}>START THE PROTOCOL DESIGN</button>

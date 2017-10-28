@@ -229,6 +229,8 @@ export class ProtocolDesignController{
 	cancelGetLiquid(){
 		this.timeline.removeBlock(this.timeline.getIndexOf(this.droppedBlock));
 		window.location="#_";
+        gv.protocolDesignController.droppedBlock = "";
+        gv.protocolDesignView.setState({disabled:""});
 		dropBlockStyle.removeDarken();
 		style.filterContainers('chip', 'lighten');
 		style.filterContainers('other', 'lighten');

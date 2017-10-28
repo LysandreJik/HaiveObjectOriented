@@ -1,0 +1,46 @@
+.welcomescreen{
+    position: absolute;
+    width:96%;
+    height:100%;
+    left:60px;
+}
+
+.welcomescreen .title{
+    position: absolute;
+    color:#75aaff;
+    left:2%;
+}
+
+.welcomescreen .mylab{
+    border: 2px solid #334;
+    background-color: #4B4F58;
+    position: absolute;
+    top: 10%;
+    left:2%;
+    height:25%;
+    width:96%;
+}
+
+.welcomescreen .currentexperiment{
+    border: 2px solid #334;
+    background-color: #4B4F58;
+    position: absolute;
+    top: 40%;
+    left:2%;
+    height:55%;
+    width:96%;
+}
+
+.welcomescreen h3{
+    font-family: "Uni";
+    color:#D0E1F9;
+    font-size: 1.3vw;
+    margin-left: 2%;
+}
+
+.welcomescreen span{
+    font-family: "Uni";
+    color:#D0E1F9;
+    font-size: 0.8vw;
+    margin-left: 2%;
+}

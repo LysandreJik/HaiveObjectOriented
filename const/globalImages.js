@@ -57,7 +57,7 @@ class GlobalImages{
 			gv.imageLoad = parent.counter/n;
 
 			if(parent.counter == n){
-				setTimeout(function(){gv.navbarModel.setActiveSection("dashboard");},100);
+				setTimeout(function(){gv.navbarModel.setActiveSection("Welcome");},100);
 			}
 
 			if(gv.loadingScreen != undefined){
@@ -126,3 +126,4 @@ gi.addImage("BOTTOM_LEFT", "images/protocol_design_hexagon_configuration/bottom_
 gi.addImage("BOTTOM_RIGHT", "images/protocol_design_hexagon_configuration/bottom_right.png");
 
 gi.addImage("CANVAS_BACKGROUND", "images/canvas_background.png");
+gi.addImage("EMPTY", "images/empty.png");

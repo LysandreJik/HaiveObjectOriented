@@ -41,6 +41,7 @@ const ProtocolDesignController = require('../controller/protocoldesigncontroller
 
 const LoginController = require('../controller/logincontroller').LoginController;
 
+import { WelcomeScreen } from "../controller/welcomescreen";
 import { Marketplace } from '../view/marketplace';
 import { HaiveStore } from '../view/dashboard/haivestoreview';
 import { HaiveTiles } from '../view/dashboard/haivetilesview';
@@ -51,6 +52,7 @@ import { AddLiquids } from '../view/protocolconceptionview';
 import { ProtocolDesign } from '../view/protocoldesignview';
 import { Login } from '../view/login';
 import { CreateAccount } from '../view/login';
+import {MyAssets} from "../view/myassets";
 
 let marketplace = <Marketplace/>;
 
@@ -78,6 +80,7 @@ let protocolDesignModel = new ProtocolDesignModel({controller:protocolDesignCont
 let protocoldesign = <ProtocolDesign/>;
 
 let loadingscreen = <LoadingScreen/>;
+let welcomescreen = <WelcomeScreen/>;
 
 let loginController = new LoginController();
 let login = <Login/>;
@@ -96,21 +99,16 @@ export class WebInterfaceController{
 
 	getFocusedPage(){
 		if(gv.imageLoad == 1){
+		     console.log(navbarModel.getActiveSection().getTitle())
 			switch(navbarModel.getActiveSection().getTitle()){
+                case "Welcome":
+                    return welcomescreen;
+                    break;
 				case "Dashboard":
-					return dashboard;
-					break;
-				case "Container Select":
-					return containerSelect;
+					return <MyAssets/>;
 					break;
 				case "Marketplace":
 					return marketplace;
-					break;
-				case "Protocol Conception":
-					return protocolconception;
-					break;
-				case "Protocol Design":
-					return protocoldesign;
 					break;
 			}
 		}else{

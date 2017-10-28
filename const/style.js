@@ -129,8 +129,8 @@ export class DropBlockStyle{
 	}
 
 	darkenAll(){
-		document.getElementById('content').classList.add('darkenFilter');
-		document.getElementById('content').classList.add('animated');
+		document.getElementById('myassetsmaincontent').classList.add('darkenFilter');
+		document.getElementById('myassetsmaincontent').classList.add('animated');
 	}
 
 	breathingBorder(id){
@@ -144,8 +144,8 @@ export class DropBlockStyle{
 	}
 
 	darken(){
-		document.getElementById('content').classList.add('darkenbackground');
-		document.getElementById('content').classList.add('animated');
+		document.getElementById('myassetsmaincontent').classList.add('darkenbackground');
+		document.getElementById('myassetsmaincontent').classList.add('animated');
 		document.getElementById('containerspage').classList.add('keepbackgroundlight');
 		document.getElementById('containerspage').classList.add('animated');
 
@@ -159,8 +159,8 @@ export class DropBlockStyle{
 	}
 
 	removeDarken(){
-		document.getElementById('content').classList.remove('darkenbackground');
-		document.getElementById('content').classList.remove('animated');
+		document.getElementById('myassetsmaincontent').classList.remove('darkenbackground');
+		document.getElementById('myassetsmaincontent').classList.remove('animated');
 		document.getElementById('containerspage').classList.remove('keepbackgroundlight');
 		document.getElementById('containerspage').classList.remove('animated');
 
@@ -174,8 +174,8 @@ export class DropBlockStyle{
 	}
 
 	lighten(){
-		document.getElementById('content').classList.add('lightenbackground');
-		document.getElementById('content').classList.add('animated');
+		document.getElementById('myassetsmaincontent').classList.add('lightenbackground');
+		document.getElementById('myassetsmaincontent').classList.add('animated');
 		document.getElementById('containerspage').classList.add('keepbackgroundlight');
 		document.getElementById('containerspage').classList.add('animated');
 
@@ -185,8 +185,8 @@ export class DropBlockStyle{
 		document.getElementById('blockstore').classList.add('animated');
 
 		setTimeout(function(){
-			document.getElementById('content').classList.remove('lightenbackground');
-			document.getElementById('content').classList.remove('animated');
+			document.getElementById('myassetsmaincontent').classList.remove('lightenbackground');
+			document.getElementById('myassetsmaincontent').classList.remove('animated');
 			document.getElementById('containerspage').classList.remove('keepbackgroundlight');
 			document.getElementById('containerspage').classList.remove('animated');
 

@@ -1,6 +1,6 @@
 export var imageLoad = 0;
 export var loadingScreen;
-export var loginDone = false;
+export var loginDone = true;
 export var creatingAccount = false;
 export var temporaryLiquidQuantity = [0,0,0]
 
@@ -27,10 +27,8 @@ export const acceptedContainerLocs = [
 
 //If add or delete, think to go to webInterfaceController.js, WebInterfaceController class, getFocusedPage method and modify the switch statement
 export const navbarMenuTitlesAndIcons = [
-	["Dashboard", "dashboard"],
-	["Container Select", "building-o"],
-	["Protocol Conception", "flask"],
-	["Protocol Design", "edit"],
+    ["Welcome", "dashboard"],
+    ["Dashboard", "flask"],
 	["Marketplace", "gears"]
 ];
 
@@ -88,6 +86,12 @@ export var hexs = [
 	['tile21', "openslot", "", "", ""],
 	['tile22', "openslot", "", "", ""]
 ];
+
+export var myAssets;
+
+export var haiveSelectorView;
+export var haiveSelectorModel;
+export var haiveSelectorController;
 
 export var containersAtTimelineStart = [];
 export var blueprintController;
@@ -160,13 +164,16 @@ export function clone(source) {
 }
 
 export function getClosestHexagonToMouse(){
-	var distance = [];
-	distance = [0, getEuclidianDistance(mouseX, mouseY, hexagon_tiles_canv_pos[0])];
+	var distance;
+    const blueprint = document.getElementById("haiveblueprint");
+
+	distance = [[hexagon_tiles_canv_pos[0][2], hexagon_tiles_canv_pos[0][3]], getEuclidianDistance(mouseX+blueprint.scrollLeft, mouseY+blueprint.scrollTop, hexagon_tiles_canv_pos[0])];
 	for(var i = 0; i < hexagon_tiles_canv_pos.length; i++){
-		if(getEuclidianDistance(mouseX, mouseY, hexagon_tiles_canv_pos[i]) < distance[1]){
-			distance = [i, getEuclidianDistance(mouseX, mouseY, hexagon_tiles_canv_pos[i])];
+		if(getEuclidianDistance(mouseX+blueprint.scrollLeft, mouseY+blueprint.scrollTop, hexagon_tiles_canv_pos[i]) < distance[1]){
+			distance = [[hexagon_tiles_canv_pos[i][2], hexagon_tiles_canv_pos[i][3]], getEuclidianDistance(mouseX+blueprint.scrollLeft, mouseY+blueprint.scrollTop, hexagon_tiles_canv_pos[i])];
 		}
 	}
+
 	return distance[0];
 }
 
