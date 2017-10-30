@@ -18,59 +18,59 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 const gv = require('../../../const/global');
 
-export class HaiveSelectorController{
-    constructor(){
+export class HaiveSelectorController {
+    constructor() {
         gv.haiveSelectorController = this;
     }
 
-    addDraggables(small, x, y){
+    addDraggables(small, x, y) {
 
 
-
-        if(small){
+        if (small) {
             this.addDraggableToStore(x);
-        }else if(gv.haiveSelectorModel.getTileHaive(x, y) != null && gv.haiveSelectorModel.getTileHaive(x, y) != "empty"){
+        } else if (gv.haiveSelectorModel.getTileHaive(x, y) != null && gv.haiveSelectorModel.getTileHaive(x, y) != "empty") {
             this.addDraggableToTiles(x, y);
-        }else{
+        } else {
             this.destroyDraggable(small, x, y);
         }
     }
 
-    destroyDraggable(small, x, y){
+    destroyDraggable(small, x, y) {
         try {
             if (small) {
                 $("#draggable_small_" + x).draggable("destroy");
             } else {
                 $("#draggable_" + x + "_" + y).draggable("destroy");
             }
-        }catch(e){}
+        } catch (e) {
+        }
     }
 
-    addDraggableToTiles(x, y){
-        $("#draggable_"+x+"_"+y).draggable({
-            start: function(event, ui){
-                console.log("Started dragging draggable "+x+" "+y);
+    addDraggableToTiles(x, y) {
+        $("#draggable_" + x + "_" + y).draggable({
+            start: function (event, ui) {
+                console.log("Started dragging draggable " + x + " " + y);
             },
 
-            helper: function(){
+            helper: function () {
                 let clone = $(this).clone();
                 clone.height($(this).height());
                 clone.width($(this).width());
                 return clone;
             },
 
-            stop: function(){
+            stop: function () {
                 let closest = gv.getClosestHexagonToMouse();
 
-                if(gv.haiveSelectorModel.getTileHaive(closest[0], closest[1]) != "empty") {
+                if (gv.haiveSelectorModel.getTileHaive(closest[0], closest[1]) != "empty") {
                     let clone = gv.haiveSelectorModel.getTileHaive(closest[0], closest[1]);
-                    if(clone != null){
+                    if (clone != null) {
                         clone = clone.getClone();
                     }
-                    gv.haiveSelectorModel.addTileHaive(gv.haiveSelectorModel.getTileHaive(x ,y), closest[0], closest[1]);
-                    if(clone != null){
+                    gv.haiveSelectorModel.addTileHaive(gv.haiveSelectorModel.getTileHaive(x, y), closest[0], closest[1]);
+                    if (clone != null) {
                         gv.haiveSelectorModel.addTileHaive(clone, x, y);
-                    }else{
+                    } else {
                         gv.haiveSelectorModel.removeTileHaive(x, y);
                     }
 
@@ -81,23 +81,23 @@ export class HaiveSelectorController{
         });
     }
 
-    addDraggableToStore(x){
-        $("#draggable_small_"+x).draggable({
-            start: function(event, ui){
-                console.log("Started dragging draggable "+x);
+    addDraggableToStore(x) {
+        $("#draggable_small_" + x).draggable({
+            start: function (event, ui) {
+                console.log("Started dragging draggable " + x);
             },
 
-            helper: function(){
+            helper: function () {
                 let clone = $(this).clone();
                 clone.height($(this).height());
                 clone.width($(this).width());
                 return clone;
             },
 
-            stop: function(){
+            stop: function () {
                 let closest = gv.getClosestHexagonToMouse()
 
-                if(gv.haiveSelectorModel.getTileHaive(closest[0], closest[1]) != "empty") {
+                if (gv.haiveSelectorModel.getTileHaive(closest[0], closest[1]) != "empty") {
                     if (gv.haiveSelectorModel.getTileHaive(closest[0], closest[1]) != null) {
                         gv.haiveSelectorModel.addStoreHaive(gv.haiveSelectorModel.getTileHaive(closest[0], closest[1]));
                     }
@@ -110,14 +110,35 @@ export class HaiveSelectorController{
         });
     }
 
-    addDroppables(small, x, y){
-        if(!small){
+    addDroppables(small, x, y) {
+        if (!small) {
             this.addDroppableToTiles(x, y);
         }
     }
 
-    addDroppableToTiles(x, y){
+    addDroppableToTiles(x, y) {
 
     }
 
+    /**
+     * Function which displays the miscellaneous hovers such as the hover item to set the description of the haive or the welcome screen
+     * @param hover String : "setdescofhaive" and "welcomescreen" are currently the only two supported kinds.
+     * @param id id of the hover.
+     */
+    hoverMisc(hover, id) {
+        var parent = gv.haiveSelectorView;
+        if (hover == "setdescofhaive") {
+            setTimeout(function () {
+                parent.setState({hoverMisc: hover + ":" + id});
+                window.location = "#desc";
+            }, 100);
+        } else if (hover == "welcomescreen") {
+            setTimeout(function () {
+                // console.log("Setting state to welcomescreen");
+                parent.setState({hoverMisc: hover + ":" + id});
+                window.location = "#welcome";
+            }, 100);
+
+        }
+    }
 }

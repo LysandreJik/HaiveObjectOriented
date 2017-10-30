@@ -130,14 +130,14 @@ export class HaiveSelectorModel{
 
         let allEmpty = this.getAllEmptyTiles();
         for(let i = 0; i < allEmpty.length; i++){
-            console.log(allEmpty[i]);
+            //console.log(allEmpty[i]);
             let neighbours = this.getNeighbours(allEmpty[i][1], allEmpty[i][2]);
-            console.log("Neighbours : ", neighbours);
+            //console.log("Neighbours : ", neighbours);
 
             let alone = true;
 
             for(let i = 0; i < neighbours.length; i++){
-                console.log(neighbours[i]);
+                //console.log(neighbours[i]);
                 if(neighbours[i] != "empty" && neighbours[i] != null && neighbours[i] != ""){
                     alone = false;
                 }
@@ -149,6 +149,15 @@ export class HaiveSelectorModel{
                 this.setTileHaive(allEmpty[i][1], allEmpty[i][2], "empty");
             }
         }
+
+        console.log("full haives : ", this.getFullHaives());
+
+        if(this.getFullHaives().length == 0){
+            console.log("Setting tile haive");
+            this.setTileHaive(0, 0, null);
+        }
+
+        console.log("All empty haives : ",this.getAllEmptyTiles());
 
         gv.haiveSelectorView.refresh();
     }
@@ -191,6 +200,10 @@ export class HaiveSelectorModel{
                 this.tileHaives[i][0] = null;
             }
         }
+
+        this.updateEmptyTiles();
+
+        gv.haiveSelectorView.refresh();
     }
 
     getTileHaives(){
@@ -249,7 +262,18 @@ export class HaiveSelectorModel{
             }
         }
 
-        console.log("All empty tiles", allEmptyTiles);
         return allEmptyTiles;
+    }
+
+    getFullHaives(){
+        let fullHaives = [];
+
+        for(let i = 0; i < this.tileHaives.length; i++) {
+            if (this.tileHaives[i][0] != null && this.tileHaives[i][0] != "empty") {
+                fullHaives.push(this.tileHaives[i]);
+            }
+        }
+
+        return fullHaives;
     }
 }

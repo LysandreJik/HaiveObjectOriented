@@ -41,7 +41,7 @@ const ProtocolDesignController = require('../controller/protocoldesigncontroller
 
 const LoginController = require('../controller/logincontroller').LoginController;
 
-import { WelcomeScreen } from "../controller/welcomescreen";
+import { WelcomeScreen } from "../view/welcomescreen";
 import { Marketplace } from '../view/marketplace';
 import { HaiveStore } from '../view/dashboard/haivestoreview';
 import { HaiveTiles } from '../view/dashboard/haivetilesview';

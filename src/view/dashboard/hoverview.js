@@ -32,37 +32,34 @@ export class HexagonHoverTypes extends React.Component{
 		super(props);
 		this.state = {desc:false};
 	}
+
+	componentDidMount(){
+	    console.log("mountes maggle");
+    }
+
 	render(){
-		if(this.props.small == true){
-			return(
-				<a href="#_" className="lightbox" id={"hs"+this.props.keyId}>
-					{/* This is the image displayed when a Hexagon is clicked on, from the dashboard*/}
-					<HexImageHover/>
-					<div id={"hovercontent_small"+this.props.keyId} className="lightboxdiv animated fadeIn">
-						<h1>{gv.haiveStoreModel.getHaive(this.props.keyId).getName()+" HAIVE"}</h1>
-						<button className="btnghost" onClick={() => gv.navbarModel.setActiveSection("Marketplace")}>Buy</button>
-					</div>
-				</a>
-			);
-		}else{
-            const parent = this;
-            return(
-				<a href="#_" className="lightbox" id={"h"+this.props.keyId}>
-					{/* This is the image displayed when a Hexagon is clicked on, from the dashboard*/}
-					<HexImageHover/>
-					<div id={"hovercontent"+this.props.keyId} className="lightboxdiv animated fadeIn">
+	    if(gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]) == null){
+	        return <div></div>
+        }
 
-						<h1>{gv.haiveTilesModel.getHaive(this.props.keyId).getType()+" HAIVE"}</h1>
-						<h4>{gv.haiveTilesModel.getHaive(this.props.keyId).getName()}</h4>
-						<p>{gv.haiveTilesModel.getHaive(this.props.keyId).getDesc()}</p>
+        const parent = this;
+        return(
+            <a href="#_" className="lightbox" id={this.props.keyId}>
+                {/* This is the image displayed when a Hexagon is clicked on, from the dashboard*/}
+                <HexImageHover/>
+                <div id={"hovercontent"+this.props.keyId} className="lightboxdiv animated fadeIn">
 
-						<button className="btnghost" onClick={function(){gv.navbarModel.setActiveSection('Container Select');gv.currentlySelectedHaiveID=gv.haiveTilesModel.getHaive(parent.props.keyId).getRefID();gv.currentlySelectedHaive=gv.haiveTilesModel.getHaiveByRefID(gv.currentlySelectedHaiveID)}}>START</button>{"\u00a0\u00a0\u00a0"}
-						<button className="btnghost" onClick={() => gv.haiveTilesModel.removeHaive(this.props.keyId)}>Remove</button>{"\u00a0\u00a0\u00a0"}
-						<button className="btnghost" onClick={() => gv.haiveTilesController.hoverMisc("setdescofhaive", this.props.keyId)}>+</button>
-					</div>
-				</a>
-			);
-		}
+                    <h1>{gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]).getType()+" HAIVE"}</h1>
+                    <h4>{gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]).getName()}</h4>
+                    <p>{gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]).getDesc()}</p>
+
+                    <button className="btnghost" onClick={function(){gv.myAssets.setSelected(2);gv.currentlySelectedHaive=gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1])}}>START</button>{"\u00a0\u00a0\u00a0"}
+                    <button className="btnghost" onClick={function(){gv.haiveSelectorView.refresh("hover", "none");gv.haiveSelectorModel.addStoreHaive(gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]));gv.haiveSelectorModel.removeTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1])}}>Remove</button>{"\u00a0\u00a0\u00a0"}
+                    <button className="btnghost" onClick={() => gv.haiveSelectorController.hoverMisc("setdescofhaive", this.props.keyId)}>+</button>
+                </div>
+            </a>
+        );
+
 	}
 }
 
@@ -87,17 +84,17 @@ export class HaiveDesc extends React.Component{
 				<div id="warning_div" className="pipettetipsdialog warning">
 					<span>CHANGE DETAILS</span>
 					<label htmlFor="field1" style={{"margin":"20px"}}>
-						<span id="liquidtype_pipettetipsdialogspan">Haive's name</span><input id="haivename_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveTilesModel.getHaiveTiles()[this.props.id].getName()}/>
+						<span id="liquidtype_pipettetipsdialogspan">Haive's name</span><input id="haivename_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveSelectorModel.getTileHaive(this.props.id.split("_")[0], this.props.id.split("_")[1]).getName()}/>
 					</label>
 					<label htmlFor="field1" style={{"margin":"20px"}}>
-						<span id="liquidtype_pipettetipsdialogspan">Haive's description</span><input id="haivedesc_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveTilesModel.getHaiveTiles()[this.props.id].getDesc()}/>
+						<span id="liquidtype_pipettetipsdialogspan">Haive's description</span><input id="haivedesc_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveSelectorModel.getTileHaive(this.props.id.split("_")[0], this.props.id.split("_")[1]).getDesc()}/>
 					</label>
 					<button onClick={
 							function(){
-								gv.haiveTilesModel.getHaiveTiles()[parent.props.id].setName($('#haivename_dialog').val());
-								gv.haiveTilesModel.getHaiveTiles()[parent.props.id].setDesc($('#haivedesc_dialog').val());
+                                gv.haiveSelectorModel.getTileHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]).setName($('#haivename_dialog').val());
+                                gv.haiveSelectorModel.getTileHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]).setDesc($('#haivedesc_dialog').val());
 								window.location="#_";
-								gv.haiveTilesView.refresh();
+								gv.haiveSelectorView.refresh("hovermisc", "");
 							}
 						}>Ok</button>
 					<button onClick={function(){window.location="#_"}}>Cancel</button>

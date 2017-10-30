@@ -24,6 +24,8 @@ const model = new HaiveSelectorModel();
 
 const HaiveSelectorController = require("../../controller/dashboard/haiveselectorcontroller").HaiveSelectorController;
 const controller = new HaiveSelectorController();
+import { HexagonHoverTypes } from './hoverview';
+import { HaiveDesc } from './hoverview';
 
 import React from 'react';
 
@@ -33,13 +35,17 @@ import React from 'react';
 export class HaiveSelector extends React.Component{
     constructor(props) {
         super(props);
-
+        this.state = {hover:"none", hoverMisc:"none"};
         gv.haiveSelectorView = this;
     }
 
     refresh(state, value){
         if(state == undefined){
             this.setState({refresh:true});
+        }else if(state == "hover"){
+            this.setState({hover:value});
+        }else if(state == "hovermisc"){
+            this.setState({hoverMisc:value});
         }else{
             this.setState({state:value});
         }
@@ -50,6 +56,8 @@ export class HaiveSelector extends React.Component{
             <div className={"maincontent"}>
                 <HaiveDispenser/>
                 <HaiveBlueprint/>
+                {this.state.hover != "none" ? <HexagonHoverTypes small={false} keyId={this.state.hover}/> : ""}
+                {this.state.hoverMisc.split(':')[0] == "setdescofhaive" ? <HaiveDesc id={this.state.hoverMisc.split(':')[1]}/> : ""}
             </div>
         );
     }
@@ -61,7 +69,6 @@ export class HaiveDispenser extends React.Component{
             <div id={"haivedispenser"} className={"haivedispenser"}>
                 <ul className="haivestoreul">
                     {model.getStoreHaives().map(function(hex, index){
-                        console.log(hex);
                         return (
                             <Hexagon x={index} y={0} key={index} title={hex.getName()} description={hex.getDesc()} type={hex.getType()} small={true}/>
                         );
@@ -178,11 +185,12 @@ class Hexagon extends React.Component{
     }
 
     render(){
+        let parent = this;
         if(this.props.title == "null"){
             return(
                 <li className="hexsmall" style={this.getStyle(this.props.small)} id={this.props.small ? "draggable_small_"+this.props.x : "draggable_"+this.props.x+"_"+this.props.y}>
                     <div className={"animated fadeIn hexsmallIn"}>
-                        <a id={"hex"+this.props.x+this.props.y} className="hexempty" draggable="false" onClick = {this.props.buy} href="#img1">
+                        <a id={"hex"+this.props.x+this.props.y} className="hexempty" draggable="false">
                             <img className={"empty"} src={gi.getImage('EMPTY')} alt="" />
                         </a>
                     </div>
@@ -192,7 +200,7 @@ class Hexagon extends React.Component{
             return(
                 <li className="hexsmall" style={this.getStyle(this.props.small)} id={this.props.small ? "draggable_small_"+this.props.x : "draggable_"+this.props.x+"_"+this.props.y}>
                     <div className={"animated fadeIn hexsmallIn"}>
-                        <a id={"hex"+this.props.x+this.props.y} className="hexempty" draggable="false" onClick = {this.props.buy} href="#img1">
+                        <a id={"hex"+this.props.x+this.props.y} className="hexempty" draggable="false">
                             <img className={""} src={gi.getImage('EMPTY')} alt="" />
                         </a>
                     </div>
@@ -201,8 +209,12 @@ class Hexagon extends React.Component{
         }else{
             return(
                 <li className="hexsmall" style={this.getStyle(this.props.small)} id={this.props.small ? "draggable_small_"+this.props.x : "draggable_"+this.props.x+"_"+this.props.y}>
-                    <div className={"animated fadeIn hexsmallIn"} onClick={!this.props.small ? () => gv.myAssets.setSelected(2) : ""}>
-                        <a id={"hex"+this.props.x+this.props.y} className="hexLink" draggable="false" onClick = {this.props.buy} href="#img1">
+                    <div className={"animated fadeIn hexsmallIn"} onClick={!this.props.small ?
+                        function(){
+                            gv.haiveSelectorView.refresh("hover", parent.props.x+"_"+parent.props.y);
+                            setTimeout(function(){window.location = "#"+parent.props.x+"_"+parent.props.y;}, 1);
+                        } : ""}>
+                        <a id={"hex"+this.props.x+this.props.y} className="hexLink" draggable="false">
                             <img src={gi.getImage(this.props.type.toUpperCase())} alt="" />
                             <h1>{this.props.title}</h1>
                             <p>{this.props.description}</p>

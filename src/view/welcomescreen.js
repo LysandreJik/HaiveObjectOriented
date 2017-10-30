@@ -39,7 +39,9 @@ class MyLaboratory extends React.Component{
         return (
             <div className={"mylab"}>
                 <h3>My laboratory</h3>
-                <span>The laboratory is empty.</span>
+                <span>{"Currently selected haive : "+gv.currentlySelectedHaive.getName()}</span><br></br>
+                <span>{"Type : "+gv.currentlySelectedHaive.getType()}</span>
+                <span>{"Containers : "+gv.currentlySelectedHaive.getContainers()}</span>
             </div>
         );
     }

@@ -185,6 +185,8 @@ export class Block{
      */
     setSelected(selected){
 	    this.selected = selected;
+
+	    console.log("Selected : ",gv.currentlySelectedHaive);
     }
 
     /**
