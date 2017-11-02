@@ -29,7 +29,7 @@ export const acceptedContainerLocs = [
 export const navbarMenuTitlesAndIcons = [
     ["Welcome", "dashboard"],
     ["Dashboard", "flask"],
-	["Marketplace", "gears"]
+	["Asset store", "gears"]
 ];
 
 export var haiveStore = [

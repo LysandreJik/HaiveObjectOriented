@@ -160,6 +160,7 @@ export class HaiveSelectorModel{
         console.log("All empty haives : ",this.getAllEmptyTiles());
 
         gv.haiveSelectorView.refresh();
+        gv.mainAppController.saveState();
     }
 
     getNeighbours(x, y){

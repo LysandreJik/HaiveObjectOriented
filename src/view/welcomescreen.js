@@ -23,12 +23,13 @@ const gv = require('../../const/global');
 export class WelcomeScreen extends React.Component{
     render(){
         return(
-
-            <div className="welcomescreen">
-                <h1 className={"title"}>Dashboard</h1>
-                <MyLaboratory/>
-                <CurrentExperiment/>
-            </div>
+            <section id={"maincontent"} className={"maincontent"}>
+                <div className="welcomescreen">
+                    <h1 className={"title"}>Dashboard</h1>
+                    <MyLaboratory/>
+                    <CurrentExperiment/>
+                </div>
+            </section>
 
         );
     }

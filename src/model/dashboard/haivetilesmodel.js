@@ -48,7 +48,11 @@ export class HaiveTilesModel{
 		}
 
 		//The following code serves as an initiator for the debugging process. Please delete the following lines before release
+
+
 		gv.currentlySelectedHaive = this.haiveTiles[0];
+
+/*
 		gv.currentlySelectedHaive.addContainerObject("top-left", new Container({type:"P20 normal chip", name:"p20 normal second ?", id:"P20N:002", loc:"top-left"}));
 		gv.currentlySelectedHaive.addContainerObject("top-right", new Container({type:"6 falcon stand", name:"6fs 2nd", id:"6FS:002", loc:"top-right"}));
 		gv.currentlySelectedHaive.addContainerObject("middle-left", new Container({type:"15 screw tubes", name:"15 st", id:"15ST:002", loc:"middle-left"}));
@@ -92,7 +96,9 @@ export class HaiveTilesModel{
 
 		gv.currentlySelectedHaive.getContainer("middle-left").getTip(1,2).setLiquid("CBA");
 		gv.currentlySelectedHaive.getContainer("middle-left").getTip(1,2).setLiquidAmount("150");
-		gv.currentlySelectedHaive.getContainer("middle-left").getTip(1,2).setColor("cyan");
+		gv.currentlySelectedHaive.getContainer("middle-left").getTip(1,2).setColor("cyan");*/
+
+
 		gv.haiveTilesModel = this;
 	}
 

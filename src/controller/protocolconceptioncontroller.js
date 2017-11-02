@@ -28,7 +28,7 @@ export class ProtocolConceptionController{
      */
 	constructor(){
 		gv.protocolConceptionController = this;
-        gv.protocolConceptionController.saveContainersDebug();
+        //gv.protocolConceptionController.saveContainersDebug();
 	}
 
     /**

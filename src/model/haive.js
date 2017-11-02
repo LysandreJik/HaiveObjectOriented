@@ -19,6 +19,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 const acceptedLocs = require('../../const/global').acceptedContainerLocs;
 const clone = require('../../const/global').clone;
 const Container = require('./container').Container;
+const gv = require('../../const/global');
 
 /**
  *  Class which hold "Haive" types. "Haive" can be filled with objects from the "Container" class.
@@ -158,6 +159,12 @@ export class Haive{
 				}));
 			}
 		}
+
+        if(this.containers.length > 0 && gv.myAssets != undefined){
+            gv.myAssets.setState({button:[false, false, false]});
+        }else if(gv.myAssets != undefined){
+            gv.myAssets.setState({button:[false, false, true]});
+        }
 	}
 
     /**
@@ -177,6 +184,12 @@ export class Haive{
 		if(!containerExists){
 			this.containers.push(container);
 		}
+
+        if(this.containers.length > 0 && gv.myAssets != undefined){
+            gv.myAssets.setState({button:[false, false, false]});
+        }else if(gv.myAssets != undefined){
+            gv.myAssets.setState({button:[false, false, true]});
+        }
 	}
 
     /**
@@ -194,6 +207,12 @@ export class Haive{
 
 			}
 		}
+
+		if(this.containers.length > 0 && gv.myAssets != undefined){
+		    gv.myAssets.setState({button:[false, false, false]});
+        }else if(gv.myAssets != undefined){
+            gv.myAssets.setState({button:[false, false, true]});
+        }
 	}
 
     /**

@@ -72,7 +72,7 @@ export class MyAssets extends React.Component{
         gv.myAssets = this;
         this.setSelectedComponent = this.setSelectedComponent.bind(this);
 
-        this.state={selectedComponent:haive};
+        this.state={selectedComponent:haive, button:[false, true, true]};
     }
 
     setSelectedComponent(component){
@@ -102,8 +102,8 @@ export class MyAssets extends React.Component{
             <div id={"maincontent"} className={"maincontent"}>
                 <div id={"bar"} className={"myassetsbar"}>
                     <button id="myassetsbarbuttons1" className={"myassetsbarbuttons myassetsbarbuttonselected"} onClick={() => this.setSelected(1)}>HAIVE SELECT</button>
-                    <button id="myassetsbarbuttons2" className={"myassetsbarbuttons"} onClick={() => this.setSelected(2)}>CONTAINERS SELECT</button>
-                    <button id="myassetsbarbuttons3" className={"myassetsbarbuttons"} onClick={() => this.setSelected(3)}>PROTOCOL EDITOR</button>
+                    <button id="myassetsbarbuttons2" className="myassetsbarbuttons" onClick={() => this.setSelected(2)} disabled={this.state.button[1]}>CONTAINERS SELECT</button>
+                    <button id="myassetsbarbuttons3" className={"myassetsbarbuttons"} onClick={() => this.setSelected(3)} disabled={this.state.button[2]}>PROTOCOL EDITOR</button>
                 </div>
                 {this.state.selectedComponent}
             </div>

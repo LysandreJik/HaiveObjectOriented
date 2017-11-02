@@ -107,7 +107,7 @@ export class WebInterfaceController{
 				case "Dashboard":
 					return <MyAssets/>;
 					break;
-				case "Marketplace":
+				case "Asset store":
 					return marketplace;
 					break;
 			}
@@ -163,4 +163,42 @@ export class WebInterfaceController{
 		gv.mainApp.setState({hover:type, hoverFunc:func});
 		setTimeout(function(){window.location="#warning";}, 100);
 	}
+
+	saveState(){
+        let css = 'background: #fff; color: #5a5a00';
+
+        let haives = gv.haiveSelectorModel.getFullHaives();
+        let formattedCode = [];
+
+        for(let i = 0; i < haives.length; i++){
+            let haive = haives[i][0];
+            let id;
+
+            if(haive.getType() == "DISPENSER"){
+                id = "D";
+            }else if(haive.getType() == "FREEZER"){
+                id = "F";
+            }else{
+                id = "C";
+            }
+
+            if(i == 0){
+                id += "0";
+            }else{
+                let dx = (haives[i][1] - haives[0][1]);
+                let dy = (haives[i][2] - haives[0][2]);
+                console.log(dx, dy);
+                id += dx + "_" + dy;
+            }
+
+            formattedCode.push({
+                id:id,
+                name:haives[i][0].getName(),
+                desc:haives[i][0].getDesc(),
+                containers:haives[i][0].getContainers()
+            })
+        }
+
+	    console.log("%c%s", css, JSON.stringify(formattedCode, undefined, 2));
+    }
 }

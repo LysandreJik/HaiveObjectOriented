@@ -74,7 +74,6 @@ export class HaiveSelectorController {
                         gv.haiveSelectorModel.removeTileHaive(x, y);
                     }
 
-                    gv.haiveSelectorModel.updateEmptyTiles();
                     gv.haiveSelectorView.refresh();
                 }
             }
@@ -105,19 +104,11 @@ export class HaiveSelectorController {
                     gv.haiveSelectorModel.removeStoreHaive(x);
                     gv.haiveSelectorModel.updateEmptyTiles();
                     gv.haiveSelectorView.refresh();
+
+
                 }
             }
         });
-    }
-
-    addDroppables(small, x, y) {
-        if (!small) {
-            this.addDroppableToTiles(x, y);
-        }
-    }
-
-    addDroppableToTiles(x, y) {
-
     }
 
     /**

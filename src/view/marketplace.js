@@ -20,6 +20,6 @@ import React from 'react';
 
 export class Marketplace extends React.Component{
 	render(){
-		return(<section className="centertext_blue animated fadeInRight">THE MARKETPLACE ISN'T IMPLEMENTED YET THANK YOU FOR YOUR UNDERSTANDING.</section>);
+        return(<section className="centertext_blue animated fadeInRight">THE ASSET STORE ISN'T IMPLEMENTED YET.<br></br>THANK YOU FOR YOUR UNDERSTANDING.</section>);
 	}
 }
