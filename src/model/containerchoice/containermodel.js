@@ -65,6 +65,8 @@ export class ContainerSelectModel{
      * @returns Container object
      */
 	getContainerOnField(loc){
+	    console.log(this.containersOnField);
+	    console.log(loc);
 		return this.containersOnField[gv.getContainerLocNumberFromLocString(loc)];
 	}
 

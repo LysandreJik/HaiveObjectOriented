@@ -99,15 +99,7 @@ export class NavbarModel{
      * @param e
      */
 	handler(e){
-		console.log(gv.currentlySelectedHaive.getContainers());
-		console.log(e);
-		if(e == "Container Select" || e == "Protocol Conception" || e == "Protocol Design"){
-			if(gv.currentlySelectedHaive.getContainers() != "empty"){
-				this.setActiveSection(e);
-			}
-		}else{
-			this.setActiveSection(e);
-		}
+        this.setActiveSection(e);
 	}
 }
 

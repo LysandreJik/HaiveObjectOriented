@@ -19,7 +19,6 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 import React from 'react';
 
 import {Warning} from "./warningview";
-import {HaiveSelector} from "./dashboard/haiveselector";
 
 const WebInterfaceController = require('../controller/webinterfacecontroller').WebInterfaceController;
 	const gv = require('../../const/global');
@@ -40,7 +39,6 @@ export class App extends React.Component{
 
 	componentWillMount(){
 		webInterfaceController.getNavbarController().setRefreshAppFunction(this);
-		webInterfaceController.getHaiveStoreController().setRefreshAppFunction(this);
 	}
 
 	refresh(state, value){
@@ -54,14 +52,6 @@ export class App extends React.Component{
 	updateApp(state, value){
 		// console.log("Updated app with state "+state+":"+value);
 		this.setState({state:value});
-
-		if(state =="refreshTiles"){
-			webInterfaceController.refreshTiles();
-		}
-
-		if(state == "refreshStore"){
-			webInterfaceController.refreshStore();
-		}
 	}
 
 	render(){

@@ -32,11 +32,13 @@ export class Timeline{
 
 		this.initialTipContents = [];
 
-		if(!gv.currentlySelectedHaive.isEmpty()){
-			for(let i = 0; i < gv.currentlySelectedHaive.getContainers().length; i++){
-				this.initialTipContents.push(gv.currentlySelectedHaive.getContainers()[i].getFullChipsClone());
-			}
-		}
+		if(gv.currentlySelectedHaive != undefined){
+            if(!gv.currentlySelectedHaive.isEmpty()){
+                for(let i = 0; i < gv.currentlySelectedHaive.getContainers().length; i++){
+                    this.initialTipContents.push(gv.currentlySelectedHaive.getContainers()[i].getFullChipsClone());
+                }
+            }
+        }
 	}
 
     /**

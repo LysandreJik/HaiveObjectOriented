@@ -40,9 +40,9 @@ class MyLaboratory extends React.Component{
         return (
             <div className={"mylab"}>
                 <h3>My laboratory</h3>
-                <span>{"Currently selected haive : "+gv.currentlySelectedHaive.getName()}</span><br></br>
-                <span>{"Type : "+gv.currentlySelectedHaive.getType()}</span>
-                <span>{"Containers : "+gv.currentlySelectedHaive.getContainers()}</span>
+                <span>{gv.currentlySelectedHaive != undefined ? "Currently selected haive : "+gv.currentlySelectedHaive.getName() : "Currently selected haive : No haive currently selected."}</span><br></br>
+                <span>{gv.currentlySelectedHaive != undefined ? "Type : "+gv.currentlySelectedHaive.getType() : "Type : No haive currently selected."}</span>
+                <span>{gv.currentlySelectedHaive != undefined ? "Containers : "+gv.currentlySelectedHaive.getContainers() : "Containers : No haive currently selected."}</span>
             </div>
         );
     }

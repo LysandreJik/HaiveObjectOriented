@@ -97,7 +97,7 @@ export class AddLiquids extends React.Component{
 /**
  * Component displayed when a container is clicked on.
  */
-class ContainersHover extends React.Component{
+export class ContainersHover extends React.Component{
 	render(){
 		return(
 			<div className="lightbox" id={"cthover"} draggable="false">
@@ -245,6 +245,8 @@ class PipetteTips extends React.Component{
 		this.mouseUp = this.mouseUp.bind(this);
 		this.mouseMove = this.mouseMove.bind(this);
 		this.mouseIsDown = false;
+
+        model = gv.protocolConceptionModel;
 	}
 
 	componentDidMount(){

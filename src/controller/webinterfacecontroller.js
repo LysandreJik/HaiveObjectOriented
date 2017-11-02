@@ -17,18 +17,22 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 import React from 'react';
+import { WelcomeScreen } from "../view/welcomescreen";
+import { Marketplace } from '../view/marketplace';
+import { Navbar } from '../view/navbarview';
+import { ContainerSelect } from '../view/containerchoice/containerview';
+import { LoadingScreen } from '../view/loadingscreenview';
+import { AddLiquids } from '../view/protocolconceptionview';
+import { ProtocolDesign } from '../view/protocoldesignview';
+import { Login } from '../view/login';
+import { CreateAccount } from '../view/login';
+import { MyAssets } from "../view/myassets";
 
 const gv = require('../../const/global');
 const gi = require('../../const/globalImages').gi;
 
 const NavbarModel = require('../model/navbarmodel').NavbarModel;
 const NavbarController = require('../controller/navbarcontroller').NavbarController;
-
-const HaiveStoreModel = require('../model/dashboard/haivestoremodel').HaiveStoreModel;
-const HaiveStoreController = require('../controller/dashboard/haivestorecontroller').HaiveStoreController;
-
-const HaiveTilesModel = require('../model/dashboard/haivetilesmodel').HaiveTilesModel;
-const HaiveTilesController = require('../controller/dashboard/haivetilescontroller').HaiveTilesController;
 
 const ContainerSelectModel = require('../model/containerchoice/containermodel').ContainerSelectModel;
 const ContainerSelectController = require('../controller/containerchoice/containercontroller').ContainerSelectController;
@@ -41,19 +45,6 @@ const ProtocolDesignController = require('../controller/protocoldesigncontroller
 
 const LoginController = require('../controller/logincontroller').LoginController;
 
-import { WelcomeScreen } from "../view/welcomescreen";
-import { Marketplace } from '../view/marketplace';
-import { HaiveStore } from '../view/dashboard/haivestoreview';
-import { HaiveTiles } from '../view/dashboard/haivetilesview';
-import { Navbar } from '../view/navbarview';
-import { ContainerSelect } from '../view/containerchoice/containerview';
-import { LoadingScreen } from '../view/loadingscreenview';
-import { AddLiquids } from '../view/protocolconceptionview';
-import { ProtocolDesign } from '../view/protocoldesignview';
-import { Login } from '../view/login';
-import { CreateAccount } from '../view/login';
-import {MyAssets} from "../view/myassets";
-
 let marketplace = <Marketplace/>;
 
 
@@ -64,12 +55,6 @@ let containerSelect = <ContainerSelect model={containerSelectModel}/>;
 let navbarController = new NavbarController();
 let navbarModel = new NavbarModel({controller:navbarController});
 let navbar = <aside className="bg-black aside-sm nav-vertical only-icon" id="nav"><Navbar model={navbarModel}/></aside>;
-
-let haiveTilesController = new HaiveTilesController();
-let haiveTilesModel = new HaiveTilesModel({controller:haiveTilesController});
-let haiveStoreController = new HaiveStoreController({droppedTileFromStore:haiveTilesController.droppedTileFromStore});
-let haiveStoreModel = new HaiveStoreModel({controller:haiveStoreController});
-let dashboard = <section id="content"><HaiveStore model={haiveStoreModel}/><HaiveTiles model={haiveTilesModel}/></section>;
 
 let protocolConceptionController = new ProtocolConceptionController();
 let protocolConceptionModel = new ProtocolConceptionModel({controller:protocolConceptionController});
@@ -125,38 +110,12 @@ export class WebInterfaceController{
 		return createAccount;
 	}
 
-	getNavbarModel(){
-		return navbarModel;
-	}
-
 	getNavbarController(){
 		return navbarController;
 	}
 
 	getNavbarView(){
 		return navbar;
-	}
-
-	getHaiveStoreModel(){
-		return haiveStoreModel;
-	}
-
-	getHaiveStoreController(){
-		return haiveStoreController;
-	}
-
-	getHaiveStoreView(){
-		return dashboard;
-	}
-
-	refreshTiles(){
-		// console.log("Refresh tiles function called");
-		dashboard = <section id="content"><HaiveStore model={haiveStoreModel}/><HaiveTiles model={haiveTilesModel}/></section>;
-	}
-
-	refreshStore(){
-		// console.log("Refresh store function called");
-		dashboard = <section id="content"><HaiveStore model={haiveStoreModel}/><HaiveTiles model={haiveTilesModel}/></section>;
 	}
 
 	hoverMisc(type, func){

@@ -18,6 +18,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 
 import React from 'react';
+import {ContainersHover} from "../protocolconceptionview";
 
 const gv = require('../../../const/global');
 const containerImgBaseSize = 150;
@@ -47,7 +48,7 @@ export class ContainerSelect extends React.Component{
 					<img className="animated speed-slow center zoomIn" src="images/animations/zoominhexagon.png" />
 					</div>
 					<div id="maincontent">
-						<div style={{height:"100%"}, {width:"80%"}}>
+						<div style={{height:"100%", width:"80%"}}>
 							<div className="canvashex">
 								{this.state.animationDone=="true"&&gv.currentlySelectedHaive!=undefined?<MainContent/>:""}
 							</div>
@@ -182,7 +183,7 @@ class Canvas extends React.Component{
 	constructor(props){
 		super(props);
 		gv.containerViewCanvas = this;
-		this.state = {containers:model.getContainersOnField(), refresh:false, hover:""};
+		this.state = {containers:model.getContainersOnField(), refresh:false, hover:"", containerSelected:"none"};
 	}
 
 	componentDidMount(){
@@ -222,7 +223,11 @@ class Canvas extends React.Component{
         return (
 				<div id={container_location} className="canvascontainersontop animated speed-ultrafast pulse"  draggable = {false} style={divStyle}>
 					<img id={"img_"+container_location} src={("images/containers/container_main_images/"+container_type.getType().replace(/ /g,'_'))+(dark ? "_dark" : "") + ".png"} draggable = {false} width={containerImgBaseSize*ratio} />
-					{dark ? <button style={{"left":0, "position":"absolute", "backgroundColor":"#222"}} onClick={function(){model.removeContainerFromHaive(container_location)}} className="btnghost">{"Remove "+container_type.getType()}</button> : ""}
+					{<button style={{"left":0, "position":"absolute"}} onClick={
+					    function(){
+                            gv.protocolConceptionController.clickedContainer(gv.currentlySelectedHaive.getContainer(container_location));
+					    }
+					} className="btnghostinvisiblebutclickable">{"Remove "+container_type.getType()}</button>}
 				</div>
 			);
 	}
@@ -254,6 +259,7 @@ class Canvas extends React.Component{
 				{gv.currentlySelectedHaive.getContainer("top-left") != "" || gv.currentlySelectedHaive.getContainer("top-right") != "" || gv.currentlySelectedHaive.getContainer("middle-left") != "" ||
 					gv.currentlySelectedHaive.getContainer("middle-right") != "" || gv.currentlySelectedHaive.getContainer("bottom-left") != ""|| gv.currentlySelectedHaive.getContainer("bottom-right") != "" ?
 					<button className="protocols animated fadeInLeft btnghostdarker canvascontainertext" onClick={function(){controller.addLiquidToContainers()}}>ADD LIQUIDS</button> : ""}
+                {this.state.containerSelected != "none" ? <ContainersHover type={this.state.containerSelected}/> : ""}
 			</div>
 		);
 	}

@@ -18,12 +18,6 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 import {HaiveSelector} from "./dashboard/haiveselector";
 
-const HaiveStoreModel = require('../model/dashboard/haivestoremodel').HaiveStoreModel;
-const HaiveStoreController = require('../controller/dashboard/haivestorecontroller').HaiveStoreController;
-
-const HaiveTilesModel = require('../model/dashboard/haivetilesmodel').HaiveTilesModel;
-const HaiveTilesController = require('../controller/dashboard/haivetilescontroller').HaiveTilesController;
-
 const ProtocolConceptionModel = require('../model/protocolconceptionmodel').ProtocolConceptionModel;
 const ProtocolConceptionController = require('../controller/protocolconceptioncontroller').ProtocolConceptionController;
 
@@ -37,16 +31,9 @@ import { AddLiquids } from '../view/protocolconceptionview';
 import { ProtocolDesign } from '../view/protocoldesignview';
 
 import React from 'react';
-import { HaiveStore } from '../view/dashboard/haivestoreview';
-import { HaiveTiles } from '../view/dashboard/haivetilesview';
 import {ContainerSelect} from "./containerchoice/containerview";
 
 const gv = require('../../const/global');
-
-let haiveTilesController = new HaiveTilesController();
-let haiveTilesModel = new HaiveTilesModel({controller:haiveTilesController});
-let haiveStoreController = new HaiveStoreController({droppedTileFromStore:haiveTilesController.droppedTileFromStore});
-let haiveStoreModel = new HaiveStoreModel({controller:haiveStoreController});
 
 let containerSelectController = new ContainerSelectController();
 let containerSelectModel = new ContainerSelectModel({controller:containerSelectController});

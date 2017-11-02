@@ -37,11 +37,11 @@ export class ProtocolConceptionController{
      */
 	clickedContainer(container){
 		console.log("Clicked container "+container.getType());
-		gv.protocolConceptionView.setState({containerSelected:container});
+		gv.containerViewCanvas.setState({containerSelected:container});
 
 		setTimeout(function(){
 			window.location = "#cthover";
-			gv.protocolConceptionView.refresh();
+			gv.containerViewCanvas.refresh();
 		}, 1);
 
 	}
