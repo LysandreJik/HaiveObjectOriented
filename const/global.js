@@ -145,6 +145,20 @@ export var pos_bottom_right = [1-0.4, 1-0.21];
 export var availableContainers;
 export var containerBar;
 
+export function fetchJSONFile(path, callback) {
+    let httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = function() {
+        if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+                let data = JSON.parse(httpRequest.responseText);
+                if (callback) callback(data);
+            }
+        }
+    };
+    httpRequest.open('GET', path);
+    httpRequest.send();
+}
+
 export function clone(source) {
     if (Object.prototype.toString.call(source) === '[object Array]') {
         var __clone = [];

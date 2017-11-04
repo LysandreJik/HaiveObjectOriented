@@ -62,9 +62,22 @@ export class Container{
 	}
 
     /**
+     * Book a tip in this container, if the tip is empty.
+     */
+	bookEmptyTip(){
+        let tip = this.getEmptyTips()[0];
+        tip.setFull(true);
+        tip.setContaminated(true);
+        return tip;
+    }
+
+    /**
      * Unbook a tip in this container.
      */
 	unbookTip(tip){
+        var stack = new Error().stack;
+        console.log("PRINTING CALL STACK");
+        console.log( stack );
 		tip.setFull(false);
 	}
 
@@ -156,7 +169,7 @@ export class Container{
 		let fullChips = [];
 		for (let i = 0; i < this.tipArr.length; i++) {
 			for (let j = 0; j < this.tipArr[i].length; j++) {
-				if(!this.tipArr[i][j].isFull() && this.tipArr[i][j].getLiquid() == ""){
+				if(!this.tipArr[i][j].isFull() && this.tipArr[i][j].getLiquid() == "" && !this.tipArr[i][j].isContaminated()){
 					fullChips.push(this.tipArr[i][j]);
 				}
 			}
@@ -264,13 +277,30 @@ export class Container{
         let fullChips = [];
         for (let i = 0; i < this.tipArr.length; i++) {
             for (let j = 0; j < this.tipArr[i].length; j++) {
-                if(this.tipArr[i][j].isFull()){
+                if(this.tipArr[i][j].isFull() && !this.tipArr[i][j].isContaminated()){
                     fullChips.push(this.tipArr[i][j]);
                 }
             }
         }
 
         return fullChips;
+    }
+
+    /**
+     * Returns the empty tips
+     * @returns Array of tips
+     */
+    getEmptyTips(){
+        let emptyTips = [];
+        for (let i = 0; i < this.tipArr.length; i++) {
+            for (let j = 0; j < this.tipArr[i].length; j++) {
+                if(!this.tipArr[i][j].isFull() && !this.tipArr[i][j].isContaminated()){
+                    emptyTips.push(this.tipArr[i][j]);
+                }
+            }
+        }
+
+        return emptyTips;
     }
 
     /**

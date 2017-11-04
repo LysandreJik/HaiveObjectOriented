@@ -18,30 +18,21 @@
     <title>Login</title>
 </head>
 <body>
+<form action="index.html"}>
     <div class="logincontentswrapper animated fadeIn">
-        <div class="logincontents">
-            <form action="app.html">
-                <span class="colorblue">EMAIL ADDRESS</span><br>
-                <input id="user" type="text" name="username"><br>
-                <span class="colorblue">PASSWORD</span><br>
-                <input id="pass" type="password" name="password">
-
-                <br>
-                <br>
-
-                <button type="submit" class="btnghostlighter">login</button>
-                <button type="button" class="btnghostlighter" onclick="createaccount()">create account</button>
-            </form>
-
-
+        <div class="createaccountcontents">
+            <span class="colorbluesmall">Email address</span><br>
+            <input id="email" type="text" name="email"><br>
+            <span class="colorbluesmall">PASSWORD</span><br>
+            <input id="pass" type="password" name="password">
+            <span class="colorbluesmall">CONFIRM PASSWORD</span><br>
+            <input id="passconfirm" type="password" name="passwordconfirm">
+            <br>
+            <br>
+            <button class="btnghostlighter">create account</button>
+            <button class="btnghostlighter">cancel</button>
         </div>
     </div>
-
-    <script>
-        function createaccount(){
-            window.location="account.html";
-        }
-
-    </script>
+</form>
 </body>
 </html>

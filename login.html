@@ -20,7 +20,7 @@
 <body>
     <div class="logincontentswrapper animated fadeIn">
         <div class="logincontents">
-            <form action="app.html">
+            <form action="app.html" method="post" }>
                 <span class="colorblue">EMAIL ADDRESS</span><br>
                 <input id="user" type="text" name="username"><br>
                 <span class="colorblue">PASSWORD</span><br>
@@ -29,19 +29,10 @@
                 <br>
                 <br>
 
-                <button type="submit" class="btnghostlighter">login</button>
-                <button type="button" class="btnghostlighter" onclick="createaccount()">create account</button>
+                <button class="btnghostlighter" onClick={gv.loginController.login}>login</button>
+                <button class="btnghostlighter" onClick={gv.loginController.createAccount}>create account</button>
             </form>
-
-
         </div>
     </div>
-
-    <script>
-        function createaccount(){
-            window.location="account.html";
-        }
-
-    </script>
 </body>
 </html>

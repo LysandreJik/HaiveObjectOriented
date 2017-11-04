@@ -180,6 +180,7 @@ export class ProtocolDesignController{
 
         }
 
+        $.post("json.php", {json : JSON.stringify(arr, undefined, 2)});
         console.log(JSON.stringify(arr, undefined, 2));
     }
 
@@ -418,12 +419,16 @@ export class ProtocolDesignController{
 			currentQuantity *= 1000;
 		}
 
+		console.log("Drooped block is currently : ", this.droppedBlock);
+		let container = this.droppedBlock.getContainer();
+
 		//If the chosen quantity is wrong or above the max quantity, the quantity contained by the tip is immediately set to the maximum one.
 		if(currentQuantity > maxQuantity || currentQuantity < 0 || (!(currentQuantity < 0) && !(currentQuantity > 0))){
 			this.timeline.setBlock(new Block({
 				text:"GET LIQUID :\u00a0"+tip.getLiquid(),
 				type:"get liquid",
 				tip:tip,
+                container:container,
 				liquidQuantity:[tip.getLiquidAmount(),tip.getAmountUnit()]
 			}), this.timeline.getIndexOf(this.droppedBlock));
 			tip.setLiquidAmount(0);
@@ -432,6 +437,7 @@ export class ProtocolDesignController{
 				text:"GET LIQUID :\u00a0"+tip.getLiquid(),
 				type:"get liquid",
 				tip:tip,
+                container:container,
 				liquidQuantity:[currentQuantity/1000, gv.currentlySelectedDimension]
 			}), this.timeline.getIndexOf(this.droppedBlock));
 			let q = maxQuantity-currentQuantity;
@@ -443,6 +449,8 @@ export class ProtocolDesignController{
 
 		}
 
+		console.log("just updated the goddamn fucking thing");
+		console.log("block", this.timeline.getBlock(this.timeline.getIndexOf(this.droppedBlock)))
 		this.getSpeed();
 		this.timeline.setErrors();
 		gv.protocolDesignView.refresh();
@@ -593,12 +601,14 @@ export class ProtocolDesignController{
 				gv.protocolDesignController.droppedBlock.setContainer(containerObj);
 				gv.protocolDesignController.droppedBlock.setText("Deposit tip in "+containerObj.getType()+" container");
 
+				gv.protocolDesignController.droppedBlock.setTip(containerObj.bookEmptyTip());
 				gv.protocolDesignView.refresh();
 				gv.protocolDesignController.getSpeed();
 			}
 		}else if(gv.protocolDesignController.droppedBlock.getType() == "get liquid"){
 			if(containerObj.isLiquidContainer()){
-				console.log(gv.protocolDesignController.droppedBlock);
+                gv.protocolDesignController.droppedBlock.setContainer(containerObj);
+				console.log("Get liquid block dropped ; ", gv.protocolDesignController.droppedBlock);
 				if(gv.protocolDesignController.droppedBlock.getTip() != undefined){
 					gv.protocolDesignController.droppedBlock.getTip().addLiquid(gv.protocolDesignController.droppedBlock.getLiquidQuantity()[0], gv.protocolDesignController.droppedBlock.getLiquidQuantity()[1]);
 					gv.temporaryLiquidQuantity = [gv.protocolDesignController.droppedBlock.getLiquidQuantity()[0], gv.protocolDesignController.droppedBlock.getLiquidQuantity()[1], gv.protocolDesignController.droppedBlock.getTip()];
@@ -607,10 +617,12 @@ export class ProtocolDesignController{
 			}
 		}else if(gv.protocolDesignController.droppedBlock.getType() == "deposit liquid") {
 			if(containerObj.isLiquidContainer()){
+                gv.protocolDesignController.droppedBlock.setContainer(containerObj);
 				gv.hoverview.depositLiquid(gv.currentlySelectedHaive.getContainers()[container.substring(15)]);
 			}
 		}else if(gv.protocolDesignController.droppedBlock.getType() == "pipetting") {
 			if(containerObj.isLiquidContainer()){
+                gv.protocolDesignController.droppedBlock.setContainer(containerObj);
 				gv.hoverview.pipetting(gv.currentlySelectedHaive.getContainers()[container.substring(15)]);
 			}
 		}
@@ -673,10 +685,14 @@ export class ProtocolDesignController{
 		this.timeline.setBlock(new Block({
 			text:"DISPOSE LIQUID :\u00a0"+tip.getLiquid()+" ("+depositAmount+type+")",
 			type:"deposit liquid",
+            container:gv.protocolDesignController.droppedBlock.getContainer(),
 			tip:tip,
 			liquidQuantity:[depositAmount, type],
 			dirtyingTip:!emptyTip
 		}), this.timeline.getIndexOf(parent.props.block));
+
+		console.log(this.timeline.getBlock(this.timeline.getIndexOf(parent.props.block)));
+
 		this.getSpeed();
 	}
 
@@ -701,6 +717,7 @@ export class ProtocolDesignController{
             text:"PIPETTING :\u00a0"+parent.props.tip.getLiquid(),
             type:"pipetting",
             tip:parent.props.tip,
+            container:gv.protocolDesignController.droppedBlock.getContainer(),
             liquidQuantity:[qty[0], qty[1]],
             args:{
                 position:[$('#tippos_val').val(), type],

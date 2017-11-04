@@ -151,5 +151,11 @@ export class WebInterfaceController{
         }
 
 	    console.log("%c%s", css, JSON.stringify(formattedCode, undefined, 2));
+
+        gv.fetchJSONFile('json/read.json', function(data){
+            console.log(data);
+        });
+
+
     }
 }

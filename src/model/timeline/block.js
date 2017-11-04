@@ -30,9 +30,7 @@ export class Block{
 		}else{
 			this.speed = args.speed;
 			this.tip = args.tip;
-			if(this.tip == undefined){
-				this.container = args.container;
-			}
+            this.container = args.container;
 			this.type = args.type;
 			this.text = args.text;
 			if(args.text == undefined){
@@ -84,6 +82,8 @@ export class Block{
 
 
 		this.selected = false;
+
+        console.log("Created", this);
 	}
 
     /**
@@ -478,6 +478,7 @@ export class Block{
      */
 	setContainer(container){
 		this.container = container;
+        console.log("Set container of ", this, "to ", container);
 	}
 
     /**

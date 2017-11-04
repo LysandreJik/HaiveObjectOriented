@@ -56,11 +56,17 @@ export class Tip{
 			this.viscous = args.viscous;
 		}
 
-		if(args.full == undefined){
-			this.full = false;
-		}else{
-			this.full = args.full;
-		}
+        if(args.full == undefined){
+            this.full = false;
+        }else{
+            this.full = args.full;
+        }
+
+        if(args.contaminated == undefined){
+            this.contaminated = false;
+        }else{
+            this.contaminated = args.contaminated;
+        }
 	}
 
     /**
@@ -77,7 +83,8 @@ export class Tip{
 			amountUnit:clone(this.amountUnit),
 			liquidAmount:clone(this.liquidAmount),
 			viscous:clone(this.viscous),
-			full:clone(this.full)
+			full:clone(this.full),
+            contaminated:clone(this.contaminated)
 		});
 	}
 
@@ -99,6 +106,7 @@ export class Tip{
 		this.liquidAmount = 0;
 		this.viscous = false;
 		this.full = false;
+		this.contaminated = false;
 	}
 
     /**
@@ -124,6 +132,22 @@ export class Tip{
 	setFull(full){
 		this.full = full;
 	}
+
+    /**
+     * Setter for the contaminated boolean. A contaminated tip is not suitable for re-use.
+     * @param contaminated
+     */
+	setContaminated(contaminated){
+	    this.contaminated = contaminated;
+    }
+
+    /**
+     * Getter for the contamniated boolean. A contaminated tip is not suitable for re-use.
+     * @returns {*}
+     */
+    isContaminated(){
+	    return this.contaminated;
+    }
 
     /**
      * Get the Tip's X position
