@@ -30,6 +30,7 @@ let controller;
 export class ContainerSelectModel{
 	constructor(args){
 		controller = args.controller;
+		gv.containerSelectModel = this;
 		this.containersAvailable = new ContainersAvailable();
 		this.containersOnField = [];
 	}

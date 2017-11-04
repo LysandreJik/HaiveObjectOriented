@@ -32,8 +32,6 @@ export class Block{
 			this.tip = args.tip;
 			if(this.tip == undefined){
 				this.container = args.container;
-			}else{
-				this.container = this.tip.getContainer();
 			}
 			this.type = args.type;
 			this.text = args.text;
@@ -185,8 +183,6 @@ export class Block{
      */
     setSelected(selected){
 	    this.selected = selected;
-
-	    console.log("Selected : ",gv.currentlySelectedHaive);
     }
 
     /**
@@ -452,7 +448,7 @@ export class Block{
 
     /**
      * Tip getter
-     * May return null : Some block does not use this, so attention is required.
+     * May return null : Some block do not use this, so attention is required.
      * @returns {*} Tip object
      */
 	getTip(){

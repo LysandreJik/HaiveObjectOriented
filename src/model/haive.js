@@ -112,6 +112,16 @@ export class Haive{
 
 	}
 
+	getJSONContainers(){
+	    let jsonContainers = [];
+
+	    for(let i = 0; i < this.containers.length; i++){
+	        jsonContainers.push(this.containers[i].getJSONCopy());
+        }
+
+        return jsonContainers;
+    }
+
     /**
      * Get a container from the Haive, according to the location passed as parameter.
      * @param loc Location of the container, String
@@ -135,6 +145,11 @@ export class Haive{
 	addContainer(loc, container){
         let containerExists = false;
 
+        console.log(container);
+        console.log(gv.containerSelectModel.containersAvailable.containers);
+        console.log(gv.containerSelectModel.containersAvailable.getAvailableContainersPerType(container));
+        let containerObj = gv.containerSelectModel.containersAvailable.getAvailableContainersPerType(container)[0];
+
 		if(acceptedLocs.indexOf(loc) == -1){
 			throw new SyntaxError("Container location isn't correct : "+loc)
 		}else{
@@ -142,8 +157,8 @@ export class Haive{
 				if(this.containers[i].getLoc() == loc) {
 					this.containers[i] = new Container({
 						loc:loc,
-						name:"",
-						id:"",
+						name:containerObj.getNeighbours(),
+						id:containerObj.getId(),
 						type:container
 					});
 					containerExists = true;
@@ -153,12 +168,14 @@ export class Haive{
 			if(!containerExists){
 				this.containers.push(new Container({
 					loc:loc,
-					name:"",
-					id:"",
+					name:containerObj.getName(),
+					id:containerObj.getId(),
 					type:container
 				}));
 			}
 		}
+
+        gv.containerSelectModel.containersAvailable.removeContainer(containerObj);
 
         if(this.containers.length > 0 && gv.myAssets != undefined){
             gv.myAssets.setState({button:[false, false, false]});

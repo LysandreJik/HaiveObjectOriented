@@ -35,7 +35,7 @@ export class Timeline{
 		if(gv.currentlySelectedHaive != undefined){
             if(!gv.currentlySelectedHaive.isEmpty()){
                 for(let i = 0; i < gv.currentlySelectedHaive.getContainers().length; i++){
-                    this.initialTipContents.push(gv.currentlySelectedHaive.getContainers()[i].getFullChipsClone());
+                    this.initialTipContents.push(gv.currentlySelectedHaive.getContainers()[i].getChipsClone());
                 }
             }
         }

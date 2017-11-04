@@ -37,7 +37,7 @@ export class ProtocolConceptionController{
      */
 	clickedContainer(container){
 		console.log("Clicked container "+container.getType());
-		gv.containerViewCanvas.setState({containerSelected:container});
+		gv.containerView.setState({containerSelected:container});
 
 		setTimeout(function(){
 			window.location = "#cthover";

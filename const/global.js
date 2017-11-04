@@ -46,14 +46,16 @@ export const empty =       "openslot";
 
 
 export var containersAvailable = [
-	["P1000 normal chip", "p1000 normal", "P1000N:001"],
-	["P1000 long chip", "p1000 long", "P1000L:001"],
-	["P20 normal chip", "p20", "P20N:001"],
-	["P200 normal chip", "p200", "P200N:001"],
-	["15 screw tubes", "15st", "15SC:001"],
-	["6 falcon stand", "6fs", "6FS:001"],
-	["P1000 normal chip", "second p100 normal", "P1000N:002"]
+	["P1000 normal chip", "My first P1000 normal chip container", "P1000N:001"],
+	["P1000 long chip", "My first P1000 long chip container", "P1000L:001"],
+	["P20 normal chip", "My first P20 normal chip container", "P20N:001"],
+	["P200 normal chip", "My first P200 normal chip container", "P200N:001"],
+	["15 screw tubes", "My first 15 screw tubes container", "15SC:001"],
+	["6 falcon stand", "My first 6 falcon stand container", "6FS:001"],
+	["P1000 normal chip", "My second P1000 normal chip container", "P1000N:002"]
 ];
+
+export var containerSelectModel;
 
 export var hexagon_tiles_canv_pos = [];
 
@@ -147,6 +149,7 @@ export function clone(source) {
     if (Object.prototype.toString.call(source) === '[object Array]') {
         var __clone = [];
         for (var i=0; i<source.length; i++) {
+            console.log(source[i]);
             __clone[i] = clone(source[i]);
         }
         return __clone;

@@ -31,6 +31,8 @@ export class ContainersAvailable{
 				name:gv.containersAvailable[i][1],
 				id:gv.containersAvailable[i][2],
 			}));
+
+			console.log("Creating ", i);
 		}
 		gv.availableContainers = this;
 	}

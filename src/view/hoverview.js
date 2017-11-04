@@ -449,7 +449,8 @@ class Pipetting extends React.Component{
 
                     <label htmlFor="field3">
                         <span id="nprcent">{"Redial pipette to n% of total liquid. n = "}</span><input style={{"width":"20vw"}} id="nprcent_val" type="text" name="field2" required="true" />
-                        <span id="xprcent">{"Mix with x% of total liquid. x = "}</span><input style={{"width":"20vw"}} id="xprcent_val" type="text" name="field2" required="true" />
+                        <span id="xprcent">{"Mix with x% of total liquid. x = "}</span><input style={{"width":"20vw"}} id="xprcent_val" type="text" name="field2" required="true" /><br></br>
+                        <span id="nbriterations">{"Number of iterations"}</span><br></br><input style={{"width":"20vw"}} id="nbriterations_val" type="text" name="field3" required="true" />
                     </label>
 
 					<label>
@@ -457,11 +458,16 @@ class Pipetting extends React.Component{
 								function(){
                                     let n = $('#nprcent_val').val();
                                     let x = $('#xprcent_val').val();
+                                    let i = $('#nbriterations_val').val();;
                                     
 									if((/^\d*[,.]\d+$/.test(n) || /^\d+$/.test(n)) && n > 0 && n < 100){
                                         if((/^\d*[,.]\d+$/.test(x) || /^\d+$/.test(x)) && x > 0 && x < 100){
                                             if(/^\d*[,.]\d+$/.test($('#tippos_val').val()) || /^\d+$/.test($('#tippos_val').val())){
-                                                gv.protocolDesignController.definePipetting(parent, pos);
+                                                if((/^\d*[,.]\d+$/.test(i) || /^\d+$/.test(i)) && n > 0){
+                                                    gv.protocolDesignController.definePipetting(parent, pos);
+                                                }else{
+                                                    $('#nbriterations_val').val("Only positive numbers are accepted");
+                                                }
                                             }else{
                                                 $('#tippos_val').val("Only numbers are accepted");
                                             }

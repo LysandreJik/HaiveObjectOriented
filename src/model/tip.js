@@ -25,7 +25,7 @@ export class Tip{
 	constructor(args){
 		this.x = args.x;
 		this.y = args.y;
-		this.container = args.container;
+		//this.container = args.container;
 		if(args.liquid == undefined){
 			this.liquid = "";
 		}else{
@@ -71,7 +71,7 @@ export class Tip{
 		return new Tip({
 			x:clone(this.x),
 			y:clone(this.y),
-			container:this.container,
+			//container:this.container,
 			liquid:clone(this.liquid),
 			color:clone(this.color),
 			amountUnit:clone(this.amountUnit),
@@ -81,13 +81,13 @@ export class Tip{
 		});
 	}
 
-    /**
-     * Returns the container of this Tip.
-     * @returns {*} Container object
-     */
-	getContainer(){
-		return this.container;
-	}
+    // /**
+     // * Returns the container of this Tip.
+     // * @returns {*} Container object
+     // */
+	// getContainer(){
+	// 	return this.container;
+	// }
 
     /**
      * Cleans this tip and empties it. Basically resets it to its unused, original state.

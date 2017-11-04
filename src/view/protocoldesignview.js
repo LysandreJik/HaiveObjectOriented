@@ -119,7 +119,7 @@ export class ProtocolDesign extends React.Component{
 		return(
 			<section className="vbox ">
 				<section className="scrollable wrapper">
-					<div id="maincontent" className="row">
+					<div id="maincontent" className="row animated fadeIn speed-fast">
 
 
 						<ContainersPage blockDropped={controller.clickOnContainer.bind(this)} disabled={this.state.disabled}/>
@@ -142,7 +142,7 @@ class RunInterface extends React.Component{
     render(){
         return(
             <div id={"runinterface"}>
-                <button className={"runbutton menuitem"}>START THE PROTOCOL</button>
+                <button className={"runbutton menuitem"} onClick={gv.protocolDesignController.startProtocol}>START THE PROTOCOL</button>
             </div>
         );
     }

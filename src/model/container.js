@@ -31,7 +31,6 @@ export class Container{
 		this.id = args.id;
 		this.loc = args.loc;
 		this.maxLiquidQuantity = args.maxLiquidQuantity;
-		this.bookedChips = args.bookedChips;
 
 		if(acceptedTypes.indexOf(args.type) != -1){
 			this.type = args.type;
@@ -51,25 +50,22 @@ export class Container{
 		}else{
 			this.tipArr = args.tipArr;
 		}
-
-
-		if(this.bookedChips == undefined){
-			this.bookedChips = 0;
-		}
 	}
 
     /**
      * Book a tip in this container. This way there will always be enough tips.
      */
 	bookTip(){
-		this.bookedChips += 1;
+	    let tip = this.getFullTips()[0];
+	    tip.setFull(false);
+	    return tip;
 	}
 
     /**
      * Unbook a tip in this container.
      */
-	unbookTip(){
-		this.bookedChips -= 1;
+	unbookTip(tip){
+		tip.setFull(false);
 	}
 
     /**
@@ -173,7 +169,7 @@ export class Container{
      * Returns an array of all tips, cloned (no referencing).
      * @returns {Array} MD Array of tips.
      */
-	getFullChipsClone(){
+	getChipsClone(){
         let fullTip = [];
 		for (let i = 0; i < this.tipArr.length; i++) {
             let fullTipLine = [];
@@ -196,28 +192,86 @@ export class Container{
 			id:this.id,
 			loc:this.loc,
 			maxLiquidQuantity:this.maxLiquidQuantity,
-			bookedChip:this.bookedChips,
 			type:this.type,
-			tipArr:this.getFullChipsClone(),
+			tipArr:this.getChipsClone(),
 		});
 	}
+
+	getJSONCopy(){
+	    let tipArr = [];
+	    let fullTips = this.getFullTips();
+
+	    console.log(fullTips);
+	    for(let i = 0; i < fullTips.length; i++){
+	        console.log(fullTips[i]);
+	        tipArr.push({x:fullTips[i].getX(), y:fullTips[i].getY()});
+        }
+
+        return new Container({
+            name:this.name,
+            id:this.id,
+            loc:this.loc,
+            type:this.type,
+            tipArr:tipArr
+        });
+    }
+
+    getSuccintJSONCopy(){
+        return ({
+            loc:this.getNumberFromPosition(this.loc),
+            type:this.type
+        });
+    }
+
+    getNumberFromPosition(pos){
+        if(pos == "middle-right"){
+            return 3;
+        }else if(pos == "bottom-right"){
+            return 5;
+        }else if(pos == "bottom-left"){
+            return 7;
+        }else if(pos == "middle-left"){
+            return 9;
+        }else if(pos == "top-left"){
+            return 11;
+        }else if(pos == "top-right"){
+            return 1;
+        }
+    }
 
     /**
      * Returns the number of full tips
      * @returns {number} int
      */
-	getNumberOfFullTips(){
+    getNumberOfFullTips(){
         let fullChips = 0;
-		for (let i = 0; i < this.tipArr.length; i++) {
-			for (let j = 0; j < this.tipArr[i].length; j++) {
-				if(this.tipArr[i][j].isFull()){
-					fullChips++;
-				}
-			}
-		}
+        for (let i = 0; i < this.tipArr.length; i++) {
+            for (let j = 0; j < this.tipArr[i].length; j++) {
+                if(this.tipArr[i][j].isFull()){
+                    fullChips++;
+                }
+            }
+        }
 
-		return fullChips-this.bookedChips;
-	}
+        return fullChips;
+    }
+
+    /**
+     * Returns the full tips
+     * @returns Array of tips
+     */
+    getFullTips(){
+        let fullChips = [];
+        for (let i = 0; i < this.tipArr.length; i++) {
+            for (let j = 0; j < this.tipArr[i].length; j++) {
+                if(this.tipArr[i][j].isFull()){
+                    fullChips.push(this.tipArr[i][j]);
+                }
+            }
+        }
+
+        return fullChips;
+    }
 
     /**
      * Returns an array of all contaminated tips.
@@ -295,6 +349,7 @@ export class Container{
      * @param y y-axis value
      */
 	setTip(chip, x, y){
+	    console.log(x, y, chip);
 		this.tipArr[x][y] = gv.clone(chip);
 	}
 }

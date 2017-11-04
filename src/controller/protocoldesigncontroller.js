@@ -34,11 +34,154 @@ export class ProtocolDesignController{
 		this.cancelGetLiquid = this.cancelGetLiquid.bind(this);
         this.blueprintMounted = this.blueprintMounted.bind(this);
         this.blueprintUnmounted = this.blueprintUnmounted.bind(this);
+        this.startProtocol = this.startProtocol.bind(this);
 		this.mouseIsDown = false;
 		this.x1y1 = [-1,-1];
 		this.draggingBlock = false;
 
 	}
+
+    /**
+     * Sends the data to the raspberry PI
+     */
+    startProtocol(){
+        let blocks = this.timeline.getBlocks();
+        let arr = [];
+        let actualCounter = 0;
+
+        let haives = gv.haiveSelectorModel.getFullHaives();
+        let id = "";
+
+        console.log("Full haives ", gv.haiveSelectorModel.getFullHaives());
+        for(let i = 0; i < haives.length; i++){
+            if(haives[i][0] == gv.currentlySelectedHaive){
+                if(i == 0){
+                    if(haives[0][0].getType() == "DISPENSER"){
+                        id = "D";
+                    }else if(haives[0][0].getType() == "FREEZER"){
+                        id = "F";
+                    }else{
+                        id = "C";
+                    }
+
+                    id += "0";
+                }else{
+                    if(haives[i][0].getType() == "DISPENSER"){
+                        id = "D";
+                    }else if(haives[i][0].getType() == "FREEZER"){
+                        id = "F";
+                    }else{
+                        id = "C";
+                    }
+
+                    let dx = (haives[i][1] - haives[0][1]);
+                    let dy = (haives[i][2] - haives[0][2]);
+                    console.log(dx, dy);
+                    id += dx + "_" + dy;
+                }
+            }
+        }
+
+        for(let i = 0; i < blocks.length; i++){
+            if(blocks[i].getType() != "empty"){
+                if(blocks[i].getType() == "get tip" || blocks[i].getType() == "deposit tip"){
+                    arr.push({
+                        id:actualCounter,
+                        haive_id:id,
+                        type:"move header",
+                        container:blocks[i].getContainer().getSuccintJSONCopy(),
+                        tip:{x:String.fromCharCode(97 + blocks[i].getTip().getX()), y:blocks[i].getTip().getY()},
+                        "movement speed":blocks[i].getSpeed()
+                    });
+
+                    actualCounter++;
+
+                    if(blocks[i].getType() == "get tip"){
+                        arr.push({
+                            id:actualCounter,
+                            haive_id:id,
+                            type:blocks[i].getType(),
+                            status:"get"
+                        });
+                    }else{
+                        arr.push({
+                            id:actualCounter,
+                            haive_id:id,
+                            type:"get tip",
+                            status:"deposit"
+                        });
+                    }
+
+                }else if(blocks[i].getType() == "get liquid" || blocks[i].getType() == "deposit liquid"){
+                    arr.push({
+                        id:actualCounter,
+                        haive_id:id,
+                        type:"move header",
+                        container:blocks[i].getContainer().getSuccintJSONCopy(),
+                        tip:{x:String.fromCharCode(97 + blocks[i].getTip().getX()), y:blocks[i].getTip().getY()},
+                        "movement speed":blocks[i].getSpeed()
+                    });
+
+                    actualCounter++;
+
+                    if(blocks[i].getType() == "get liquid"){
+                        arr.push({
+                            id:actualCounter,
+                            haive_id:id,
+                            type:blocks[i].getType(),
+                            status:"get",
+                            "operation speed":blocks[i].getSpeed(),
+                            amount:blocks[i].getLiquidQuantity()[0]+blocks[i].getLiquidQuantity()[1]
+                        });
+                    }else{
+                        arr.push({
+                            id:actualCounter,
+                            haive_id:id,
+                            type:blocks[i].getType(),
+                            status:"deposit",
+                            "operation speed":blocks[i].getSpeed(),
+                            amount:blocks[i].getLiquidQuantity()[0]+blocks[i].getLiquidQuantity()[1]
+                        });
+                    }
+
+                }else if(blocks[i].getType() == "wait"){
+                    arr.push({
+                        id:actualCounter,
+                        haive_id:id,
+                        type:blocks[i].getType(),
+                        amount:blocks[i].getArgs().wait
+                    });
+                }else if(blocks[i].getType() == "pipetting"){
+                    arr.push({
+                        id:actualCounter,
+                        haive_id:id,
+                        type:"move header",
+                        container:blocks[i].getContainer().getSuccintJSONCopy(),
+                        tip:{x:String.fromCharCode(97 + blocks[i].getTip().getX()), y:blocks[i].getTip().getY()},
+                        "movement speed":blocks[i].getSpeed()
+                    });
+
+                    actualCounter++;
+
+                    arr.push({
+                        id:actualCounter,
+                        haive_id:id,
+                        type:blocks[i].getType(),
+                        "tip position":blocks[i].getArgs().position[0],
+                        location:blocks[i].getArgs().position[1],
+                        "pipette redial qty":blocks[i].getArgs().n,
+                        "mix qty":blocks[i].getArgs().x,
+                        iterations:blocks[i].getArgs().iterations
+                    });
+                }
+
+                actualCounter++;
+            }
+
+        }
+
+        console.log(JSON.stringify(arr, undefined, 2));
+    }
 
     /**
 	 * Creates a new timeline. Sends out a warning because the actual timeline will be overriden.
@@ -426,11 +569,11 @@ export class ProtocolDesignController{
 				style.filterContainers('other', 'lighten');
 				dropBlockStyle.stopBreathingBorder('containerspage');
 				if(gv.protocolDesignController.droppedBlock.getContainer() == undefined){
-					containerObj.bookTip();
+                    gv.protocolDesignController.droppedBlock.setTip(containerObj.bookTip());
 				}else{
 					if(gv.protocolDesignController.droppedBlock.getContainer() != container){
-						gv.protocolDesignController.droppedBlock.getContainer().unbookTip();
-						containerObj.bookTip();
+						gv.protocolDesignController.droppedBlock.getContainer().unbookTip(gv.protocolDesignController.droppedBlock.getTip());
+						gv.protocolDesignController.droppedBlock.setTip(containerObj.bookTip());
 					}
 				}
 
@@ -484,6 +627,7 @@ export class ProtocolDesignController{
 		if(/^\d+$/.test(document.getElementById('wait_textfield').value)){
 			parent.props.block.setText("Wait "+document.getElementById('wait_textfield').value+" seconds");
 			parent.props.block.setType("wait");
+			parent.props.block.setArgs({wait:document.getElementById('wait_textfield').value});
 			window.location="#_";
             gv.protocolDesignView.refresh();
 		}else{
@@ -561,7 +705,8 @@ export class ProtocolDesignController{
             args:{
                 position:[$('#tippos_val').val(), type],
                 n:$('#nprcent_val').val(),
-                x:$('#xprcent_val').val()
+                x:$('#xprcent_val').val(),
+                iterations:$('#nbriterations_val').val()
             }
         }), this.timeline.getIndexOf(parent.props.block));
 

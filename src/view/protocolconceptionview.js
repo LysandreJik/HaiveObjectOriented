@@ -98,11 +98,16 @@ export class AddLiquids extends React.Component{
  * Component displayed when a container is clicked on.
  */
 export class ContainersHover extends React.Component{
+
+    componentDidMount(){
+        this.setState({updated:true});
+    }
+
 	render(){
 		return(
 			<div className="lightbox" id={"cthover"} draggable="false">
-					<ContainerImageHover type={this.props.type}/>
-					<PipetteTips container={this.props.type}/>
+                <ContainerImageHover type={this.props.type}/>
+                <PipetteTips container={this.props.type}/>
 			</div>
 		);
 	}

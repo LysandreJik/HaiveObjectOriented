@@ -81,7 +81,7 @@ export class ContainerSelectController{
 								gv.availableContainers.addContainer(new Container({type:gv.currentlySelectedHaive.getContainer(id_tag).getType(), name:"none", id:"none", loc:"containerbar"}));
 							}
 
-							gv.availableContainers.removeFirstContainerByType(gv.acceptedContainerTypes[ui.draggable.prop('id').substring(6)]);
+							//gv.availableContainers.removeFirstContainerByType(gv.acceptedContainerTypes[ui.draggable.prop('id').substring(6)]);
                             gv.currentlySelectedHaive.addContainer(id_tag, gv.acceptedContainerTypes[ui.draggable.prop('id').substring(6)]);
 							gv.containerViewCanvas.refresh();
 							gv.containerBar.refresh();

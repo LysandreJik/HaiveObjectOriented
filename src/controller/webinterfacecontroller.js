@@ -34,9 +34,6 @@ const gi = require('../../const/globalImages').gi;
 const NavbarModel = require('../model/navbarmodel').NavbarModel;
 const NavbarController = require('../controller/navbarcontroller').NavbarController;
 
-const ContainerSelectModel = require('../model/containerchoice/containermodel').ContainerSelectModel;
-const ContainerSelectController = require('../controller/containerchoice/containercontroller').ContainerSelectController;
-
 const ProtocolConceptionModel = require('../model/protocolconceptionmodel').ProtocolConceptionModel;
 const ProtocolConceptionController = require('../controller/protocolconceptioncontroller').ProtocolConceptionController;
 
@@ -46,11 +43,6 @@ const ProtocolDesignController = require('../controller/protocoldesigncontroller
 const LoginController = require('../controller/logincontroller').LoginController;
 
 let marketplace = <Marketplace/>;
-
-
-let containerSelectController = new ContainerSelectController();
-let containerSelectModel = new ContainerSelectModel({controller:containerSelectController});
-let containerSelect = <ContainerSelect model={containerSelectModel}/>;
 
 let navbarController = new NavbarController();
 let navbarModel = new NavbarModel({controller:navbarController});
@@ -154,7 +146,7 @@ export class WebInterfaceController{
                 id:id,
                 name:haives[i][0].getName(),
                 desc:haives[i][0].getDesc(),
-                containers:haives[i][0].getContainers()
+                containers:haives[i][0].getJSONContainers()
             })
         }
 

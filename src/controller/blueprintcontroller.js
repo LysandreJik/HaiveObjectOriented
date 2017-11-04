@@ -99,14 +99,14 @@ export class BlueprintController{
 				this.blockCopyTimeline.getTip().removeLiquid(this.blockCopyTimeline.getLiquidQuantity()[0], this.blockCopyTimeline.getLiquidQuantity()[1]);
 			}else if(this.blockCopyTimeline.getType() == "get tip"){
 				console.log(this.blockCopyTimeline);
-				this.blockCopyTimeline.getContainer().bookTip();
+				this.blockCopyTimeline.setTip(this.blockCopyTimeline.getContainer().bookTip());
 			}else if(this.blockCopyTimeline.getType() == "megablock"){
 			    let blocks = this.blockCopyTimeline.getBlocksRecursively();
 			    for(let i = 0; i < blocks.length; i++){
                     if(blocks[i].getType() == "get liquid"){
                         blocks[i].getTip().removeLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
                     }else if(blocks[i].getType() == "get tip"){
-                        blocks[i].getContainer().bookTip();
+                        blocks[i].setTip(blocks[i].getContainer().bookTip());
                     }
                 }
             }
@@ -132,14 +132,14 @@ export class BlueprintController{
                 blocks[i].getTip().removeLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
             }else if(blocks[i].getType() == "get tip"){
                 console.log(blocks[i]);
-                blocks[i].getContainer().bookTip();
+                blocks[i].setTip(blocks[i].getContainer().bookTip());
             }else if(this.blockCopyTimeline.getType() == "megablock"){
                 let blocksTemp = this.blockCopyTimeline.getBlocksRecursively();
                 for(let i = 0; i < blocksTemp.length; i++){
                     if(blocksTemp[i].getType() == "get liquid"){
                         blocksTemp[i].getTip().removeLiquid(blocksTemp[i].getLiquidQuantity()[0], blocksTemp[i].getLiquidQuantity()[1]);
                     }else if(blocksTemp[i].getType() == "get tip"){
-                        blocksTemp[i].getContainer().bookTip();
+                        blocksTemp[i].setTip(blocksTemp[i].getContainer().bookTip());
                     }
                 }
             }
@@ -162,7 +162,7 @@ export class BlueprintController{
 
 		if(block.getType() != "START_BLOCK"){
             if(block.getType() == "get tip"){
-                block.getContainer().unbookTip();
+                block.getContainer().unbookTip(block.getTip());
                 block.clearError();
             }else if(block.getType() == "get liquid"){
                 block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
@@ -176,7 +176,7 @@ export class BlueprintController{
                 let blocks = block.getBlocksRecursively();
                 for(let i = 0; i < blocks.length; i++){
                     if(blocks[i].getType() == "get tip"){
-                        blocks[i].getContainer().unbookTip();
+                        blocks[i].getContainer().unbookTip(blocks[i].getTip());
                         blocks[i].clearError();
                     }else if(blocks[i].getType() == "get liquid"){
                         blocks[i].getTip().addLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
@@ -206,7 +206,7 @@ export class BlueprintController{
 
         if(block.getType() != "START_BLOCK"){
             if(block.getType() == "get tip"){
-                block.getContainer().unbookTip();
+                block.getContainer().unbookTip(block.getTip());
                 block.clearError();
             }else if(block.getType() == "get liquid"){
                 block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
@@ -220,7 +220,7 @@ export class BlueprintController{
                 let blocks = block.getBlocksRecursively();
                 for(let i = 0; i < blocks.length; i++){
                     if(blocks[i].getType() == "get tip"){
-                        blocks[i].getContainer().unbookTip();
+                        blocks[i].getContainer().unbookTip(blocks[i].getTip());
                         blocks[i].clearError();
                     }else if(blocks[i].getType() == "get liquid"){
                         blocks[i].getTip().addLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
@@ -296,7 +296,7 @@ export class BlueprintController{
             let block = blocks[i];
 
             if(block.getType() == "get tip"){
-                block.getContainer().unbookTip();
+                block.getContainer().unbookTip(block.getTip());
                 block.clearError();
             }else if(block.getType() == "get liquid"){
                 block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
@@ -310,7 +310,7 @@ export class BlueprintController{
                 let blocksTemp = block.getBlocksRecursively();
                 for(let i = 0; i < blocksTemp.length; i++){
                     if(blocksTemp[i].getType() == "get tip"){
-                        blocksTemp[i].getContainer().unbookTip();
+                        blocksTemp[i].getContainer().unbookTip(blocksTemp[i].getTip());
                         blocksTemp[i].clearError();
                     }else if(blocksTemp[i].getType() == "get liquid"){
                         blocksTemp[i].getTip().addLiquid(blocksTemp[i].getLiquidQuantity()[0], blocksTemp[i].getLiquidQuantity()[1]);

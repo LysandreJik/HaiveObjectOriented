@@ -32,7 +32,7 @@ let controller;
 export class ContainerSelect extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {animationDone:"false"};
+		this.state = {animationDone:"false", containerSelected:"none"};
 		gv.containerView = this;
 		model = this.props.model;
 		controller = model.getController();
@@ -66,7 +66,7 @@ export class ContainerSelect extends React.Component{
 							<span className="colorblue" style={{"fontSize":"20px"}}>{gv.currentlySelectedHaive.getDesc()}</span>
 						</div>:""}
 						{this.state.animationDone=="true"&&gv.currentlySelectedHaive==undefined?<h1>PLEASE SELECT A HAIVE FIRST</h1>:""}
-
+                        {this.state.containerSelected != "none" ? <ContainersHover type={this.state.containerSelected}/> : ""}
 					</div>
 				</section>
 			</section>
@@ -183,7 +183,7 @@ class Canvas extends React.Component{
 	constructor(props){
 		super(props);
 		gv.containerViewCanvas = this;
-		this.state = {containers:model.getContainersOnField(), refresh:false, hover:"", containerSelected:"none"};
+		this.state = {containers:model.getContainersOnField(), refresh:false, hover:""};
 	}
 
 	componentDidMount(){
@@ -258,8 +258,8 @@ class Canvas extends React.Component{
 
 				{gv.currentlySelectedHaive.getContainer("top-left") != "" || gv.currentlySelectedHaive.getContainer("top-right") != "" || gv.currentlySelectedHaive.getContainer("middle-left") != "" ||
 					gv.currentlySelectedHaive.getContainer("middle-right") != "" || gv.currentlySelectedHaive.getContainer("bottom-left") != ""|| gv.currentlySelectedHaive.getContainer("bottom-right") != "" ?
-					<button className="protocols animated fadeInLeft btnghostdarker canvascontainertext" onClick={function(){controller.addLiquidToContainers()}}>ADD LIQUIDS</button> : ""}
-                {this.state.containerSelected != "none" ? <ContainersHover type={this.state.containerSelected}/> : ""}
+					<button className="protocols animated fadeInLeft btnghostdarker canvascontainertext" onClick={() => gv.myAssets.setSelected(3)}>EDIT PROTOCOLS</button> : ""}
+
 			</div>
 		);
 	}
