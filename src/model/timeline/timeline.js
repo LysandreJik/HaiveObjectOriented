@@ -232,17 +232,7 @@ export class Timeline{
 		}
 	}*/
 
-/*
-	getLastIndexOf(type){
-		for (let i = blocks.length-1; i >= 0 ; i--) {
-			if(this.blocks[i].getType() == type){
-				return i;
-			}
-		}
 
-		return -1;
-	}
-*/
 
     /**
      * Main error and warning method. Contains all the base algorithm which detects timeline anomalies and probably unforeseen errors.
@@ -287,12 +277,13 @@ export class Timeline{
 				if((depositTipIndex > getTipIndex && depositTipIndex != i) || getTipIndex == -1){
 					extendedTimeline[i].callError();
 					extendedTimeline[i].setErrorText("No tip selected !");
-				}else if(extendedTimeline[i].getContainer() != undefined && this.getBlock(getTipIndex).getContainer() != undefined){
-					if(this.getBlock(getTipIndex).getContainer().getType() != extendedTimeline[i].getContainer().getType()){
-						extendedTimeline[i].callWarning();
-						extendedTimeline[i].setWarningText("Wrong container selected !");
-					}
-
+				}else if(extendedTimeline[i].getContainer() != undefined && this.getBlock(getTipIndex) != undefined){
+				    if(this.getBlock(getTipIndex).getContainer() != undefined){
+                        if(this.getBlock(getTipIndex).getContainer().getType() != extendedTimeline[i].getContainer().getType()){
+                            extendedTimeline[i].callWarning();
+                            extendedTimeline[i].setWarningText("Wrong container selected !");
+                        }
+                    }
 				}
 			}else if(extendedTimeline[i].getType() == "get tip"){
 				extendedTimeline[i].clearError();
