@@ -38,6 +38,7 @@ export class App extends React.Component{
 	}
 
 	componentWillMount(){
+
 		webInterfaceController.getNavbarController().setRefreshAppFunction(this);
 	}
 
@@ -47,6 +48,8 @@ export class App extends React.Component{
 		}else{
 			this.setState({state:value});
 		}
+
+        console.log("Mounted", state, value)
 	}
 
 	updateApp(state, value){
@@ -55,14 +58,11 @@ export class App extends React.Component{
 	}
 
 	render(){
-		// console.log("Refreshed app");
-
 		if(gv.loginDone){
 			return(
 				<section className="hbox stretch bg">
 					{webInterfaceController.getNavbarView()}
 					<section id="content" style={{"width":"100%"}}>{webInterfaceController.getFocusedPage()}</section>
-
 					{this.state.hover != 'none' ? <Warning agree={this.state.hoverFunc} type={this.state.hover}/> : ""}
 				</section>
 			);

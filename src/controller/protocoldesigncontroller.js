@@ -18,8 +18,8 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 const gv = require('../../const/global');
 const style = require('../../const/style');
-const Timeline = require('../model/timeline/timeline').Timeline;
 const Block = require("../model/timeline/block").Block;
+const Timeline = require('../model/timeline/timeline').Timeline;
 let dropBlockStyle = new style.DropBlockStyle();
 
 /**
@@ -29,7 +29,6 @@ let dropBlockStyle = new style.DropBlockStyle();
 export class ProtocolDesignController{
 	constructor(){
 		gv.protocolDesignController = this;
-		this.timeline = new Timeline();
 		this.droppedBlock="";
 		this.cancelGetLiquid = this.cancelGetLiquid.bind(this);
         this.blueprintMounted = this.blueprintMounted.bind(this);
@@ -38,6 +37,7 @@ export class ProtocolDesignController{
 		this.mouseIsDown = false;
 		this.x1y1 = [-1,-1];
 		this.draggingBlock = false;
+		this.timeline = new Timeline();
 
 	}
 
@@ -45,7 +45,7 @@ export class ProtocolDesignController{
      * Sends the data to the raspberry PI
      */
     startProtocol(){
-        let blocks = this.timeline.getBlocks();
+        let blocks = gv.currentlySelectedHaive.getTimeline().getBlocks();
         let arr = [];
         let actualCounter = 0;
 
@@ -340,17 +340,17 @@ export class ProtocolDesignController{
         megablock.addBlocks(gv.protocolDesignModel.getSelection());
         megablock.setText(parent);
 
-        let lowestBlockIndex = this.timeline.getBlocks().length;
+        let lowestBlockIndex = gv.currentlySelectedHaive.getTimeline().getBlocks().length;
 
         for(let i = 0; i < gv.protocolDesignModel.getSelection().length; i++){
             if(gv.protocolDesignModel.getSelection()[i].getIndex() < lowestBlockIndex){
                 lowestBlockIndex = gv.protocolDesignModel.getSelection()[i].getIndex();
             }
 
-            this.timeline.removeBlock(gv.protocolDesignModel.getSelection()[i].getIndex());
+            gv.currentlySelectedHaive.getTimeline().removeBlock(gv.protocolDesignModel.getSelection()[i].getIndex());
         }
 
-        this.timeline.addBlock(megablock, lowestBlockIndex);
+        gv.currentlySelectedHaive.getTimeline().addBlock(megablock, lowestBlockIndex);
 
         console.log(megablock);
         window.location = "#_";
@@ -371,7 +371,7 @@ export class ProtocolDesignController{
 	 * When a "get liquid" block (or a block with a similar purpose
      */
 	cancelGetLiquid(){
-		this.timeline.removeBlock(this.timeline.getIndexOf(this.droppedBlock));
+		gv.currentlySelectedHaive.getTimeline().removeBlock(gv.currentlySelectedHaive.getTimeline().getIndexOf(this.droppedBlock));
 		window.location="#_";
         gv.protocolDesignController.droppedBlock = "";
         gv.protocolDesignView.setState({disabled:""});
@@ -424,22 +424,22 @@ export class ProtocolDesignController{
 
 		//If the chosen quantity is wrong or above the max quantity, the quantity contained by the tip is immediately set to the maximum one.
 		if(currentQuantity > maxQuantity || currentQuantity < 0 || (!(currentQuantity < 0) && !(currentQuantity > 0))){
-			this.timeline.setBlock(new Block({
+			gv.currentlySelectedHaive.getTimeline().setBlock(new Block({
 				text:"GET LIQUID :\u00a0"+tip.getLiquid(),
 				type:"get liquid",
 				tip:tip,
                 container:container,
 				liquidQuantity:[tip.getLiquidAmount(),tip.getAmountUnit()]
-			}), this.timeline.getIndexOf(this.droppedBlock));
+			}), gv.currentlySelectedHaive.getTimeline().getIndexOf(this.droppedBlock));
 			tip.setLiquidAmount(0);
 		}else{
-			this.timeline.setBlock(new Block({
+			gv.currentlySelectedHaive.getTimeline().setBlock(new Block({
 				text:"GET LIQUID :\u00a0"+tip.getLiquid(),
 				type:"get liquid",
 				tip:tip,
                 container:container,
 				liquidQuantity:[currentQuantity/1000, gv.currentlySelectedDimension]
-			}), this.timeline.getIndexOf(this.droppedBlock));
+			}), gv.currentlySelectedHaive.getTimeline().getIndexOf(this.droppedBlock));
 			let q = maxQuantity-currentQuantity;
 			if(q / 1000 > 0){
 				q /= 1000;
@@ -450,9 +450,9 @@ export class ProtocolDesignController{
 		}
 
 		console.log("just updated the goddamn fucking thing");
-		console.log("block", this.timeline.getBlock(this.timeline.getIndexOf(this.droppedBlock)))
+		console.log("block", gv.currentlySelectedHaive.getTimeline().getBlock(gv.currentlySelectedHaive.getTimeline().getIndexOf(this.droppedBlock)))
 		this.getSpeed();
-		this.timeline.setErrors();
+		gv.currentlySelectedHaive.getTimeline().setErrors();
 		gv.protocolDesignView.refresh();
 	}
 
@@ -462,11 +462,11 @@ export class ProtocolDesignController{
 	 * @param that is the "ProtocolDesign" view class, which contains the information needed to identify the current block under modifications.
      */
 	selectedTipPipetting(tip, that){
-		if(this.timeline.getBlock(that.state.receiveBlockDroppedNumber).getLiquidQuantity() != undefined){
-			this.timeline.getBlock(that.state.receiveBlockDroppedNumber).getTip().
+		if(gv.currentlySelectedHaive.getTimeline().getBlock(that.state.receiveBlockDroppedNumber).getLiquidQuantity() != undefined){
+			gv.currentlySelectedHaive.getTimeline().getBlock(that.state.receiveBlockDroppedNumber).getTip().
 				addLiquid(
-					this.timeline.getBlock(that.state.receiveBlockDroppedNumber).getLiquidQuantity()[0],
-					this.timeline.getBlock(that.state.receiveBlockDroppedNumber).getLiquidQuantity()[1]
+					gv.currentlySelectedHaive.getTimeline().getBlock(that.state.receiveBlockDroppedNumber).getLiquidQuantity()[0],
+					gv.currentlySelectedHaive.getTimeline().getBlock(that.state.receiveBlockDroppedNumber).getLiquidQuantity()[1]
 				);
 		}
 		dropBlockStyle.removeDarken();
@@ -484,7 +484,7 @@ export class ProtocolDesignController{
 		}
 
 		if(currentQuantity > maxQuantity || currentQuantity < 0 || (!(currentQuantity < 0) && !(currentQuantity > 0))){
-			this.timeline.setBlock(new Block({
+			gv.currentlySelectedHaive.getTimeline().setBlock(new Block({
 				text:"PIPETTING :\u00a0"+tip.getLiquid()+" ("+tip.getLiquidAmount()+tip.getAmountUnit()+")",
 				type:"pipetting",
 				tip:tip,
@@ -492,7 +492,7 @@ export class ProtocolDesignController{
 			}), that.state.receiveBlockDroppedNumber);
 			tip.setLiquidAmount(0);
 		}else{
-			this.timeline.setBlock(new Block({
+			gv.currentlySelectedHaive.getTimeline().setBlock(new Block({
 				text:"PIPETTING :\u00a0"+tip.getLiquid()+" ("+currentQuantity+gv.currentlySelectedDimension+")",
 				type:"pipetting",
 				tip:tip,
@@ -682,16 +682,16 @@ export class ProtocolDesignController{
 			tip.setColor("blue");
 		}
 
-		this.timeline.setBlock(new Block({
+		gv.currentlySelectedHaive.getTimeline().setBlock(new Block({
 			text:"DISPOSE LIQUID :\u00a0"+tip.getLiquid()+" ("+depositAmount+type+")",
 			type:"deposit liquid",
             container:gv.protocolDesignController.droppedBlock.getContainer(),
 			tip:tip,
 			liquidQuantity:[depositAmount, type],
 			dirtyingTip:!emptyTip
-		}), this.timeline.getIndexOf(parent.props.block));
+		}), gv.currentlySelectedHaive.getTimeline().getIndexOf(parent.props.block));
 
-		console.log(this.timeline.getBlock(this.timeline.getIndexOf(parent.props.block)));
+		console.log(gv.currentlySelectedHaive.getTimeline().getBlock(gv.currentlySelectedHaive.getTimeline().getIndexOf(parent.props.block)));
 
 		this.getSpeed();
 	}
@@ -707,13 +707,13 @@ export class ProtocolDesignController{
 	    let tip = parent.props.tip;
 
 	    tip.setLiquid($("#depositliquid_name").val());
-	    let qty = this.timeline.getCurrentlyHeldLiquidQuantity(gv.protocolDesignController.droppedBlock.getIndex());
+	    let qty = gv.currentlySelectedHaive.getTimeline().getCurrentlyHeldLiquidQuantity(gv.protocolDesignController.droppedBlock.getIndex());
 	    console.log("Index : ", gv.protocolDesignController.droppedBlock.getIndex());
 	    console.log("Qty : ", qty);
 	    tip.addLiquid(qty[0], qty[1]);
 	    tip.setColor(document.getElementById("pipettetipsdialogcolorselect").value);
 
-        this.timeline.setBlock(new Block({
+        gv.currentlySelectedHaive.getTimeline().setBlock(new Block({
             text:"PIPETTING :\u00a0"+parent.props.tip.getLiquid(),
             type:"pipetting",
             tip:parent.props.tip,
@@ -725,7 +725,7 @@ export class ProtocolDesignController{
                 x:$('#xprcent_val').val(),
                 iterations:$('#nbriterations_val').val()
             }
-        }), this.timeline.getIndexOf(parent.props.block));
+        }), gv.currentlySelectedHaive.getTimeline().getIndexOf(parent.props.block));
 
 	    gv.protocolDesignView.refresh();
 
@@ -739,19 +739,19 @@ export class ProtocolDesignController{
 		}
 		window.location="#_";
 		parent.props.tip.setLiquid($("#depositliquid_name").val());
-		parent.props.tip.addLiquid(this.timeline.getCurrentlyHeldLiquidQuantity()[0], type);
+		parent.props.tip.addLiquid(gv.currentlySelectedHaive.getTimeline().getCurrentlyHeldLiquidQuantity()[0], type);
 		gv.protocolDesignView.refresh();
 		parent.props.parent.setState({depositLiquid:"none", depositLiquidSpecs:"none"});
 		if(parent.props.tip.getColor() == ""){
 			parent.props.tip.setColor("blue");
 		}
-		this.timeline.setBlock(new Block({
+		gv.currentlySelectedHaive.getTimeline().setBlock(new Block({
 			text:"PIPETTING :\u00a0"+parent.props.tip.getLiquid(),
 			type:"pipetting",
 			tip:parent.props.tip,
 			liquidQuantity:[$("#depositliquid_amount").val(), type],
 			dirtyingTip:!emptyTip
-		}), this.timeline.getIndexOf(parent.props.block));
+		}), gv.currentlySelectedHaive.getTimeline().getIndexOf(parent.props.block));
 		this.lightenLiquidContainers();
 		this.getSpeed();*/
 	}

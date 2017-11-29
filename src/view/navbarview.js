@@ -38,7 +38,7 @@ export class Navbar extends React.Component {
 		return(
 			<section className="vbox">
 				<NavbarHeader />
-				<section>
+                <section>
 					<div className="lt nav-user hidden-xs pos-rlt">
 						<div className="nav-avatar pos-rlt">
 							<a href="#" className="thumb-sm avatar animated fadeIn" data-toggle="dropdown">

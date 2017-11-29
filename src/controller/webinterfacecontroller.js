@@ -76,7 +76,7 @@ export class WebInterfaceController{
 
 	getFocusedPage(){
 		if(gv.imageLoad == 1){
-		     console.log(navbarModel.getActiveSection().getTitle())
+            console.log(navbarModel.getActiveSection().getTitle())
 			switch(navbarModel.getActiveSection().getTitle()){
                 case "Welcome":
                     return welcomescreen;

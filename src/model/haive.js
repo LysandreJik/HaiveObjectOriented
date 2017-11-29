@@ -21,6 +21,8 @@ const clone = require('../../const/global').clone;
 const Container = require('./container').Container;
 const gv = require('../../const/global');
 
+const Timeline = require('../model/timeline/timeline').Timeline;
+
 /**
  *  Class which hold "Haive" types. "Haive" can be filled with objects from the "Container" class.
  */
@@ -43,6 +45,11 @@ export class Haive{
 
 		this.refID = args.refID;
 		this.desc = args.desc;
+		this.timeline = args.timeline;
+
+		if(this.timeline == undefined){
+		    this.timeline = new Timeline();
+        }
 
 		if(args.containers == undefined){
             this.containers = [];
@@ -50,6 +57,23 @@ export class Haive{
             this.containers = args.containers;
         }
 	}
+
+    /**
+     * Getter for this Haive's timeline.
+     * @returns {*}
+     */
+	getTimeline(){
+	    console.log(this.timeline);
+	    return this.timeline;
+    }
+
+    /**
+     * Setter for this Haive's timeline.
+     * @param timeline
+     */
+    setTimeline(timeline){
+	    this.timeline = timeline;
+    }
 
     /**
      * Returns the reference ID of the Haive

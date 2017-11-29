@@ -25,14 +25,12 @@ const Container = require('./container').Container;
 export class ContainersAvailable{
 	constructor(){
 		this.containers = [];
-		for(var i = 0; i < gv.containersAvailable.length; i++){
+		for(let i = 0; i < gv.containersAvailable.length; i++){
 			this.containers.push(new Container({
 				type:gv.containersAvailable[i][0],
 				name:gv.containersAvailable[i][1],
 				id:gv.containersAvailable[i][2],
 			}));
-
-			console.log("Creating ", i);
 		}
 		gv.availableContainers = this;
 	}

@@ -82,8 +82,6 @@ export class Block{
 
 
 		this.selected = false;
-
-        console.log("Created", this);
 	}
 
     /**

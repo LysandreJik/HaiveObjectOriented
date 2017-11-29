@@ -176,7 +176,7 @@ export class ProtocolConceptionModel{
 				height:size_of_tips,
 				postion:"absolute"
 			};
-		}catch(e){console.log(e)}
+		}catch(e){}
 	}
 
     /**
@@ -195,7 +195,7 @@ export class ProtocolConceptionModel{
 				height:hexagonHover.height()*0.615+'px',
 				position:"absolute"
 			};
-		}catch(e){console.log(e)}
+		}catch(e){}
 	}
 
     /**

@@ -53,7 +53,14 @@ export class HexagonHoverTypes extends React.Component{
                     <h4>{gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]).getName()}</h4>
                     <p>{gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]).getDesc()}</p>
 
-                    <button className="btnghost" onClick={function(){gv.myAssets.setState({button:[false, false, true]});gv.myAssets.setSelected(2);gv.currentlySelectedHaive=gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1])}}>START</button>{"\u00a0\u00a0\u00a0"}
+                    <button className="btnghost" onClick={
+                        function(){
+                            gv.myAssets.setState({button:[false, false, true]});
+                            gv.myAssets.setSelected(2);
+                            gv.currentlySelectedHaive = gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]);
+                            gv.protocolDesignController.timeline = gv.currentlySelectedHaive.getTimeline()
+                        }
+                    }>START</button>{"\u00a0\u00a0\u00a0"}
                     <button className="btnghost" onClick={function(){gv.haiveSelectorView.refresh("hover", "none");gv.haiveSelectorModel.addStoreHaive(gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]));gv.haiveSelectorModel.removeTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1])}}>Remove</button>{"\u00a0\u00a0\u00a0"}
                     <button className="btnghost" onClick={() => gv.haiveSelectorController.hoverMisc("setdescofhaive", this.props.keyId)}>+</button>
                 </div>
