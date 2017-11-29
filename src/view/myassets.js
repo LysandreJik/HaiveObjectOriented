@@ -62,6 +62,10 @@ export class MyAssets extends React.Component{
         this.state={selectedComponent:haive, button:[false, true, true]};
     }
 
+    componentDidUpdate(){
+
+    }
+
     setSelectedComponent(component){
         this.setState({selectedComponent:component});
     }

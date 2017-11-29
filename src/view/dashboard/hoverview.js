@@ -55,10 +55,15 @@ export class HexagonHoverTypes extends React.Component{
 
                     <button className="btnghost" onClick={
                         function(){
-                            gv.myAssets.setState({button:[false, false, true]});
+
                             gv.myAssets.setSelected(2);
                             gv.currentlySelectedHaive = gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]);
                             gv.protocolDesignController.timeline = gv.currentlySelectedHaive.getTimeline()
+                            if(gv.currentlySelectedHaive.containers.length > 0){
+                                gv.myAssets.setState({button:[false, false, false]});
+                            }else{
+                                gv.myAssets.setState({button:[false, false, true]});
+                            }
                         }
                     }>START</button>{"\u00a0\u00a0\u00a0"}
                     <button className="btnghost" onClick={function(){gv.haiveSelectorView.refresh("hover", "none");gv.haiveSelectorModel.addStoreHaive(gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]));gv.haiveSelectorModel.removeTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1])}}>Remove</button>{"\u00a0\u00a0\u00a0"}
