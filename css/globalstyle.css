@@ -120,6 +120,14 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	overflow-y: auto;
 }
 
+.cancelbutton{
+    position: absolute;
+    left: 85%;
+    width:10%;
+    bottom: 5%;
+    z-index: -1;
+}
+
 .blockstoresupplements{
 	position: absolute;
 	top:85%;

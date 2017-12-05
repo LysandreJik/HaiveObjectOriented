@@ -34,11 +34,12 @@ export class ProtocolDesignController{
         this.blueprintMounted = this.blueprintMounted.bind(this);
         this.blueprintUnmounted = this.blueprintUnmounted.bind(this);
         this.startProtocol = this.startProtocol.bind(this);
+        this.cancelBlockDropped = this.cancelBlockDropped.bind(this);
 		this.mouseIsDown = false;
 		this.x1y1 = [-1,-1];
 		this.draggingBlock = false;
 		this.timeline = new Timeline();
-
+		gv.protocolDesignController.isDragging = false;
 	}
 
     /**
@@ -381,6 +382,8 @@ export class ProtocolDesignController{
 		dropBlockStyle.stopBreathingBorder('containerspage');
 		gv.hoverview.clearAll();
 		gv.protocolDesignView.refresh();
+
+		gv.protocolDesignController.isDragging = false;
 	}
 
     /**
@@ -517,6 +520,7 @@ export class ProtocolDesignController{
      * @param blockObj is a "Block" object. If undefined, the html element will be used instead.
      */
 	blockDropped(block, snaptothis, blockObj){
+	    gv.protocolDesignRunInterface.setVisible(true);
 		let blockObject;
 		if(blockObj == undefined){
 			let category = block.prop('id').split('_')[block.prop('id').split('_').length-2];
@@ -538,6 +542,8 @@ export class ProtocolDesignController{
 				blockDropped:gv.protocolDesignController.timeline.getBlocks()[snaptothis.split('_')[snaptothis.split('_').length-1]],
 				disabled:gv.protocolDesignModel.getLiquidContainersAsString()+gv.protocolDesignModel.getOtherContainersAsString()
 			});
+
+            gv.protocolDesignController.isDragging = true;
 		}
 
 		if(blockObject.getType() == "get liquid" || blockObject.getType() == "deposit liquid" || blockObject.getType() == "pipetting"){
@@ -546,6 +552,8 @@ export class ProtocolDesignController{
 				blockDropped:gv.protocolDesignController.timeline.getBlocks()[snaptothis.split('_')[snaptothis.split('_').length-1]],
 				disabled:gv.protocolDesignModel.getTipContainersAsString()+gv.protocolDesignModel.getOtherContainersAsString()
 			});
+
+            gv.protocolDesignController.isDragging = true;
 		}
 
 		if(blockObject.getType() == "wait"){
@@ -554,7 +562,36 @@ export class ProtocolDesignController{
 			});
 			setTimeout(function(){window.location='#wait'},1);
 		}
+
+
 	}
+
+	cancelBlockDropped(){
+        gv.currentlySelectedHaive.getTimeline().removeBlock(gv.currentlySelectedHaive.getTimeline().getIndexOf(this.droppedBlock));
+        window.location="#_";
+
+        if(gv.protocolDesignController.droppedBlock.getType() == "get tip" || gv.protocolDesignController.droppedBlock.getType() == "deposit tip"){
+            style.filterContainers('liquid', 'lighten');
+        }else if(gv.protocolDesignController.droppedBlock.getType() == "get liquid" ||
+            gv.protocolDesignController.droppedBlock.getType() == "deposit liquid" ||
+            gv.protocolDesignController.droppedBlock.getType() == "pipetting"){
+            style.filterContainers('chip', 'lighten');
+        }
+
+        dropBlockStyle.removeDarken();
+        style.filterContainers('other', 'lighten');
+
+        gv.protocolDesignController.droppedBlock = "";
+        gv.protocolDesignView.setState({disabled:""});
+
+        dropBlockStyle.stopBreathingBorder('containerspage');
+        gv.hoverview.clearAll();
+        gv.protocolDesignView.refresh();
+
+        gv.protocolDesignRunInterface.setVisible(false);
+
+        gv.protocolDesignController.isDragging = false;
+    }
 
     /**
 	 * Method called when the user clicked on a container, choosing which tip type/liquid he wants.
@@ -859,5 +896,6 @@ export class ProtocolDesignController{
      */
     getSpeed(){
 		window.location = "#speed";
+		gv.protocolDesignController.isDragging = false;
 	}
 }

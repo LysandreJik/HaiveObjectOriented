@@ -156,6 +156,7 @@ warningmessagebig{
 	color:#D0E1F9;
 	display:inline-block;
 	margin-left: 5px;
+    z-index: -1;
 }
 
 .menuitem:hover{

@@ -145,6 +145,8 @@ export var pos_bottom_right = [1-0.4, 1-0.21];
 export var availableContainers;
 export var containerBar;
 
+export var protocolDesignRunInterface;
+
 export function fetchJSONFile(path, callback) {
     let httpRequest = new XMLHttpRequest();
     httpRequest.onreadystatechange = function() {

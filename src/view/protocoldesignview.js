@@ -139,10 +139,21 @@ export class ProtocolDesign extends React.Component{
 }
 
 class RunInterface extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {visible:false};
+        gv.protocolDesignRunInterface = this;
+    }
+
+    setVisible(visible){
+        this.setState({visible:visible});
+    }
+
     render(){
         return(
             <div id={"runinterface"}>
-                <button className={"runbutton menuitem"} onClick={gv.protocolDesignController.startProtocol}>START THE PROTOCOL</button>
+                <button className="runbutton menuitem" onClick={gv.protocolDesignController.startProtocol}>START THE PROTOCOL</button>
+                {this.state.visible ? <button className="menuitem cancelbutton animated fadeIn speed-ultrafast" onClick={gv.protocolDesignController.cancelBlockDropped}>CANCEL</button> : ""}
             </div>
         );
     }

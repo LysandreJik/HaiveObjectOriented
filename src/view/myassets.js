@@ -86,6 +86,11 @@ export class MyAssets extends React.Component{
         }
 
         document.getElementById('myassetsbarbuttons'+Math.floor(selected)).classList.add('myassetsbarbuttonselected');
+
+        console.log("Dragging ; ", gv.protocolDesignController.isDragging);
+        if(gv.protocolDesignController.isDragging){
+            gv.protocolDesignController.cancelBlockDropped();
+        }
     }
 
     render(){
