@@ -139,7 +139,7 @@ export class Welcome extends React.Component{
 		return(
 			<div className="lightbox animated setbackgroundtotransparent welcome" id={"welcome"}>
 				<div id="warning_div" className="warning animated">
-					<span className="animated fadeOut" style={{"fontSize":"5vw", "color":"#2BB8DB", "fontFamily":"Uni"}}>HAIVE</span>
+					<span className="animated fadeOut" style={{"fontSize":"5vw", "color":"#95CAFF", "fontFamily":"Uni"}}>HAIVE</span>
 				</div>
 			</div>
 		);

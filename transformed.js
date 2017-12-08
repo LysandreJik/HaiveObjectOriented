@@ -29660,7 +29660,7 @@ var LoadingScreen = exports.LoadingScreen = function (_React$Component) {
 		value: function render() {
 			var options = {
 				strokeWidth: 5,
-				color: '#2BB8DB',
+				color: '#95CAFF',
 				trailColor: '#eee',
 				trailWidth: 2
 			};
@@ -36499,7 +36499,7 @@ var Welcome = exports.Welcome = function (_React$Component4) {
 					{ id: 'warning_div', className: 'warning animated' },
 					_react2.default.createElement(
 						'span',
-						{ className: 'animated fadeOut', style: { "fontSize": "5vw", "color": "#2BB8DB", "fontFamily": "Uni" } },
+						{ className: 'animated fadeOut', style: { "fontSize": "5vw", "color": "#95CAFF", "fontFamily": "Uni" } },
 						'HAIVE'
 					)
 				)

@@ -42,7 +42,7 @@ export class LoadingScreen extends React.Component{
 	render() {
         const options = {
             strokeWidth: 5,
-            color: '#2BB8DB',
+            color: '#95CAFF',
             trailColor: '#eee',
             trailWidth: 2,
         };
