@@ -91,15 +91,18 @@ class HexImageHover extends React.Component{
 export class HaiveDesc extends React.Component{
 	render(){
 		const parent = this;
+		console.log(this.props.id);
 		return(
 			<div className="lightbox" id={"desc"}>
 				<div id="warning_div" className="pipettetipsdialog warning">
 					<span>CHANGE DETAILS</span>
 					<label htmlFor="field1" style={{"margin":"20px"}}>
-						<span id="liquidtype_pipettetipsdialogspan">Haive's name</span><input id="haivename_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveSelectorModel.getTileHaive(this.props.id.split("_")[0], this.props.id.split("_")[1]).getName()}/>
+						<span id="liquidtype_pipettetipsdialogspan">Haive's name</span>
+                        <input id="haivename_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveSelectorModel.getTileHaive(this.props.id.split("_")[0], this.props.id.split("_")[1]).getName()}/>
 					</label>
 					<label htmlFor="field1" style={{"margin":"20px"}}>
-						<span id="liquidtype_pipettetipsdialogspan">Haive's description</span><input id="haivedesc_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveSelectorModel.getTileHaive(this.props.id.split("_")[0], this.props.id.split("_")[1]).getDesc()}/>
+						<span id="liquidtype_pipettetipsdialogspan">Haive's description</span>
+                        <input id="haivedesc_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveSelectorModel.getTileHaive(this.props.id.split("_")[0], this.props.id.split("_")[1]).getDesc()}/>
 					</label>
 					<button onClick={
 							function(){
@@ -109,7 +112,12 @@ export class HaiveDesc extends React.Component{
 								gv.haiveSelectorView.refresh("hovermisc", "");
 							}
 						}>Ok</button>
-					<button onClick={function(){window.location="#_"}}>Cancel</button>
+					<button onClick={
+					    function(){
+					        window.location="#_";
+					        gv.haiveSelectorView.refresh("hovermisc", "");
+					    }
+					}>Cancel</button>
 				</div>
 			</div>
 		);
