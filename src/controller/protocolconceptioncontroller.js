@@ -51,12 +51,12 @@ export class ProtocolConceptionController{
      */
 	createNewTimeline(){
 		console.log("Created a new timeline");
-		gv.protocolDesignController.timeline.blocks = [new Block({type:"START_BLOCK", text:"START"}), new Block(), new Block()];
+		gv.protocolDesignController.timeline.blocks = [new Block(), new Block(), new Block()];
 		gv.currentlySelectedHaive.setContainers(gv.containersAtTimelineStart);
 		window.location="#_";
 		gv.myAssets.setSelected(3);
 		gv.protocolDesignView.refresh();
-
+        setTimeout(function(){gv.protocolDesignView.refresh()}, 1);
 	}
 
 	saveContainersDebug(){

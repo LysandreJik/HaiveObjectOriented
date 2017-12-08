@@ -258,7 +258,15 @@ class Canvas extends React.Component{
 
 				{gv.currentlySelectedHaive.getContainer("top-left") != "" || gv.currentlySelectedHaive.getContainer("top-right") != "" || gv.currentlySelectedHaive.getContainer("middle-left") != "" ||
 					gv.currentlySelectedHaive.getContainer("middle-right") != "" || gv.currentlySelectedHaive.getContainer("bottom-left") != ""|| gv.currentlySelectedHaive.getContainer("bottom-right") != "" ?
-					<button className="protocols animated fadeInLeft btnghostdarker canvascontainertext" onClick={() => gv.myAssets.setSelected(3)}>EDIT PROTOCOLS</button> : ""}
+					<button className="protocols animated fadeInLeft btnghostdarker canvascontainertext" onClick={
+					    function(){
+					        gv.myAssets.setSelected(3);
+					        if(gv.currentlySelectedHaive.getTimeline().getNonEmptyBlocks().length == 0){
+                                gv.protocolConceptionController.saveContainers();
+                            }
+
+					    }
+					}>EDIT PROTOCOLS</button> : ""}
 
 			</div>
 		);
