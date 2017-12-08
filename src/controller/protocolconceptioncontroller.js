@@ -82,4 +82,8 @@ export class ProtocolConceptionController{
         window.location="#_";
         gv.myAssets.setSelected(3)
 	}
+
+
 }
+
+

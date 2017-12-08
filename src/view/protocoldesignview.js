@@ -99,6 +99,7 @@ export class ProtocolDesign extends React.Component{
 							window.location="#_";
 							controller.timeline.addEmptyBlocks();
 							gv.protocolDesignController.droppedBlock = undefined;
+							gv.protocolDesignRunInterface.setVisible(false);
 						}
 					}>Ok</button>
 				</div>
@@ -147,6 +148,7 @@ class RunInterface extends React.Component{
 
     setVisible(visible){
         this.setState({visible:visible});
+        console.log("Set state to visible =  "+visible);
     }
 
     render(){
