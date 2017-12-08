@@ -117,7 +117,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	right:5%;
 	border: 0.2vw solid #53687E;
 	padding: 0;
-	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .cancelbutton{
