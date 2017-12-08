@@ -9,7 +9,6 @@
     border: 0.2vw solid #53687E;
     background: #88FF88;
     color:#000;
-    overflow-y: auto;
 }
 
 .stopblueprint{
@@ -23,7 +22,6 @@
     border: 0.2vw solid #53687E;
     background: #FF8888;
     color:#000;
-    overflow-y: auto;
 }
 
 .moredetailbutton{
