@@ -188,14 +188,14 @@ export class BlueprintController{
             }else if(block.getType() == "megablock"){
                 let blocks = block.getBlocksRecursively();
                 for(let i = 0; i < blocks.length; i++){
-                    if(block[i].getType() == "get tip"){
-                        block[i].getTip().setContaminated(false);
-                        block[i].getContainer().unbookTip(block[i].getTip());
-                        block[i].clearError();
-                    }else if(block[i].getType() == "deposit tip") {
-                        block[i].getTip().setContaminated(false);
-                        block[i].getTip().setContainingTip(false);
-                        block[i].clearError();
+                    if(blocks[i].getType() == "get tip"){
+                        blocks[i].getTip().setContaminated(false);
+                        blocks[i].getContainer().unbookTip(blocks[i].getTip());
+                        blocks[i].clearError();
+                    }else if(blocks[i].getType() == "deposit tip") {
+                        blocks[i].getTip().setContaminated(false);
+                        blocks[i].getTip().setContainingTip(false);
+                        blocks[i].clearError();
                     }else if(blocks[i].getType() == "get liquid"){
                         blocks[i].getTip().addLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
                     }else if(blocks[i].getType() == "deposit liquid"){
@@ -244,7 +244,12 @@ export class BlueprintController{
                 let blocks = block.getBlocksRecursively();
                 for(let i = 0; i < blocks.length; i++){
                     if(blocks[i].getType() == "get tip"){
+                        blocks[i].getTip().setContaminated(false);
                         blocks[i].getContainer().unbookTip(blocks[i].getTip());
+                        blocks[i].clearError();
+                    }else if(blocks[i].getType() == "deposit tip") {
+                        blocks[i].getTip().setContaminated(false);
+                        blocks[i].getTip().setContainingTip(false);
                         blocks[i].clearError();
                     }else if(blocks[i].getType() == "get liquid"){
                         blocks[i].getTip().addLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
@@ -320,7 +325,13 @@ export class BlueprintController{
             let block = blocks[i];
 
             if(block.getType() == "get tip"){
+                block.getTip().setContaminated(false);
                 block.getContainer().unbookTip(block.getTip());
+                block.clearError();
+            }else if(block.getType() == "deposit tip") {
+                block.getTip().setContaminated(false);
+                block.getTip().setContainingTip(false);
+                console.log(block.getTip());
                 block.clearError();
             }else if(block.getType() == "get liquid"){
                 block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
@@ -334,7 +345,12 @@ export class BlueprintController{
                 let blocksTemp = block.getBlocksRecursively();
                 for(let i = 0; i < blocksTemp.length; i++){
                     if(blocksTemp[i].getType() == "get tip"){
+                        blocksTemp[i].getTip().setContaminated(false);
                         blocksTemp[i].getContainer().unbookTip(blocksTemp[i].getTip());
+                        blocksTemp[i].clearError();
+                    }else if(blocksTemp[i].getType() == "deposit tip") {
+                        blocksTemp[i].getTip().setContaminated(false);
+                        blocksTemp[i].getTip().setContainingTip(false);
                         blocksTemp[i].clearError();
                     }else if(blocksTemp[i].getType() == "get liquid"){
                         blocksTemp[i].getTip().addLiquid(blocksTemp[i].getLiquidQuantity()[0], blocksTemp[i].getLiquidQuantity()[1]);
