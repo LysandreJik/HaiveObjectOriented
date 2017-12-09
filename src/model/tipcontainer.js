@@ -52,6 +52,23 @@ export class TipContainer{
 		}
 	}
 
+	bookTip(){
+	    let tip = this.getUncontaminatedFullTips()[0];
+	    tip.setContainingTip(false);
+	    return tip;
+    }
+
+    unbookTip(tip){
+	    tip.setContaminated(false);
+	    tip.setContainingTip(true);
+    }
+
+    depositTip(tip){
+	    tip.setContainingTip(true);
+	    tip.setContaminated(true);
+	    return tip;
+    }
+
     /**
      * Container name.
      * @returns {*} String
@@ -153,7 +170,7 @@ export class TipContainer{
 
     /**
      * Getter for this container's clone. (No referencing)
-     * @returns {Container} Container object
+     * @returns {TipContainer} Container object
      */
 	getClone(){
 		return new TipContainer({
@@ -216,7 +233,7 @@ export class TipContainer{
         let fullTips = [];
         for (let i = 0; i < this.tipArr.length; i++) {
             for (let j = 0; j < this.tipArr[i].length; j++) {
-                if(!this.tipArr[i][j].containsTip() && !this.tipArr[    i][j].isContaminated()){
+                if(this.tipArr[i][j].containsTip() && !this.tipArr[i][j].isContaminated()){
                     fullTips.push(this.tipArr[i][j]);
                 }
             }
@@ -229,17 +246,8 @@ export class TipContainer{
      * Returns the number of full tips
      * @returns {number} int
      */
-    getNumberOfFullTips(){
-        let fullTips = 0;
-        for (let i = 0; i < this.tipArr.length; i++) {
-            for (let j = 0; j < this.tipArr[i].length; j++) {
-                if(this.tipArr[i][j].containsTip()){
-                    fullTips++;
-                }
-            }
-        }
-
-        return fullTips;
+    getNumberOfUncontaminatedFullTips(){
+        return this.getUncontaminatedFullTips().length;
     }
 
     /**

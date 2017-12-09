@@ -6526,7 +6526,7 @@ var Container = exports.Container = function () {
      */
 
   }, {
-    key: 'getNumberOfFullTips',
+    key: 'getNumberOfUncontaminatedFullTips',
     value: function getNumberOfFullTips() {
       var fullChips = 0;
       for (var i = 0; i < this.tipArr.length; i++) {
@@ -15411,7 +15411,7 @@ var ProtocolDesignController = exports.ProtocolDesignController = function () {
 			console.log(containerObj, gv.protocolDesignController.droppedBlock.getType());
 
 			if (gv.protocolDesignController.droppedBlock.getType() == "get tip") {
-				if (containerObj.isTipContainer() && containerObj.getNumberOfFullTips() > 0) {
+				if (containerObj.isTipContainer() && containerObj.getNumberOfUncontaminatedFullTips() > 0) {
 					dropBlockStyle.removeDarken();
 					style.filterContainers('liquid', 'lighten');
 					style.filterContainers('other', 'lighten');
@@ -33782,7 +33782,7 @@ var ContainerMini = exports.ContainerMini = function (_React$Component) {
 						} },
 					this.props.container.isLiquidContainer() ? "LIQUID CONTAINER" : this.props.container.isTipContainer() ? "CHIP CONTAINER" : "",
 					_react2.default.createElement("br", null),
-					this.props.container.isLiquidContainer() ? this.getFilledTips("miniature") : this.props.container.isTipContainer() ? this.props.container.getNumberOfFullTips() > 1 ? this.props.container.getNumberOfFullTips() + " CHIPS LEFT" : this.props.container.getNumberOfFullTips() + " CHIP LEFT" : "",
+					this.props.container.isLiquidContainer() ? this.getFilledTips("miniature") : this.props.container.isTipContainer() ? this.props.container.getNumberOfUncontaminatedFullTips() > 1 ? this.props.container.getNumberOfUncontaminatedFullTips() + " CHIPS LEFT" : this.props.container.getNumberOfUncontaminatedFullTips() + " CHIP LEFT" : "",
 					_react2.default.createElement("br", null),
 					this.props.container.getType(),
 					this.props.hover == this.props.id.substring(15) ? this.props.container.isLiquidContainer() ? this.getFilledTips("detail") : "" : "",

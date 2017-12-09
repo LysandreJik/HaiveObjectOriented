@@ -155,14 +155,11 @@ export class Timeline{
 	        this.blocks.push(new Block());
         }
 
-        console.log(this.blocks.length);
-
 		while(this.blocks[this.blocks.length-2].getType() != "empty" || this.blocks[this.blocks.length-1].getType() != "empty"){
 			this.blocks.push(new Block());
 		}
 
 		if(this.blocks[this.blocks.length-1].getType() == "empty" || this.blocks[this.blocks.length-2].getType() == "empty"){
-		    console.log(this.blocks);
 			while(this.blocks[this.blocks.length-3].getType() == "empty" && this.blocks.length > 3){
 				this.blocks.pop();
 			}

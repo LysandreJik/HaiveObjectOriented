@@ -432,10 +432,7 @@ export class Block{
                 text.push(textTemp);
             }
         }
-
-        console.log(text);
         return text;
-
     }
 
     /**

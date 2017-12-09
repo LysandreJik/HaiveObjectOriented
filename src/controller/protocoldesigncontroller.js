@@ -608,7 +608,7 @@ export class ProtocolDesignController{
 		console.log(containerObj, gv.protocolDesignController.droppedBlock.getType());
 
 		if(gv.protocolDesignController.droppedBlock.getType() == "get tip"){
-			if(containerObj.isTipContainer() && containerObj.getNumberOfFullTips() > 0){
+			if(containerObj.isTipContainer() && containerObj.getNumberOfUncontaminatedFullTips() > 0){
 				dropBlockStyle.removeDarken();
 				style.filterContainers('liquid', 'lighten');
 				style.filterContainers('other', 'lighten');
@@ -639,8 +639,7 @@ export class ProtocolDesignController{
 				gv.protocolDesignController.droppedBlock.setContainer(containerObj);
 				gv.protocolDesignController.droppedBlock.setText("Deposit tip in "+containerObj.getType()+" container");
 
-				gv.protocolDesignController.droppedBlock.setTip(containerObj.bookEmptyTip());
-				gv.protocolDesignController.droppedBlock.getTip().setContaminated(true);
+                gv.protocolDesignController.droppedBlock.setTip(containerObj.depositTip(containerObj.getEmptyTips()[0]));
 				gv.protocolDesignView.refresh();
 				gv.protocolDesignController.getSpeed();
 			}

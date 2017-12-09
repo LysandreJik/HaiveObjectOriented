@@ -141,7 +141,7 @@ export class TestTube{
                 s += "B";
                 break;
             case 2:
-                s += "c";
+                s += "C";
                 break;
             case 3:
                 s += "D";

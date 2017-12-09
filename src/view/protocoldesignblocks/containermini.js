@@ -65,7 +65,7 @@ export class ContainerMini extends React.Component{
                 <div id={"nested"+this.props.id} className="containgerspagenesteddiv" onMouseDown={() => this.props.blockDropped(this.props.id)}>
 					{this.props.container.isLiquidContainer() ? "LIQUID CONTAINER" : (this.props.container.isTipContainer() ? "CHIP CONTAINER" : "")}
 					<br></br>
-					{this.props.container.isLiquidContainer() ? this.getFilledTips("miniature") : this.props.container.isTipContainer() ? this.props.container.getNumberOfFullTips() > 1 ? this.props.container.getNumberOfFullTips()+" CHIPS LEFT" : this.props.container.getNumberOfFullTips()+" CHIP LEFT" :""}
+					{this.props.container.isLiquidContainer() ? this.getFilledTips("miniature") : this.props.container.isTipContainer() ? this.props.container.getNumberOfUncontaminatedFullTips() > 1 ? this.props.container.getNumberOfUncontaminatedFullTips()+" CHIPS LEFT" : this.props.container.getNumberOfUncontaminatedFullTips()+" CHIP LEFT" :""}
 					<br></br>
 					{this.props.container.getType()}
 					{this.props.hover == this.props.id.substring(15) ? this.props.container.isLiquidContainer()  ? this.getFilledTips("detail") : "" : ""}

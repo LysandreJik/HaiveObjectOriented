@@ -31,7 +31,6 @@ export class ProtocolConceptionModel{
      * @param key
      */
     clickedOnTip(parent, container, key){
-        console.log(container);
         const x = Math.floor(key/this.getContainerWidthAndHeight(container)[1]);
         const y = key%this.getContainerWidthAndHeight(container)[1];
         if(!container.isLiquidContainer()){

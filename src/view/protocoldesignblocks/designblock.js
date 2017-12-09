@@ -84,7 +84,6 @@ export class Block extends React.Component{
 				<span className="designblocktext" style={{"color":this.props.block.getForegroundColor()}}>
 					{
 					    this.props.block.getExtendedText().map(function(text, index){
-					        console.log(text, text.length);
 					        if(text.length > 1){
 					            return(
 					                <div className={"bigblocksmallblock"} key={index}>
