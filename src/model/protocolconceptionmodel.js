@@ -35,7 +35,7 @@ export class ProtocolConceptionModel{
         const x = Math.floor(key/this.getContainerWidthAndHeight(container)[1]);
         const y = key%this.getContainerWidthAndHeight(container)[1];
         if(!container.isLiquidContainer()){
-            if(container.getTip(x,y).isFull()){
+            if(container.getTip(x,y).containsTip()){
                 container.getTip(x,y).setContainingTip(false);
                 container.getTip(x,y).setColor("");
             }else{

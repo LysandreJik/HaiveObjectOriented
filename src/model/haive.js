@@ -169,10 +169,6 @@ export class Haive{
      */
 	addContainer(loc, container){
         let containerExists = false;
-
-        console.log(container);
-        console.log(gv.containerSelectModel.containersAvailable.containers);
-        console.log(gv.containerSelectModel.containersAvailable.getAvailableContainersPerType(container));
         let containerObj = gv.containerSelectModel.containersAvailable.getAvailableContainersPerType(container)[0];
 
 		if(acceptedLocs.indexOf(loc) == -1){
@@ -180,17 +176,17 @@ export class Haive{
 		}else{
 			for (let i = 0; i < this.containers.length; i++) {
 				if(this.containers[i].getLoc() == loc) {
-				    if(this.containers[i].isLiquidContainer()){
+				    if(containerObj.isLiquidContainer()){
                         this.containers[i] = new LiquidContainer({
                             loc:loc,
-                            name:containerObj.getNeighbours(),
+                            name:containerObj.getName(),
                             id:containerObj.getId(),
                             type:container
                         });
                     }else{
                         this.containers[i] = new TipContainer({
                             loc:loc,
-                            name:containerObj.getNeighbours(),
+                            name:containerObj.getName(),
                             id:containerObj.getId(),
                             type:container
                         });
