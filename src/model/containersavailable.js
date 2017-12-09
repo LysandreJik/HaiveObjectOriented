@@ -17,7 +17,8 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 const gv = require('../../const/global');
-const Container = require('./container').Container;
+const TipContainer = require('./tipcontainer').TipContainer;
+const LiquidContainer = require('./liquidcontainer').LiquidContainer;
 
 /**
  * Class that contains all the information about the available containers.
@@ -26,11 +27,21 @@ export class ContainersAvailable{
 	constructor(){
 		this.containers = [];
 		for(let i = 0; i < gv.containersAvailable.length; i++){
-			this.containers.push(new Container({
-				type:gv.containersAvailable[i][0],
-				name:gv.containersAvailable[i][1],
-				id:gv.containersAvailable[i][2],
-			}));
+		    let type = gv.containersAvailable[i][0];
+            if(type == "P20 normal chip" || type == "P200 normal chip" || type == "P1000 normal chip" || type == "P1000 long chip") {
+                this.containers.push(new TipContainer({
+                    type:gv.containersAvailable[i][0],
+                    name:gv.containersAvailable[i][1],
+                    id:gv.containersAvailable[i][2],
+                }));
+            }else{
+                this.containers.push(new LiquidContainer({
+                    type:gv.containersAvailable[i][0],
+                    name:gv.containersAvailable[i][1],
+                    id:gv.containersAvailable[i][2],
+                }));
+            }
+
 		}
 		gv.availableContainers = this;
 	}

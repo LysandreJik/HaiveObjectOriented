@@ -20,7 +20,8 @@ import React from 'react';
 
 const gv = require('../../../const/global');
 const ContainersAvailable = require('../containersavailable').ContainersAvailable;
-const Container = require('../../model/container').Container;
+const TipContainer = require('../tipcontainer').TipContainer;
+const LiquidContainer = require('../liquidcontainer').LiquidContainer;
 
 let controller;
 
@@ -85,7 +86,14 @@ export class ContainerSelectModel{
      * @param loc String which indicates the location such as : "top-right" or "middle-left"
      */
 	removeContainerFromHaive(loc){
-		gv.availableContainers.addContainer(new Container({type:gv.currentlySelectedHaive.getContainer(loc).getType(), name:"none", id:"none", loc:"containerbar"}));
+	    let isLiquidContainer = gv.currentlySelectedHaive.getContainer(loc).isLiquidContainer();
+
+	    if(isLiquidContainer){
+            gv.availableContainers.addContainer(new LiquidContainer({type:gv.currentlySelectedHaive.getContainer(loc).getType(), name:"none", id:"none", loc:"containerbar"}));
+        }else{
+            gv.availableContainers.addContainer(new TipContainer({type:gv.currentlySelectedHaive.getContainer(loc).getType(), name:"none", id:"none", loc:"containerbar"}));
+        }
+
 		gv.currentlySelectedHaive.removeContainer(loc);
 		gv.containerViewCanvas.refresh();
 		gv.containerBar.refresh();

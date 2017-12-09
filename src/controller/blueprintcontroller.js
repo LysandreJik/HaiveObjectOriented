@@ -162,6 +162,7 @@ export class BlueprintController{
 
 		if(block.getType() != "START_BLOCK"){
             if(block.getType() == "get tip"){
+                block.getTip().setContaminated(false);
                 block.getContainer().unbookTip(block.getTip());
                 block.clearError();
             }else if(block.getType() == "get liquid"){

@@ -640,6 +640,7 @@ export class ProtocolDesignController{
 				gv.protocolDesignController.droppedBlock.setText("Deposit tip in "+containerObj.getType()+" container");
 
 				gv.protocolDesignController.droppedBlock.setTip(containerObj.bookEmptyTip());
+				gv.protocolDesignController.droppedBlock.getTip().setContaminated(true);
 				gv.protocolDesignView.refresh();
 				gv.protocolDesignController.getSpeed();
 			}

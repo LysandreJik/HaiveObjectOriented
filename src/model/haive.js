@@ -18,7 +18,8 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 const acceptedLocs = require('../../const/global').acceptedContainerLocs;
 const clone = require('../../const/global').clone;
-const Container = require('./container').Container;
+const TipContainer = require('./tipcontainer').TipContainer;
+const LiquidContainer = require('./liquidcontainer').LiquidContainer;
 const gv = require('../../const/global');
 
 const Timeline = require('../model/timeline/timeline').Timeline;
@@ -179,23 +180,44 @@ export class Haive{
 		}else{
 			for (let i = 0; i < this.containers.length; i++) {
 				if(this.containers[i].getLoc() == loc) {
-					this.containers[i] = new Container({
-						loc:loc,
-						name:containerObj.getNeighbours(),
-						id:containerObj.getId(),
-						type:container
-					});
+				    if(this.containers[i].isLiquidContainer()){
+                        this.containers[i] = new LiquidContainer({
+                            loc:loc,
+                            name:containerObj.getNeighbours(),
+                            id:containerObj.getId(),
+                            type:container
+                        });
+                    }else{
+                        this.containers[i] = new TipContainer({
+                            loc:loc,
+                            name:containerObj.getNeighbours(),
+                            id:containerObj.getId(),
+                            type:container
+                        });
+                    }
+
 					containerExists = true;
 				}
 			}
 
 			if(!containerExists){
-				this.containers.push(new Container({
-					loc:loc,
-					name:containerObj.getName(),
-					id:containerObj.getId(),
-					type:container
-				}));
+			    let type = container;
+			    if(type == "P20 normal chip" || type == "P200 normal chip" || type == "P1000 normal chip" || type == "P1000 long chip"){
+                    this.containers.push(new TipContainer({
+                        loc:loc,
+                        name:containerObj.getName(),
+                        id:containerObj.getId(),
+                        type:container
+                    }));
+                }else{
+                    this.containers.push(new LiquidContainer({
+                        loc:loc,
+                        name:containerObj.getName(),
+                        id:containerObj.getId(),
+                        type:container
+                    }));
+                }
+
 			}
 		}
 

@@ -31,19 +31,20 @@ export class ProtocolConceptionModel{
      * @param key
      */
     clickedOnTip(parent, container, key){
+        console.log(container);
         const x = Math.floor(key/this.getContainerWidthAndHeight(container)[1]);
         const y = key%this.getContainerWidthAndHeight(container)[1];
-        if(container.isTipContainer()){
+        if(!container.isLiquidContainer()){
             if(container.getTip(x,y).isFull()){
-                container.getTip(x,y).setFull(false);
+                container.getTip(x,y).setContainingTip(false);
                 container.getTip(x,y).setColor("");
             }else{
-                container.getTip(x,y).setFull(true);
+                container.getTip(x,y).setContainingTip(true);
                 container.getTip(x,y).setColor("blue");
             }
             parent.setState({selected:"none"});
         }else if(container.isLiquidContainer()){
-            parent.setState({selected:container.getTip(x,y)});
+            parent.setState({selected:container.getTestTube(x,y)});
         }
     }
 
@@ -57,7 +58,7 @@ export class ProtocolConceptionModel{
         const x = Math.floor(key/this.getContainerWidthAndHeight(container)[1]);
         const y = key%this.getContainerWidthAndHeight(container)[1];
         if(container.isTipContainer()){
-            container.getTip(x,y).setFull(true);
+            container.getTip(x,y).setContainingTip(true);
             container.getTip(x,y).setColor("blue");
             parent.setState({selected:"none"});
         }else if(container.isLiquidContainer()){
@@ -116,7 +117,12 @@ export class ProtocolConceptionModel{
 
 		for(let i = 0; i < ij[0]; i++){
 			for(let j = 0; j < ij[1]; j++){
-				pipetteTipImages.push(this.getPipetteLocation(container.getTip(i, j), container));
+			    if(container.isTipContainer()){
+                    pipetteTipImages.push(this.getPipetteLocation(container.getTip(i, j), container));
+                }else{
+                    pipetteTipImages.push(this.getPipetteLocation(container.getTestTube(i, j), container));
+                }
+
 			}
 		}
 		return pipetteTipImages;
@@ -264,7 +270,11 @@ export class ProtocolConceptionModel{
 	getColor(key, container){
         const x = Math.floor(key / this.getContainerWidthAndHeight(container)[1]);
         const y = key % this.getContainerWidthAndHeight(container)[1];
-        return container.getTip(x, y).getColor();
+        if(!container.isLiquidContainer()){
+            return container.getTip(x, y).getColor();
+        }else{
+            return container.getTestTube(x, y).getColor();
+        }
 	}
 
     /**

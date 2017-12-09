@@ -17,7 +17,8 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 const gv = require('../../../const/global');
-const Container = require('../../model/container').Container;
+const TipContainer = require('../../model/tipcontainer').TipContainer;
+const LiquidContainer = require('../../model/liquidcontainer').LiquidContainer;
 
 /**
  * Controller class for the container select. Any action taken on the container select screen is redirected and managed here.
@@ -78,7 +79,12 @@ export class ContainerSelectController{
                             let id_tag = gv.getClosestContainer((gv.mouseX-background.offset().left), (gv.mouseY-background.offset().top));
 
 							if(gv.currentlySelectedHaive.getContainer(id_tag) != ""){
-								gv.availableContainers.addContainer(new Container({type:gv.currentlySelectedHaive.getContainer(id_tag).getType(), name:"none", id:"none", loc:"containerbar"}));
+							    if(gv.currentlySelectedHaive.getContainer(id_tag).isLiquidContainer()){
+                                    gv.availableContainers.addContainer(new LiquidContainer({type:gv.currentlySelectedHaive.getContainer(id_tag).getType(), name:"none", id:"none", loc:"containerbar"}));
+                                }else{
+                                    gv.availableContainers.addContainer(new TipContainer({type:gv.currentlySelectedHaive.getContainer(id_tag).getType(), name:"none", id:"none", loc:"containerbar"}));
+                                }
+
 							}
 
 							//gv.availableContainers.removeFirstContainerByType(gv.acceptedContainerTypes[ui.draggable.prop('id').substring(6)]);

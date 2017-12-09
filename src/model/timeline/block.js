@@ -401,15 +401,15 @@ export class Block{
         if(this.getType() == "get tip"){
             text.push(["Container : "+this.getContainer().getType()]);
             text.push(["Container name : "+this.getContainer().getName()]);
-            text.push(["Tip : "+this.getTip().getTextLoc()]);
-        }else if(this.getType() == "dsposit tip"){
+            text.push(["Tip : "+this.getTip().getTextLoc()+" Contaminated : "+this.getTip().isContaminated()]);
+        }else if(this.getType() == "deposit tip"){
             text.push(["Container : "+this.getContainer().getType()]);
             text.push(["Container name : "+this.getContainer().getName()]);
-            text.push(["Tip : "+this.getTip().getX()+":"+this.getTip().getY()]);
+            text.push(["Tip : "+this.getTip().getTextLoc()+" Contaminated : "+this.getTip().isContaminated()]);
         }else if(this.getType() == "get liquid"){
             text.push(["Container : "+this.getContainer().getType()]);
             text.push(["Container name : "+this.getContainer().getName()]);
-            text.push(["Tip : "+this.getTip().getX()+":"+this.getTip().getY()]);
+            text.push(["Tip : "+this.getTip().getTextLoc()+" Contaminated : "+this.getTip().isContaminated()]);
             text.push(["Liquid : "+this.getTip().getLiquid()+", "+this.getLiquidQuantity()[0]+this.getLiquidQuantity()[1]]);
         }else if(this.getType() == "pipetting"){
             if(this.args.position[1] == "bs"){

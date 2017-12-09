@@ -18,14 +18,14 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 const acceptedTypes = require('../../const/global').acceptedContainerTypes;
 const gv = require('../../const/global');
-const Chip = require("./tip").Tip;
+const Tip = require("./tip").Tip;
 
 /**
  * Class of Container object
  *
  * TODO: IMPLEMENT THE REMAINING CONTAINER TYPES !!!!
  */
-export class Container{
+export class TipContainer{
 	constructor(args){
 		this.name = args.name;
 		this.id = args.id;
@@ -44,41 +44,12 @@ export class Container{
 			for(let i = 0; i < arrSize[0]; i++){
 				this.tipArr.push([]);
 				for(let j = 0; j < arrSize[1]; j++){
-					this.tipArr[i].push(new Chip({x:i, y:j, container:this}));
+					this.tipArr[i].push(new Tip({x:i, y:j, container:this}));
 				}
 			}
 		}else{
 			this.tipArr = args.tipArr;
 		}
-	}
-
-    /**
-     * Book a tip in this container. This way there will always be enough tips.
-     */
-	bookTip(){
-	    let tip = this.getFullTips()[0];
-	    tip.setFull(false);
-	    return tip;
-	}
-
-    /**
-     * Book a tip in this container, if the tip is empty.
-     */
-	bookEmptyTip(){
-        let tip = this.getEmptyTips()[0];
-        tip.setFull(true);
-        tip.setContaminated(true);
-        return tip;
-    }
-
-    /**
-     * Unbook a tip in this container.
-     */
-	unbookTip(tip){
-        var stack = new Error().stack;
-        console.log("PRINTING CALL STACK");
-        console.log( stack );
-		tip.setFull(false);
 	}
 
     /**
@@ -150,7 +121,7 @@ export class Container{
      * @returns {boolean} Returns true if the container is a liquid container, false otherwise.
      */
 	isLiquidContainer(){
-		return this.getType() == "15 screw tubes" || this.getType() == "6 falcon stand" || this.getType() == "20 magnetic beads";
+		return false;
 	}
 
     /**
@@ -158,31 +129,16 @@ export class Container{
      * @returns {boolean} Returns true if the container is a tip container, false otherwise.
      */
 	isTipContainer(){
-		return this.getType() == "P20 normal chip" || this.getType() == "P200 normal chip" || this.getType() == "P1000 normal chip" || this.getType() == "P1000 long chip";
+		return true;
 	}
 
-    /**
-     * Returns an Array of all uncontaminated tips.
-     * @returns {Array} MD Array of tips.
-     */
-	getEmptyUncontaminatedTips(){
-		let fullChips = [];
-		for (let i = 0; i < this.tipArr.length; i++) {
-			for (let j = 0; j < this.tipArr[i].length; j++) {
-				if(!this.tipArr[i][j].isFull() && this.tipArr[i][j].getLiquid() == "" && !this.tipArr[i][j].isContaminated()){
-					fullChips.push(this.tipArr[i][j]);
-				}
-			}
-		}
 
-		return fullChips;
-	}
 
     /**
      * Returns an array of all tips, cloned (no referencing).
      * @returns {Array} MD Array of tips.
      */
-	getChipsClone(){
+	getTipsClone(){
         let fullTip = [];
 		for (let i = 0; i < this.tipArr.length; i++) {
             let fullTipLine = [];
@@ -200,13 +156,13 @@ export class Container{
      * @returns {Container} Container object
      */
 	getClone(){
-		return new Container({
+		return new TipContainer({
 			name:this.name,
 			id:this.id,
 			loc:this.loc,
 			maxLiquidQuantity:this.maxLiquidQuantity,
 			type:this.type,
-			tipArr:this.getChipsClone(),
+			tipArr:this.getTipsClone(),
 		});
 	}
 
@@ -220,7 +176,7 @@ export class Container{
 	        tipArr.push({x:fullTips[i].getX(), y:fullTips[i].getY()});
         }
 
-        return new Container({
+        return new TipContainer({
             name:this.name,
             id:this.id,
             loc:this.loc,
@@ -253,20 +209,37 @@ export class Container{
     }
 
     /**
-     * Returns the number of full tips
-     * @returns {number} int
+     * Returns an Array of all uncontaminated full tips.
+     * @returns {Array} MD Array of tips.
      */
-    getNumberOfFullTips(){
-        let fullChips = 0;
+    getUncontaminatedFullTips(){
+        let fullTips = [];
         for (let i = 0; i < this.tipArr.length; i++) {
             for (let j = 0; j < this.tipArr[i].length; j++) {
-                if(this.tipArr[i][j].isFull()){
-                    fullChips++;
+                if(!this.tipArr[i][j].containsTip() && !this.tipArr[    i][j].isContaminated()){
+                    fullTips.push(this.tipArr[i][j]);
                 }
             }
         }
 
-        return fullChips;
+        return fullTips;
+    }
+
+    /**
+     * Returns the number of full tips
+     * @returns {number} int
+     */
+    getNumberOfFullTips(){
+        let fullTips = 0;
+        for (let i = 0; i < this.tipArr.length; i++) {
+            for (let j = 0; j < this.tipArr[i].length; j++) {
+                if(this.tipArr[i][j].containsTip()){
+                    fullTips++;
+                }
+            }
+        }
+
+        return fullTips;
     }
 
     /**
@@ -274,16 +247,16 @@ export class Container{
      * @returns Array of tips
      */
     getFullTips(){
-        let fullChips = [];
+        let fullTips = [];
         for (let i = 0; i < this.tipArr.length; i++) {
             for (let j = 0; j < this.tipArr[i].length; j++) {
-                if(this.tipArr[i][j].isFull() && !this.tipArr[i][j].isContaminated()){
-                    fullChips.push(this.tipArr[i][j]);
+                if(this.tipArr[i][j].containsTip()){
+                    fullTips.push(this.tipArr[i][j]);
                 }
             }
         }
 
-        return fullChips;
+        return fullTips;
     }
 
     /**
@@ -294,7 +267,7 @@ export class Container{
         let emptyTips = [];
         for (let i = 0; i < this.tipArr.length; i++) {
             for (let j = 0; j < this.tipArr[i].length; j++) {
-                if(!this.tipArr[i][j].isFull() && !this.tipArr[i][j].isContaminated()){
+                if(!this.tipArr[i][j].containsTip()){
                     emptyTips.push(this.tipArr[i][j]);
                 }
             }
@@ -307,59 +280,17 @@ export class Container{
      * Returns an array of all contaminated tips.
      * @returns {Array} MD array of tips.
      */
-	getContaminatedChips(){
-        let liquidChips = [];
+	getContaminatedTips(){
+        let liquidTips = [];
 		for (let i = 0; i < this.tipArr.length; i++) {
 			for (let j = 0; j < this.tipArr[i].length; j++) {
 				if(this.tipArr[i][j].getLiquid() != ""){
-					liquidChips.push(this.tipArr[i][j]);
+					liquidTips.push(this.tipArr[i][j]);
 				}
 			}
 		}
 
-		return liquidChips;
-	}
-
-    /**
-     * Returns an array of all liquid tips.
-     * @returns {Array} MD array of tips.
-     */
-	getLiquidTips(){
-        let liquidChips = [];
-		for (let i = 0; i < this.tipArr.length; i++) {
-			for (let j = 0; j < this.tipArr[i].length; j++) {
-				if(this.tipArr[i][j].getLiquid() != "" && this.tipArr[i][j].getLiquidAmount() > 0){
-					liquidChips.push(this.tipArr[i][j]);
-				}
-			}
-		}
-
-		return liquidChips;
-	}
-
-    /**
-     * Returns an array of all tips which contain a different liquid. If two tips contain the same liquid, only the first one will be added to this array.
-     * @returns {Array} MD array of tips.
-     */
-	getLiquidTipsSingletons(){
-        let liquidChips = [];
-		for (let i = 0; i < this.tipArr.length; i++) {
-			for (let j = 0; j < this.tipArr[i].length; j++) {
-				if(this.tipArr[i][j].getLiquid() != "" && this.tipArr[i][j].getLiquidAmount() > 0){
-                    let liquidNotContained = true;
-					for(let k = 0; k < liquidChips.length; k++){
-						if(this.tipArr[i][j].getLiquid() == liquidChips[k].getLiquid()){
-							liquidNotContained = false;
-						}
-					}
-					if(liquidNotContained){
-						liquidChips.push(this.tipArr[i][j]);
-					}
-				}
-			}
-		}
-
-		return liquidChips;
+		return liquidTips;
 	}
 
     /**
@@ -374,12 +305,12 @@ export class Container{
 
     /**
      * Sets a tip in the container
-     * @param chip Tip object
+     * @param Tip Tip object
      * @param x x-axis value
      * @param y y-axis value
      */
-	setTip(chip, x, y){
-	    console.log(x, y, chip);
-		this.tipArr[x][y] = gv.clone(chip);
+	setTip(Tip, x, y){
+	    console.log(x, y, Tip);
+		this.tipArr[x][y] = gv.clone(Tip);
 	}
 }
