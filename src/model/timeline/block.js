@@ -401,9 +401,11 @@ export class Block{
         if(this.getType() == "get tip"){
             text.push(["Container : "+this.getContainer().getType()]);
             text.push(["Container name : "+this.getContainer().getName()]);
+            text.push(["Tip : "+this.getTip().getTextLoc()]);
         }else if(this.getType() == "dsposit tip"){
             text.push(["Container : "+this.getContainer().getType()]);
             text.push(["Container name : "+this.getContainer().getName()]);
+            text.push(["Tip : "+this.getTip().getX()+":"+this.getTip().getY()]);
         }else if(this.getType() == "get liquid"){
             text.push(["Container : "+this.getContainer().getType()]);
             text.push(["Container name : "+this.getContainer().getName()]);

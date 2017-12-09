@@ -165,6 +165,43 @@ export class Tip{
 		return this.y;
 	}
 
+	getTextLoc(){
+	    let s = "";
+	    switch(this.getX()){
+            case 0:
+                s += "A";
+                break;
+            case 1:
+                s += "B";
+                break;
+            case 2:
+                s += "c";
+                break;
+            case 3:
+                s += "D";
+                break;
+            case 4:
+                s += "E";
+                break;
+            case 5:
+                s += "F";
+                break;
+            case 6:
+                s += "G";
+                break;
+            case 7:
+                s += "H";
+                break;
+            default:
+                s+="NaN";
+        }
+
+        s += this.getY();
+
+	    return s;
+
+    }
+
     /**
      * Get the Tip's liquid name
      * @returns {string|*}

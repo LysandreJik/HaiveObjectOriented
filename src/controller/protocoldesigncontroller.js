@@ -613,6 +613,7 @@ export class ProtocolDesignController{
 				style.filterContainers('liquid', 'lighten');
 				style.filterContainers('other', 'lighten');
 				dropBlockStyle.stopBreathingBorder('containerspage');
+
 				if(gv.protocolDesignController.droppedBlock.getContainer() == undefined){
                     gv.protocolDesignController.droppedBlock.setTip(containerObj.bookTip());
 				}else{
