@@ -46,6 +46,7 @@ export class Block{
 			this.comment = args.comment;
 			this.args = args.args;
 			this.noerrorcheck = args.noerrorcheck;
+			this.counted = args.counted;
 		}
 
 		if(this.speed == undefined){
@@ -84,10 +85,20 @@ export class Block{
 		    this.noerrorcheck = false;
         }
 
-
+        if(this.counted == undefined){
+		    this.counted = false;
+        }
 
 		this.selected = false;
 	}
+
+	isCounted(){
+	    return this.counted;
+    }
+
+    setCounted(counted){
+	    this.counted = counted;
+    }
 
     /**
      * Returns the "no error check" variable, which is true if a previous block is an error.
@@ -392,7 +403,8 @@ export class Block{
             blocks:this.blocks,
             comment:this.comment,
             noerrorcheck:this.noerrorcheck,
-            args:this.args
+            args:this.args,
+            counted:this.counted
 		});
 	}
 

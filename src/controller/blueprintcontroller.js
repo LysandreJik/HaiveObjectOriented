@@ -178,52 +178,81 @@ export class BlueprintController{
         gv.protocolDesignView.refresh();
 	}
 	
-
+    addBlockEffects(block){
+	    if(block.getType() == "get tip"){
+	        block.setTip(block.getContainer().bookTip());
+        }else if(block.getType() == "deposit tip"){
+	        block.getTip().setContainingTip(true);
+	        block.getTip().setContaminated(true);
+        }else if(block.getType() == "get liquid"){
+            block.getTip().removeLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
+        }else if(block.getType() == "deposit liquid" || block.getType() == "pipetting"){
+	        block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
+        }
+    }
 
 	removeBlockEffects(block){
-	    console.log("Removing block effects ...");
-        if(block.getType() != "START_BLOCK"){
-            if(block.getType() == "get tip"){
-                block.getTip().setContaminated(false);
-                block.getContainer().unbookTip(block.getTip());
-                block.clearError();
-            }else if(block.getType() == "deposit tip") {
-                block.getTip().setContaminated(false);
-                block.getTip().setContainingTip(false);
-                block.clearError();
-            }else if(block.getType() == "get liquid"){
-                block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
-            }else if(block.getType() == "deposit liquid"){
-                if(block.isDirtyingTip()){
-                    block.getTip().emptyAndClean();
-                }else{
-                    block.getTip().removeLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
-                }
-            }else if(block.getType() == "megablock"){
-                let blocks = block.getBlocksRecursively();
-                for(let i = 0; i < blocks.length; i++){
-                    if(blocks[i].getType() == "get tip"){
-                        blocks[i].getTip().setContaminated(false);
-                        blocks[i].getContainer().unbookTip(blocks[i].getTip());
-                        blocks[i].clearError();
-                    }else if(blocks[i].getType() == "deposit tip") {
-                        blocks[i].getTip().setContaminated(false);
-                        blocks[i].getTip().setContainingTip(false);
-                        blocks[i].clearError();
-                    }else if(blocks[i].getType() == "get liquid"){
-                        blocks[i].getTip().addLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
-                    }else if(blocks[i].getType() == "deposit liquid"){
-                        if(blocks[i].isDirtyingTip()){
-                            blocks[i].getTip().emptyAndClean();
+	    console.log(block.isCounted());
+	    if(block.isCounted()){
+
+        }else{
+	        block.setCounted(true);
+            console.log("Removing block effects ...");
+            if(block.getType() != "START_BLOCK"){
+                if(block.getType() == "get tip"){
+                    if(block.getTip() != undefined){
+                        block.getTip().setContaminated(false);
+                        block.getContainer().unbookTip(block.getTip());
+                        block.clearError();
+                    }
+
+                }else if(block.getType() == "deposit tip") {
+                    if(block.getTip() != undefined){
+                        block.getTip().setContaminated(false);
+                        block.getTip().setContainingTip(false);
+                        block.clearError();
+                    }
+
+                }else if(block.getType() == "get liquid"){
+                    if(block.getTip() != undefined){
+                        block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
+                    }
+                }else if(block.getType() == "deposit liquid"){
+                    if(block.getTip() != undefined){
+                        if(block.isDirtyingTip()){
+                            block.getTip().emptyAndClean();
                         }else{
-                            blocks[i].getTip().removeLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
+                            block.getTip().removeLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
+                        }
+                    }
+
+                }else if(block.getType() == "megablock"){
+                    let blocks = block.getBlocksRecursively();
+                    for(let i = 0; i < blocks.length; i++){
+                        if(blocks[i].getType() == "get tip"){
+                            blocks[i].getTip().setContaminated(false);
+                            blocks[i].getContainer().unbookTip(blocks[i].getTip());
+                            blocks[i].clearError();
+                        }else if(blocks[i].getType() == "deposit tip") {
+                            blocks[i].getTip().setContaminated(false);
+                            blocks[i].getTip().setContainingTip(false);
+                            blocks[i].clearError();
+                        }else if(blocks[i].getType() == "get liquid"){
+                            blocks[i].getTip().addLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
+                        }else if(blocks[i].getType() == "deposit liquid"){
+                            if(blocks[i].isDirtyingTip()){
+                                blocks[i].getTip().emptyAndClean();
+                            }else{
+                                blocks[i].getTip().removeLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
+                            }
                         }
                     }
                 }
-            }
 
-            gv.protocolDesignView.refresh();
+                gv.protocolDesignView.refresh();
+            }
         }
+
     }
 
     /**

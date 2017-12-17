@@ -323,11 +323,18 @@ export class Timeline{
 		}
 
 		for(let i = 0; i < extendedTimeline.length; i++){
-            extendedTimeline[i].setNoErrorCheck(false);
+
+		    if(extendedTimeline[i].isNoErrorCheck()){
+                gv.blueprintController.addBlockEffects(extendedTimeline[i]);
+
+                extendedTimeline[i].setNoErrorCheck(false);
+            }
+
+
 		    if(extendedTimeline[i].isError()){
 		        for(let j = i+1; j < extendedTimeline.length; j++){
 		            if(!extendedTimeline[j].isNoErrorCheck()){
-		                //gv.blueprintController.removeBlockEffects(extendedTimeline[j]);
+                        gv.blueprintController.removeBlockEffects(extendedTimeline[j]);
                         extendedTimeline[j].setNoErrorCheck(true);
                     }
 
@@ -336,8 +343,6 @@ export class Timeline{
                 return;
             }
         }
-
-
 	}
 
 

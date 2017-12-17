@@ -200,6 +200,8 @@ export class TestTube{
             throw new Error("Add liquid invalid units : "+this.amountUnit+", "+unit);
         }
 
+        console.log("Added",liquid,unit);
+
     }
 
     /**
