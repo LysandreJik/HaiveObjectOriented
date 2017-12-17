@@ -67,13 +67,11 @@ export class BlueprintController{
      */
 	modifyDroppedBlock(){
 	    let selectedItemContextMenu = $('#'+this.getSelectedItemContextMenu());
-		console.log(selectedItemContextMenu, this.getSelectedItemContextMenu(), );
 		let block = this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
 
         if(block.getType() == "deposit tip") {
             block.getTip().setContaminated(false);
             block.getTip().setContainingTip(false);
-            console.log(block.getTip());
             block.clearError();
         }
 
@@ -89,7 +87,6 @@ export class BlueprintController{
      */
 	copyDroppedBlock(){
 		this.blockCopyTimeline = this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
-		console.log("Copying ", this.blockCopyTimeline);
 	}
 
     /**
@@ -97,18 +94,22 @@ export class BlueprintController{
      * TODO:Manage other types of blocks
      */
 	paste(){
-		let parent = this;
-		console.log(this.blockCopyTimeline);
 		if(this.blockCopyTimeline.getType() != "empty" && this.blockCopyTimeline != undefined && this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]).getType() != "START_BLOCK"){
-			this.controller.timeline.setBlock(this.blockCopyTimeline.getClone(), this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
+
 
 
 			if(this.blockCopyTimeline.getType() == "get liquid"){
+                this.controller.timeline.setBlock(this.blockCopyTimeline.getClone(), this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
 				this.blockCopyTimeline.getTip().removeLiquid(this.blockCopyTimeline.getLiquidQuantity()[0], this.blockCopyTimeline.getLiquidQuantity()[1]);
 			}else if(this.blockCopyTimeline.getType() == "get tip"){
-				console.log(this.blockCopyTimeline);
-				this.blockCopyTimeline.setTip(this.blockCopyTimeline.getContainer().bookTip());
+			    if(this.blockCopyTimeline.getContainer().getUncontaminatedFullTips().length > 0){
+                    this.controller.timeline.setBlock(this.blockCopyTimeline.getClone(), this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
+                    let block = this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
+                    block.setTip(this.blockCopyTimeline.getContainer().bookTip());
+                }
+
 			}else if(this.blockCopyTimeline.getType() == "megablock"){
+                this.controller.timeline.setBlock(this.blockCopyTimeline.getClone(), this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
 			    let blocks = this.blockCopyTimeline.getBlocksRecursively();
 			    for(let i = 0; i < blocks.length; i++){
                     if(blocks[i].getType() == "get liquid"){
@@ -133,15 +134,19 @@ export class BlueprintController{
 	    const index = this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1];
         
         for(let i = 0; i < blocks.length; i++){
-            console.log(blocks[i], (+index+ +i));
-            this.controller.timeline.addBlock(blocks[i].getClone(), (+index + +i));
+
 
             if(blocks[i].getType() == "get liquid"){
+                this.controller.timeline.addBlock(blocks[i].getClone(), (+index + +i));
                 blocks[i].getTip().removeLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
             }else if(blocks[i].getType() == "get tip"){
-                console.log(blocks[i]);
-                blocks[i].setTip(blocks[i].getContainer().bookTip());
+                if(blocks[i].getContainer().getUncontaminatedFullTips().length > 0) {
+                    this.controller.timeline.addBlock(blocks[i].getClone(), (+index + +i));
+                    let block = this.controller.timeline.getBlock((+index + +i));
+                    block.setTip(block.getContainer().bookTip());
+                }
             }else if(this.blockCopyTimeline.getType() == "megablock"){
+                this.controller.timeline.addBlock(blocks[i].getClone(), (+index + +i));
                 let blocksTemp = this.blockCopyTimeline.getBlocksRecursively();
                 for(let i = 0; i < blocksTemp.length; i++){
                     if(blocksTemp[i].getType() == "get liquid"){
@@ -156,7 +161,6 @@ export class BlueprintController{
             gv.protocolDesignView.refresh();
         }
 
-        console.log("Adding empty blocks");
         this.controller.timeline.addEmptyBlocks();
         gv.protocolDesignView.refresh();
     }
@@ -167,61 +171,17 @@ export class BlueprintController{
      */
 	removeDroppedBlock(){
 		let block = this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
-		if(block.getType() != "START_BLOCK"){
-            if(block.getType() == "get tip"){
-                block.getTip().setContaminated(false);
-                block.getContainer().unbookTip(block.getTip());
-                block.clearError();
-            }else if(block.getType() == "deposit tip") {
-                block.getTip().setContaminated(false);
-                block.getTip().setContainingTip(false);
-                console.log(block.getTip());
-                block.clearError();
-            }else if(block.getType() == "get liquid"){
-                block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
-            }else if(block.getType() == "deposit liquid"){
-                if(block.isDirtyingTip()){
-                    block.getTip().emptyAndClean();
-                }else{
-                    block.getTip().removeLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
-                }
-            }else if(block.getType() == "megablock"){
-                let blocks = block.getBlocksRecursively();
-                for(let i = 0; i < blocks.length; i++){
-                    if(blocks[i].getType() == "get tip"){
-                        blocks[i].getTip().setContaminated(false);
-                        blocks[i].getContainer().unbookTip(blocks[i].getTip());
-                        blocks[i].clearError();
-                    }else if(blocks[i].getType() == "deposit tip") {
-                        blocks[i].getTip().setContaminated(false);
-                        blocks[i].getTip().setContainingTip(false);
-                        blocks[i].clearError();
-                    }else if(blocks[i].getType() == "get liquid"){
-                        blocks[i].getTip().addLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
-                    }else if(blocks[i].getType() == "deposit liquid"){
-                        if(blocks[i].isDirtyingTip()){
-                            blocks[i].getTip().emptyAndClean();
-                        }else{
-                            blocks[i].getTip().removeLiquid(blocks[i].getLiquidQuantity()[0], blocks[i].getLiquidQuantity()[1]);
-                        }
-                    }
-                }
-            }
+        this.removeBlockEffects(block);
+        this.controller.timeline.removeBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
 
-            this.controller.timeline.removeBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
-            this.controller.timeline.addEmptyBlocks();
-            gv.protocolDesignView.refresh();
-        }
-
+        this.controller.timeline.addEmptyBlocks();
+        gv.protocolDesignView.refresh();
 	}
+	
 
-    /**
-     * If the "Delete" option is clicked on. Deletes the block but keeps the space.
-     * TODO:Manage other types of blocks
-     */
-	deleteDroppedBlock(){
-		let block = this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
 
+	removeBlockEffects(block){
+	    console.log("Removing block effects ...");
         if(block.getType() != "START_BLOCK"){
             if(block.getType() == "get tip"){
                 block.getTip().setContaminated(false);
@@ -230,7 +190,6 @@ export class BlueprintController{
             }else if(block.getType() == "deposit tip") {
                 block.getTip().setContaminated(false);
                 block.getTip().setContainingTip(false);
-                console.log(block.getTip());
                 block.clearError();
             }else if(block.getType() == "get liquid"){
                 block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
@@ -263,10 +222,20 @@ export class BlueprintController{
                 }
             }
 
-            this.controller.timeline.setBlock(new Block(), this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
-            this.controller.timeline.addEmptyBlocks();
             gv.protocolDesignView.refresh();
         }
+    }
+
+    /**
+     * If the "Delete" option is clicked on. Deletes the block but keeps the space.
+     * TODO:Manage other types of blocks
+     */
+	deleteDroppedBlock(){
+		let block = this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
+        this.removeBlockEffects(block);
+        this.controller.timeline.setBlock(new Block(), this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
+        this.controller.timeline.addEmptyBlocks();
+        gv.protocolDesignView.refresh();
 	}
 
     /**
@@ -284,7 +253,6 @@ export class BlueprintController{
 	    if(gv.protocolDesignModel.getSelection().length < 1){
 	        throw new Error("Need at least one object selected !");
         }
-        console.log("Called");
         gv.protocolDesignBlueprintcontentView.resetBlocks();
         gv.hoverview.mergeGroup();
     }
@@ -309,7 +277,6 @@ export class BlueprintController{
     copySelectedBlocks(){
         let blocks = gv.protocolDesignModel.getSelection();
         this.blocksCopyTimeline = blocks;
-        console.log("Copied group");
 
         gv.protocolDesignBlueprintcontentView.hideOptions();
         gv.protocolDesignView.refresh();
@@ -324,45 +291,7 @@ export class BlueprintController{
         for(let i = 0; i < blocks.length; i++){
             let block = blocks[i];
 
-            if(block.getType() == "get tip"){
-                block.getTip().setContaminated(false);
-                block.getContainer().unbookTip(block.getTip());
-                block.clearError();
-            }else if(block.getType() == "deposit tip") {
-                block.getTip().setContaminated(false);
-                block.getTip().setContainingTip(false);
-                console.log(block.getTip());
-                block.clearError();
-            }else if(block.getType() == "get liquid"){
-                block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
-            }else if(block.getType() == "deposit liquid"){
-                if(block.isDirtyingTip()){
-                    block.getTip().emptyAndClean();
-                }else{
-                    block.getTip().removeLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
-                }
-            }else if(block.getType() == "megablock"){
-                let blocksTemp = block.getBlocksRecursively();
-                for(let i = 0; i < blocksTemp.length; i++){
-                    if(blocksTemp[i].getType() == "get tip"){
-                        blocksTemp[i].getTip().setContaminated(false);
-                        blocksTemp[i].getContainer().unbookTip(blocksTemp[i].getTip());
-                        blocksTemp[i].clearError();
-                    }else if(blocksTemp[i].getType() == "deposit tip") {
-                        blocksTemp[i].getTip().setContaminated(false);
-                        blocksTemp[i].getTip().setContainingTip(false);
-                        blocksTemp[i].clearError();
-                    }else if(blocksTemp[i].getType() == "get liquid"){
-                        blocksTemp[i].getTip().addLiquid(blocksTemp[i].getLiquidQuantity()[0], blocksTemp[i].getLiquidQuantity()[1]);
-                    }else if(blocksTemp[i].getType() == "deposit liquid"){
-                        if(blocksTemp[i].isDirtyingTip()){
-                            blocksTemp[i].getTip().emptyAndClean();
-                        }else{
-                            blocksTemp[i].getTip().removeLiquid(blocksTemp[i].getLiquidQuantity()[0], blocksTemp[i].getLiquidQuantity()[1]);
-                        }
-                    }
-                }
-            }
+            this.removeBlockEffects(block);
 
             this.controller.timeline.removeBlock(this.controller.timeline.getIndexOf(block));
             this.controller.timeline.addEmptyBlocks();

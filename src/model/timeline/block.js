@@ -45,6 +45,7 @@ export class Block{
 			this.dirtyingTip = args.dirtyingTip;
 			this.comment = args.comment;
 			this.args = args.args;
+			this.noerrorcheck = args.noerrorcheck;
 		}
 
 		if(this.speed == undefined){
@@ -79,10 +80,30 @@ export class Block{
 		    this.comment = "";
         }
 
+        if(this.noerrorcheck == undefined){
+		    this.noerrorcheck = false;
+        }
+
 
 
 		this.selected = false;
 	}
+
+    /**
+     * Returns the "no error check" variable, which is true if a previous block is an error.
+     * @returns {*|boolean}
+     */
+	isNoErrorCheck(){
+	    return this.noerrorcheck;
+    }
+
+    /**
+     * Sets the noerrorcheck variable.
+     * @param noerrorcheck
+     */
+    setNoErrorCheck(noerrorcheck){
+	    this.noerrorcheck = noerrorcheck;
+    }
 
     /**
      * Get the "args" variable
@@ -225,7 +246,9 @@ export class Block{
 		    return "#FF7B00";
         }
 
-		if(this.isError()){
+        if(this.isNoErrorCheck()){
+            return "#888";
+        }else if(this.isError()){
 			return "#97323D";
 		}else if(this.isWarning()){
 			return "#ECA53E";
@@ -368,6 +391,7 @@ export class Block{
 			warning:this.warning,
             blocks:this.blocks,
             comment:this.comment,
+            noerrorcheck:this.noerrorcheck,
             args:this.args
 		});
 	}

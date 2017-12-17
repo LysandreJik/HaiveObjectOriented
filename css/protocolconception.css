@@ -99,6 +99,26 @@
     color: rgb(255, 50, 50);
 }
 
+.nocheckerrormessage{
+    left: 150%;
+    position: absolute;
+    top:25%;
+    text-align: right;
+    width: 150%;
+    font-style: italic;
+    color: #888;
+}
+
+.nocheckerrormessagebig{
+    left: 130%;
+    position: absolute;
+    top:25%;
+    text-align: right;
+    width: 50%;
+    font-style: italic;
+    color: #888;
+}
+
 .warningmessage{
     left: 150%;
     position: absolute;

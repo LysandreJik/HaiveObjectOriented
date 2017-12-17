@@ -60,8 +60,6 @@ export class ProtocolConceptionModel{
             container.getTip(x,y).setContainingTip(true);
             container.getTip(x,y).setColor("blue");
             parent.setState({selected:"none"});
-        }else if(container.isLiquidContainer()){
-            parent.setState({selected:container.getTip(x,y)});
         }
     }
 

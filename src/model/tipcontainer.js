@@ -53,9 +53,14 @@ export class TipContainer{
 	}
 
 	bookTip(){
-	    let tip = this.getUncontaminatedFullTips()[0];
-	    tip.setContainingTip(false);
-	    return tip;
+	    if(this.getUncontaminatedFullTips().length > 0){
+            let tip = this.getUncontaminatedFullTips()[0];
+            tip.setContainingTip(false);
+            return tip;
+        }else{
+	        return false;
+        }
+
     }
 
     unbookTip(tip){

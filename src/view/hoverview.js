@@ -274,7 +274,7 @@ class DepositLiquid extends React.Component{
 					<h1>{this.props.container.getType()}</h1>
 
 					<div className="divgrid">
-						{this.props.container.getLiquidTips().map(function(block, index){
+						{this.props.container.getNonEmptyTestTubes().map(function(block, index){
 							return (
 								<div key={index} className={"divfullinfo"} onClick={
 										function(){
@@ -508,7 +508,7 @@ class DepositLiquidNew extends React.Component{
 	constructor(props){
 		super(props);
 		if(this.props.tip == "new"){
-			this.tip = this.props.container.getEmptyUncontaminatedTips()[0];
+			this.tip = this.props.container.getEmptyTestTubes()[0];
 		}
 		this.type = "mL";
 		this.changeSelectColor = this.changeSelectColor.bind(this);
@@ -722,7 +722,7 @@ class TipSelect extends React.Component{
 				<h1>{this.props.container.getType()}</h1>
 
 				<div className="divgrid">
-					{this.props.container.getLiquidTips().map(function(block, index){
+					{this.props.container.getNonEmptyTestTubes().map(function(block, index){
 						return (
 							<div key={index} className={"divfullinfo"} onClick={
 									function(){

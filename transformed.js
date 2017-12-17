@@ -15685,7 +15685,6 @@ var ProtocolDesignController = exports.ProtocolDesignController = function () {
 				revert: "invalid",
 
 				start: function start() {
-					console.log("started dragging a block");
 					parent.draggingBlock = true;
 				},
 

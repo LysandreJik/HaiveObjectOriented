@@ -31,6 +31,7 @@ export class Timeline{
 		}
 
 		this.initialTipContents = [];
+		this.temporaryblocks = [];
 
 		if(gv.currentlySelectedHaive != undefined){
             if(!gv.currentlySelectedHaive.isEmpty()){
@@ -218,19 +219,6 @@ export class Timeline{
 		this.addEmptyBlocks();
 	}
 
-/*
-	getChipStateAtN(n){
-		if(n == undefined){
-			return "Undefined n"
-		}else if(n == 0){
-			return this.initialTipContents;
-		}else{
-
-		}
-	}*/
-
-
-
     /**
      * Main error and warning method. Contains all the base algorithm which detects timeline anomalies and probably unforeseen errors.
      *
@@ -333,6 +321,23 @@ export class Timeline{
                 }
             }
 		}
+
+		for(let i = 0; i < extendedTimeline.length; i++){
+            extendedTimeline[i].setNoErrorCheck(false);
+		    if(extendedTimeline[i].isError()){
+		        for(let j = i+1; j < extendedTimeline.length; j++){
+		            if(!extendedTimeline[j].isNoErrorCheck()){
+		                //gv.blueprintController.removeBlockEffects(extendedTimeline[j]);
+                        extendedTimeline[j].setNoErrorCheck(true);
+                    }
+
+                }
+
+                return;
+            }
+        }
+
+
 	}
 
 

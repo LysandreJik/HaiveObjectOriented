@@ -53,7 +53,6 @@ export class ProtocolDesignController{
         let haives = gv.haiveSelectorModel.getFullHaives();
         let id = "";
 
-        console.log("Full haives ", gv.haiveSelectorModel.getFullHaives());
         for(let i = 0; i < haives.length; i++){
             if(haives[i][0] == gv.currentlySelectedHaive){
                 if(i == 0){
@@ -77,7 +76,6 @@ export class ProtocolDesignController{
 
                     let dx = (haives[i][1] - haives[0][1]);
                     let dy = (haives[i][2] - haives[0][2]);
-                    console.log(dx, dy);
                     id += dx + "_" + dy;
                 }
             }
@@ -189,7 +187,6 @@ export class ProtocolDesignController{
 	 * Creates a new timeline. Sends out a warning because the actual timeline will be overriden.
      */
 	createNewTimeline(){
-		console.log('Warning');
 		gv.mainAppController.hoverMisc("warningCreatingNewTimeline", function(){gv.protocolConceptionController.createNewTimeline()});
 	}
 
@@ -336,7 +333,6 @@ export class ProtocolDesignController{
      * @param parent
      */
     defineSingleBlock(parent){
-        console.log("Defining single block with name", parent);
         let megablock = new Block({type:"megablock"});
         megablock.addBlocks(gv.protocolDesignModel.getSelection());
         megablock.setText(parent);
@@ -352,8 +348,6 @@ export class ProtocolDesignController{
         }
 
         gv.currentlySelectedHaive.getTimeline().addBlock(megablock, lowestBlockIndex);
-
-        console.log(megablock);
         window.location = "#_";
 
         gv.protocolDesignView.refresh();
@@ -422,7 +416,6 @@ export class ProtocolDesignController{
 			currentQuantity *= 1000;
 		}
 
-		console.log("Drooped block is currently : ", this.droppedBlock);
 		let container = this.droppedBlock.getContainer();
 
 		//If the chosen quantity is wrong or above the max quantity, the quantity contained by the tip is immediately set to the maximum one.
@@ -452,8 +445,6 @@ export class ProtocolDesignController{
 
 		}
 
-		console.log("just updated the goddamn fucking thing");
-		console.log("block", gv.currentlySelectedHaive.getTimeline().getBlock(gv.currentlySelectedHaive.getTimeline().getIndexOf(this.droppedBlock)))
 		this.getSpeed();
 		gv.currentlySelectedHaive.getTimeline().setErrors();
 		gv.protocolDesignView.refresh();
@@ -533,7 +524,6 @@ export class ProtocolDesignController{
 
 		gv.currentlySelectedDimension = "mL";
 
-		console.log(blockObject);
 		gv.protocolDesignController.droppedBlock = gv.protocolDesignController.timeline.getBlocks()[snaptothis.split('_')[snaptothis.split('_').length-1]];
 
 		if(blockObject.getType() == "get tip" || blockObject.getType() == "deposit tip"){
@@ -604,9 +594,6 @@ export class ProtocolDesignController{
 		    return;
         }
 
-
-		console.log(containerObj, gv.protocolDesignController.droppedBlock.getType());
-
 		if(gv.protocolDesignController.droppedBlock.getType() == "get tip"){
 			if(containerObj.isTipContainer() && containerObj.getNumberOfUncontaminatedFullTips() > 0){
 				dropBlockStyle.removeDarken();
@@ -630,7 +617,6 @@ export class ProtocolDesignController{
 				gv.protocolDesignController.getSpeed();
 			}
 		}else if(gv.protocolDesignController.droppedBlock.getType() == "deposit tip") {
-			console.log(containerObj.getType(), gv.protocolDesignController.timeline.getCurrentlyHeldTipContainer(gv.protocolDesignController.timeline.getIndexOf(gv.protocolDesignController.droppedBlock)));
 			if(containerObj.isTipContainer()){
 				dropBlockStyle.removeDarken();
 				style.filterContainers('liquid', 'lighten');
@@ -646,7 +632,6 @@ export class ProtocolDesignController{
 		}else if(gv.protocolDesignController.droppedBlock.getType() == "get liquid"){
 			if(containerObj.isLiquidContainer()){
                 gv.protocolDesignController.droppedBlock.setContainer(containerObj);
-				console.log("Get liquid block dropped ; ", gv.protocolDesignController.droppedBlock);
 				if(gv.protocolDesignController.droppedBlock.getTip() != undefined){
 					gv.protocolDesignController.droppedBlock.getTip().addLiquid(gv.protocolDesignController.droppedBlock.getLiquidQuantity()[0], gv.protocolDesignController.droppedBlock.getLiquidQuantity()[1]);
 					gv.temporaryLiquidQuantity = [gv.protocolDesignController.droppedBlock.getLiquidQuantity()[0], gv.protocolDesignController.droppedBlock.getLiquidQuantity()[1], gv.protocolDesignController.droppedBlock.getTip()];
@@ -665,8 +650,6 @@ export class ProtocolDesignController{
 			}
 		}
 
-
-		console.log("Clicked on container with a "+gv.protocolDesignController.droppedBlock.getType()+" block.");
 	}
 
     /**
@@ -695,7 +678,6 @@ export class ProtocolDesignController{
      */
 
     defineDepositLiquid(parent, type, newLiquid){
-        console.log(type);
 		let tip;
 
 		if(newLiquid == false){
@@ -729,8 +711,6 @@ export class ProtocolDesignController{
 			dirtyingTip:!emptyTip
 		}), gv.currentlySelectedHaive.getTimeline().getIndexOf(parent.props.block));
 
-		console.log(gv.currentlySelectedHaive.getTimeline().getBlock(gv.currentlySelectedHaive.getTimeline().getIndexOf(parent.props.block)));
-
 		this.getSpeed();
 	}
 
@@ -746,8 +726,6 @@ export class ProtocolDesignController{
 
 	    tip.setLiquid($("#depositliquid_name").val());
 	    let qty = gv.currentlySelectedHaive.getTimeline().getCurrentlyHeldLiquidQuantity(gv.protocolDesignController.droppedBlock.getIndex());
-	    console.log("Index : ", gv.protocolDesignController.droppedBlock.getIndex());
-	    console.log("Qty : ", qty);
 	    tip.addLiquid(qty[0], qty[1]);
 	    tip.setColor(document.getElementById("pipettetipsdialogcolorselect").value);
 
@@ -880,12 +858,10 @@ export class ProtocolDesignController{
 			revert:"invalid",
 
             start:function(){
-			    console.log("started dragging a block");
                 parent.draggingBlock = true;
             },
 
             stop:function(){
-                console.log("stopped dragging a block")
                 parent.draggingBlock = false;
             }
 		});

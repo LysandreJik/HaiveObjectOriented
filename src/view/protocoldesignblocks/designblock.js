@@ -103,7 +103,8 @@ export class Block extends React.Component{
                     <br></br>
                     {this.props.id.substring(0,1) == "d" ? <div onClick={() => gv.hoverview.displayNotes(this.props.block)}><a><i  className={"fa fa-edit editfiles"}></i></a></div> : ""}
                     {this.props.id.substring(0,1) == "d" ? <MoreInfo more={false} display={this}/> : ""}
-                    {this.props.block.isError() ? <span className="errormessagebig animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
+                    {this.props.block.isError() && !this.props.block.isNoErrorCheck() ? <span className="errormessagebig animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
+                    {this.props.block.isNoErrorCheck() ? <span className="nocheckerrormessagebig animated fadeInRight">{"Not checked due to error"}</span> : ""}
                     {this.props.block.getComment() != undefined ? <span className={"commentbig animated fadeInLeft"}>{this.props.block.getComment()}</span> : ""}
                     {this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessagebig animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
                 </div>
@@ -120,7 +121,8 @@ export class Block extends React.Component{
                     <br></br>
                     {this.props.id.substring(0,1) == "d" ? <div onClick={() => gv.hoverview.displayNotes(this.props.block)}><a><i  className={"fa fa-edit editfiles"}></i></a></div> : ""}
                     {this.props.id.substring(0,1) == "d" ? <MoreInfo more={true} display={this}/> : ""}
-                    {this.props.block.isError() ? <span className="errormessage animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
+                    {this.props.block.isError() && !this.props.block.isNoErrorCheck() ? <span className="errormessage animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
+                    {this.props.block.isNoErrorCheck() ? <span className="nocheckerrormessage animated fadeInRight">{"Not checked due to error"}</span> : ""}
                     {this.props.block.getComment() != undefined ? <span className={"comment animated fadeInLeft"}>{this.props.block.getComment()}</span> : ""}
                     {this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessage animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
                 </div>
