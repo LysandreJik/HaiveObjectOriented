@@ -334,8 +334,8 @@ export class Timeline{
 		    if(extendedTimeline[i].isError()){
 		        for(let j = i+1; j < extendedTimeline.length; j++){
 		            if(!extendedTimeline[j].isNoErrorCheck()){
-                        gv.blueprintController.removeBlockEffects(extendedTimeline[j]);
                         extendedTimeline[j].setNoErrorCheck(true);
+                        gv.blueprintController.removeBlockEffects(extendedTimeline[j]);
                     }
 
                 }

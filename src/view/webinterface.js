@@ -38,7 +38,6 @@ export class App extends React.Component{
 	}
 
 	componentWillMount(){
-
 		webInterfaceController.getNavbarController().setRefreshAppFunction(this);
 	}
 

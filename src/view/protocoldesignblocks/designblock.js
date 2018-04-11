@@ -106,7 +106,7 @@ export class Block extends React.Component{
                     {this.props.block.isError() && !this.props.block.isNoErrorCheck() ? <span className="errormessagebig animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
                     {this.props.block.isNoErrorCheck() ? <span className="nocheckerrormessagebig animated fadeInRight">{"Not checked due to error"}</span> : ""}
                     {this.props.block.getComment() != undefined ? <span className={"commentbig animated fadeInLeft"}>{this.props.block.getComment()}</span> : ""}
-                    {this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessagebig animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
+                    {this.props.block.isWarning() && !this.props.block.isNoErrorCheck() && !this.props.block.isError() ? <span className="warningmessagebig animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
                 </div>
             );
         }else{
@@ -124,7 +124,7 @@ export class Block extends React.Component{
                     {this.props.block.isError() && !this.props.block.isNoErrorCheck() ? <span className="errormessage animated fadeInRight">{this.props.block.getErrorText()}</span> : ""}
                     {this.props.block.isNoErrorCheck() ? <span className="nocheckerrormessage animated fadeInRight">{"Not checked due to error"}</span> : ""}
                     {this.props.block.getComment() != undefined ? <span className={"comment animated fadeInLeft"}>{this.props.block.getComment()}</span> : ""}
-                    {this.props.block.isWarning() && !this.props.block.isError() ? <span className="warningmessage animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
+                    {this.props.block.isWarning() && !this.props.block.isNoErrorCheck() && !this.props.block.isError() ? <span className="warningmessage animated fadeInRight">{this.props.block.getWarningText()}</span> : ""}
                 </div>
             );
         }

@@ -23,7 +23,7 @@ const gv = require('../../const/global');
 export class WelcomeScreen extends React.Component{
     render(){
         return(
-            <section id={"maincontent"} className={"maincontent"}>
+            <section id={"maincontent"} className="maincontent">
                 <div className="welcomescreen">
                     <h1 className={"title"}>Dashboard</h1>
                     <MyLaboratory/>
@@ -38,7 +38,7 @@ export class WelcomeScreen extends React.Component{
 class MyLaboratory extends React.Component{
     render(){
         return (
-            <div className={"mylab"}>
+            <div className="mylab">
                 <h3>My laboratory</h3>
                 <span>{gv.currentlySelectedHaive != undefined ? "Currently selected haive : "+gv.currentlySelectedHaive.getName() : "Currently selected haive : No haive currently selected."}</span><br></br>
                 <span>{gv.currentlySelectedHaive != undefined ? "Type : "+gv.currentlySelectedHaive.getType() : "Type : No haive currently selected."}</span>

@@ -95,9 +95,6 @@ export class BlueprintController{
      */
 	paste(){
 		if(this.blockCopyTimeline.getType() != "empty" && this.blockCopyTimeline != undefined && this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]).getType() != "START_BLOCK"){
-
-
-
 			if(this.blockCopyTimeline.getType() == "get liquid"){
                 this.controller.timeline.setBlock(this.blockCopyTimeline.getClone(), this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
 				this.blockCopyTimeline.getTip().removeLiquid(this.blockCopyTimeline.getLiquidQuantity()[0], this.blockCopyTimeline.getLiquidQuantity()[1]);
@@ -105,7 +102,7 @@ export class BlueprintController{
 			    if(this.blockCopyTimeline.getContainer().getUncontaminatedFullTips().length > 0){
                     this.controller.timeline.setBlock(this.blockCopyTimeline.getClone(), this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
                     let block = this.controller.timeline.getBlock(this.getSelectedItemContextMenu().split('_')[this.getSelectedItemContextMenu().split('_').length-1]);
-                    block.setTip(this.blockCopyTimeline.getContainer().bookTip());
+                    block.setTip(block.getContainer().bookTip());
                 }
 
 			}else if(this.blockCopyTimeline.getType() == "megablock"){
@@ -193,10 +190,7 @@ export class BlueprintController{
 
 	removeBlockEffects(block){
 	    console.log(block.isCounted());
-	    if(block.isCounted()){
-
-        }else{
-	        block.setCounted(true);
+	    if(!block.isCounted() || !block.isNoErrorCheck()){
             console.log("Removing block effects ...");
             if(block.getType() != "START_BLOCK"){
                 if(block.getType() == "get tip"){
@@ -204,6 +198,7 @@ export class BlueprintController{
                         block.getTip().setContaminated(false);
                         block.getContainer().unbookTip(block.getTip());
                         block.clearError();
+                        block.setCounted(true);
                     }
 
                 }else if(block.getType() == "deposit tip") {
@@ -211,11 +206,13 @@ export class BlueprintController{
                         block.getTip().setContaminated(false);
                         block.getTip().setContainingTip(false);
                         block.clearError();
+                        block.setCounted(true);
                     }
 
                 }else if(block.getType() == "get liquid"){
                     if(block.getTip() != undefined){
                         block.getTip().addLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
+                        block.setCounted(true);
                     }
                 }else if(block.getType() == "deposit liquid"){
                     if(block.getTip() != undefined){
@@ -224,9 +221,11 @@ export class BlueprintController{
                         }else{
                             block.getTip().removeLiquid(block.getLiquidQuantity()[0], block.getLiquidQuantity()[1]);
                         }
+                        block.setCounted(true);
                     }
 
                 }else if(block.getType() == "megablock"){
+                    block.setCounted(true);
                     let blocks = block.getBlocksRecursively();
                     for(let i = 0; i < blocks.length; i++){
                         if(blocks[i].getType() == "get tip"){

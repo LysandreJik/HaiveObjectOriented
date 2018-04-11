@@ -53,6 +53,7 @@ export class TipContainer{
 	}
 
 	bookTip(){
+	    console.log(this.getUncontaminatedFullTips());
 	    if(this.getUncontaminatedFullTips().length > 0){
             let tip = this.getUncontaminatedFullTips()[0];
             tip.setContainingTip(false);

@@ -190,6 +190,7 @@ export class TestTube{
      * @param unit String, liquid amount unit ("mL" or "uL")
      */
     addLiquid(liquid, unit){
+        console.log(this.amountUnit, this.liquidAmount);
         if(this.amountUnit == unit ){
             this.liquidAmount = +this.liquidAmount+ +liquid;
         }else if(this.amountUnit == "mL" && unit == "uL"){
@@ -201,6 +202,7 @@ export class TestTube{
         }
 
         console.log("Added",liquid,unit);
+        console.log(this.amountUnit, this.liquidAmount);
 
     }
 
