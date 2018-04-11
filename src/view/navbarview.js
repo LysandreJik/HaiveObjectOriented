@@ -17,6 +17,8 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 import React from 'react';
+import {showAssetStore, showHaiveSelectionPage, showPage} from '../actions/focusedActions'
+import {connect} from "react-redux";
 
 let navbarModel;
 let navbarController;
@@ -157,15 +159,33 @@ class NavbarFooter extends React.Component{
 /**
  * All the items that make up the Navbar.
  */
+@connect((store) => {
+    return{
+        focusedPages : store.focusedPages
+    }
+})
 class NavbarItem extends React.Component{
 	constructor(props){
 		super(props);
+        this.showPage = this.showPage.bind(this);
 	}
+
+    showPage(pageTitle){
+        console.log("Showing page", pageTitle)
+        switch(pageTitle){
+            case "Haive select":
+                this.props.dispatch(showHaiveSelectionPage());
+                break;
+            case "Asset store":
+                this.props.dispatch(showAssetStore());
+                break;
+        }
+    }
 
 	render(){
 		if(this.props.active == true){
 			return(
-				<li className="active" onClick={() => this.props.func(this.props.link)}>
+				<li className="active" onClick={showHaiveSelectionPage}>
 					<a>
 						<i className={"fa fa-"+this.props.icon}></i>
 						<span>{this.props.content}</span>
@@ -174,7 +194,7 @@ class NavbarItem extends React.Component{
 			);
 		}else{
 			return(
-				<li onClick={() => this.props.func(this.props.link)}>
+				<li onClick={() => this.showPage(this.props.link)}>
 					<a>
 						<i className={"fa fa-"+this.props.icon}></i>
 						<span>{this.props.content}</span>

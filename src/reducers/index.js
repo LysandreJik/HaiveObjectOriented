@@ -1,6 +1,6 @@
 import {combineReducers} from "redux"
-import tips from './tips'
+import focusedPages from './focused'
 
 export default combineReducers({
-    tips
+    focusedPages
 });

@@ -25,3 +25,11 @@ export function showContainerSelectionPage(){
         page:"CONTAINER_SELECT"
     }
 }
+
+export function showAssetStore(){
+    return{
+        type:"SWITCH_PAGE",
+        page:"ASSET_STORE"
+    }
+}
+

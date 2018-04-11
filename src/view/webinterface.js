@@ -17,8 +17,12 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 import React from 'react';
-
+import {connect} from "react-redux"
 import {Warning} from "./warningview";
+import {WelcomeScreen} from "./welcomescreen";
+import {showAssetStore, showHaiveSelectionPage} from "../actions/focusedActions";
+import {MyAssets} from "./myassets";
+import {Marketplace} from "./marketplace";
 
 const WebInterfaceController = require('../controller/webinterfacecontroller').WebInterfaceController;
 	const gv = require('../../const/global');
@@ -29,11 +33,17 @@ var webInterfaceController = new WebInterfaceController();
 /**
  * The Top level view Component. It contains everything about the App.
  */
+@connect((store) => {
+    return{
+        focusedPages : store.focusedPages
+	}
+})
 export class App extends React.Component{
 	constructor(props){
 		super(props);
 		this.updateApp = this.updateApp.bind(this);
 		this.state = {hover:"none", hoverFunc:null};
+
 		gv.mainApp = this;
 	}
 
@@ -57,14 +67,35 @@ export class App extends React.Component{
 	}
 
 	render(){
+
+		if(this.props.focusedPages.page === "DASHBOARD"){
+            return(
+                <section className="hbox stretch bg">
+                    {webInterfaceController.getNavbarView()}
+                    <section id="content" style={{"width":"100%"}}><WelcomeScreen/></section>
+                    {this.state.hover != 'none' ? <Warning agree={this.state.hoverFunc} type={this.state.hover}/> : ""}
+                </section>
+            );
+		}else if(this.props.focusedPages.page === "HAIVE_SELECT"){
+            return(
+                <section className="hbox stretch bg">
+                    {webInterfaceController.getNavbarView()}
+                    <section id="content" style={{"width":"100%"}}><MyAssets/></section>
+                    {this.state.hover != 'none' ? <Warning agree={this.state.hoverFunc} type={this.state.hover}/> : ""}
+                </section>
+            );
+        }else if(this.props.focusedPages.page === "ASSET_STORE"){
+            return(
+                <section className="hbox stretch bg">
+                    {webInterfaceController.getNavbarView()}
+                    <section id="content" style={{"width":"100%"}}><Marketplace/></section>
+                    {this.state.hover != 'none' ? <Warning agree={this.state.hoverFunc} type={this.state.hover}/> : ""}
+                </section>
+            );
+        }
+
 		if(gv.loginDone){
-			return(
-				<section className="hbox stretch bg">
-					{webInterfaceController.getNavbarView()}
-					<section id="content" style={{"width":"100%"}}>{webInterfaceController.getFocusedPage()}</section>
-					{this.state.hover != 'none' ? <Warning agree={this.state.hoverFunc} type={this.state.hover}/> : ""}
-				</section>
-			);
+
 		}else{
 			console.log(gv.creatingAccount);
 			if(gv.creatingAccount){

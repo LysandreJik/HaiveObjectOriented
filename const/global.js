@@ -28,7 +28,7 @@ export const acceptedContainerLocs = [
 //If add or delete, think to go to webInterfaceController.js, WebInterfaceController class, getFocusedPage method and modify the switch statement
 export const navbarMenuTitlesAndIcons = [
     ["Welcome", "dashboard"],
-    ["Dashboard", "flask"],
+    ["Haive select", "flask"],
 	["Asset store", "gears"]
 ];
 
