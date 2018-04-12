@@ -1,10 +1,11 @@
+const gv = require('../../const/global');
+
 export default function reducer(state = {
-    type: "NA",
+    type: "INIT",
     page: "Dashboard"
 }, action){
-    console.log('Reduced')
     switch(action.type){
-        case "SWITCH_PAGE":
+        case gv.reducers.focused.SWITCH_PAGE:
             return Object.assign({}, state, {type:action.type, page:action.page});
         default:
             return state;

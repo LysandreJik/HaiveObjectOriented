@@ -28,15 +28,30 @@ export const acceptedContainerLocs = [
 export const focusablePages = {
     DASHBOARD: "Dashboard",
     HAIVE_SELECT: "Haive select",
-    ASSET_STORE: "Asset store"
+    ASSET_STORE: "Asset store",
+	subpages:{
+        CONTAINER_SELECT: "Container select",
+		HAIVE_SELECT: "Haive select"
+	}
 };
 
-//If add or delete, think to go to webInterfaceController.js, WebInterfaceController class, getFocusedPage method and modify the switch statement
 export const navbarMenuTitlesAndIcons = [
     [focusablePages.DASHBOARD, "dashboard"],
     [focusablePages.HAIVE_SELECT, "flask"],
 	[focusablePages.ASSET_STORE, "gears"]
 ];
+
+export const reducers = {
+	focused:{
+		SWITCH_PAGE: "Switch page"
+	},
+	haives:{
+        ADD_HAIVE_TO_INVENTORY: "Add Haive to inventory",
+        REMOVE_HAIVE_FROM_INVENTORY: "Remove Haive from inventory",
+		ADD_HAIVE_TO_STORE: "Add Haive to inventory",
+        REMOVE_HAIVE_FROM_STORE: "Remove Haive from inventory"
+	}
+}
 
 
 export var haiveStore = [
