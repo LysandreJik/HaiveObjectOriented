@@ -17,11 +17,13 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 import React from 'react';
-import {showAssetStore, showHaiveSelectionPage, showPage} from '../actions/focusedActions'
+import {showAssetStore, showDashboard, showHaiveSelectionPage, showPage} from '../actions/focusedActions'
 import {connect} from "react-redux";
+import {NavbarStructure} from "../structure/Navbar";
+const gv = require('../../const/global');
+
 
 let navbarModel;
-let navbarController;
 let sections;
 
 /**
@@ -30,8 +32,7 @@ let sections;
 export class Navbar extends React.Component {
 	constructor(props){
 		super(props);
-		navbarModel = this.props.model;
-		navbarController = navbarModel.getController();
+		navbarModel = new NavbarStructure();
 		sections = navbarModel.getSections();
 	}
 
@@ -52,7 +53,7 @@ export class Navbar extends React.Component {
 						</div>
 						<NavbarNotificationDropdown />
 					</div>
-					<NavbarExtendedSidebar />
+					<NavbarExtendedSidebar/>
 				</section>
 				<NavbarFooter />
 			</section>
@@ -171,19 +172,23 @@ class NavbarItem extends React.Component{
 	}
 
     showPage(pageTitle){
-        console.log("Showing page", pageTitle)
+        console.log("Showing page", pageTitle);
+        console.log(window);
         switch(pageTitle){
-            case "Haive select":
+			case gv.focusablePages.DASHBOARD:
+				this.props.dispatch(showDashboard());
+				break;
+            case gv.focusablePages.HAIVE_SELECT:
                 this.props.dispatch(showHaiveSelectionPage());
                 break;
-            case "Asset store":
+            case gv.focusablePages.ASSET_STORE:
                 this.props.dispatch(showAssetStore());
                 break;
         }
     }
 
 	render(){
-		if(this.props.active == true){
+		if(this.props.focusedPages.page === this.props.link){
 			return(
 				<li className="active" onClick={showHaiveSelectionPage}>
 					<a>
@@ -214,11 +219,6 @@ class NavbarExtendedSidebar extends React.Component{
 		super(props);
 		this.updateState = this.updateState.bind(this);
 	}
-
-	componentWillMount(){
-		navbarController.setRefreshNavbarFunction(this);
-	}
-
 	updateState(state, value){
 		this.setState({state:value});
 	}

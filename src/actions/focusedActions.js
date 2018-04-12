@@ -1,35 +1,23 @@
-export function showIndex(){
-    return{
-        type:"SWITCH_PAGE",
-        page:"INDEX"
-    }
-}
+const gv = require('../../const/global');
 
 export function showDashboard(){
     return{
         type:"SWITCH_PAGE",
-        page:"DASHBOARD"
+        page:gv.focusablePages.DASHBOARD
     }
 }
 
 export function showHaiveSelectionPage(){
     return{
         type:"SWITCH_PAGE",
-        page:"HAIVE_SELECT"
-    }
-}
-
-export function showContainerSelectionPage(){
-    return{
-        type:"SWITCH_PAGE",
-        page:"CONTAINER_SELECT"
+        page:gv.focusablePages.HAIVE_SELECT
     }
 }
 
 export function showAssetStore(){
     return{
         type:"SWITCH_PAGE",
-        page:"ASSET_STORE"
+        page:gv.focusablePages.ASSET_STORE
     }
 }
 

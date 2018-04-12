@@ -31,35 +31,6 @@ import { MyAssets } from "../view/myassets";
 const gv = require('../../const/global');
 const gi = require('../../const/globalImages').gi;
 
-const NavbarModel = require('../model/navbarmodel').NavbarModel;
-const NavbarController = require('../controller/navbarcontroller').NavbarController;
-
-const ProtocolConceptionModel = require('../model/protocolconceptionmodel').ProtocolConceptionModel;
-const ProtocolConceptionController = require('../controller/protocolconceptioncontroller').ProtocolConceptionController;
-
-const ProtocolDesignModel = require('../model/protocoldesignmodel').ProtocolDesignModel;
-const ProtocolDesignController = require('../controller/protocoldesigncontroller').ProtocolDesignController;
-
-const LoginController = require('../controller/logincontroller').LoginController;
-
-let marketplace = <Marketplace/>;
-
-let navbarController = new NavbarController();
-let navbarModel = new NavbarModel({controller:navbarController});
-let navbar = <aside className="bg-black aside-sm nav-vertical only-icon" id="nav"><Navbar model={navbarModel}/></aside>;
-
-let protocolConceptionController = new ProtocolConceptionController();
-let protocolConceptionModel = new ProtocolConceptionModel({controller:protocolConceptionController});
-let protocolconception = <AddLiquids/>;
-
-let protocolDesignController = new ProtocolDesignController();
-let protocolDesignModel = new ProtocolDesignModel({controller:protocolDesignController});
-let protocoldesign = <ProtocolDesign/>;
-
-let loadingscreen = <LoadingScreen/>;
-let welcomescreen = <WelcomeScreen/>;
-
-let loginController = new LoginController();
 let login = <Login/>;
 let createAccount = <CreateAccount/>;
 
@@ -74,40 +45,12 @@ export class WebInterfaceController{
 		gv.mainAppController = this;
 	}
 
-	getFocusedPage(){
-		if(gv.imageLoad == 1){
-            console.log(navbarModel.getActiveSection().getTitle())
-			switch(navbarModel.getActiveSection().getTitle()){
-                case "Welcome":
-                    return welcomescreen;
-                    break;
-				case "Dashboard":
-					return <MyAssets/>;
-					break;
-				case "Asset store":
-					return marketplace;
-					break;
-			}
-		}else{
-			return loadingscreen;
-		}
-
-	}
-
 	getLogin(){
 		return login;
 	}
 
 	createAccount(){
 		return createAccount;
-	}
-
-	getNavbarController(){
-		return navbarController;
-	}
-
-	getNavbarView(){
-		return navbar;
 	}
 
 	hoverMisc(type, func){

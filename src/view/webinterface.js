@@ -20,12 +20,12 @@ import React from 'react';
 import {connect} from "react-redux"
 import {Warning} from "./warningview";
 import {WelcomeScreen} from "./welcomescreen";
-import {showAssetStore, showHaiveSelectionPage} from "../actions/focusedActions";
 import {MyAssets} from "./myassets";
 import {Marketplace} from "./marketplace";
+import {Navbar} from "./navbarview";
 
 const WebInterfaceController = require('../controller/webinterfacecontroller').WebInterfaceController;
-	const gv = require('../../const/global');
+const gv = require('../../const/global');
 
 
 var webInterfaceController = new WebInterfaceController();
@@ -47,10 +47,6 @@ export class App extends React.Component{
 		gv.mainApp = this;
 	}
 
-	componentWillMount(){
-		webInterfaceController.getNavbarController().setRefreshAppFunction(this);
-	}
-
 	refresh(state, value){
 		if(state == undefined){
 			this.setState({refresh:true});
@@ -68,26 +64,32 @@ export class App extends React.Component{
 
 	render(){
 
-		if(this.props.focusedPages.page === "DASHBOARD"){
+		if(this.props.focusedPages.page === gv.focusablePages.DASHBOARD){
             return(
                 <section className="hbox stretch bg">
-                    {webInterfaceController.getNavbarView()}
+                    <aside className="bg-black aside-sm nav-vertical only-icon" id="nav">
+						<Navbar/>
+					</aside>
                     <section id="content" style={{"width":"100%"}}><WelcomeScreen/></section>
                     {this.state.hover != 'none' ? <Warning agree={this.state.hoverFunc} type={this.state.hover}/> : ""}
                 </section>
             );
-		}else if(this.props.focusedPages.page === "HAIVE_SELECT"){
+		}else if(this.props.focusedPages.page === gv.focusablePages.HAIVE_SELECT){
             return(
                 <section className="hbox stretch bg">
-                    {webInterfaceController.getNavbarView()}
+                    <aside className="bg-black aside-sm nav-vertical only-icon" id="nav">
+                        <Navbar/>
+                    </aside>
                     <section id="content" style={{"width":"100%"}}><MyAssets/></section>
                     {this.state.hover != 'none' ? <Warning agree={this.state.hoverFunc} type={this.state.hover}/> : ""}
                 </section>
             );
-        }else if(this.props.focusedPages.page === "ASSET_STORE"){
+        }else if(this.props.focusedPages.page === gv.focusablePages.ASSET_STORE){
             return(
                 <section className="hbox stretch bg">
-                    {webInterfaceController.getNavbarView()}
+                    <aside className="bg-black aside-sm nav-vertical only-icon" id="nav">
+                        <Navbar/>
+                    </aside>
                     <section id="content" style={{"width":"100%"}}><Marketplace/></section>
                     {this.state.hover != 'none' ? <Warning agree={this.state.hoverFunc} type={this.state.hover}/> : ""}
                 </section>

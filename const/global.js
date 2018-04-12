@@ -25,12 +25,19 @@ export const acceptedContainerLocs = [
 	"bottom-right"
 ];
 
+export const focusablePages = {
+    DASHBOARD: "Dashboard",
+    HAIVE_SELECT: "Haive select",
+    ASSET_STORE: "Asset store"
+};
+
 //If add or delete, think to go to webInterfaceController.js, WebInterfaceController class, getFocusedPage method and modify the switch statement
 export const navbarMenuTitlesAndIcons = [
-    ["Welcome", "dashboard"],
-    ["Haive select", "flask"],
-	["Asset store", "gears"]
+    [focusablePages.DASHBOARD, "dashboard"],
+    [focusablePages.HAIVE_SELECT, "flask"],
+	[focusablePages.ASSET_STORE, "gears"]
 ];
+
 
 export var haiveStore = [
 	['tile0', "DISPENSER", "First dispenser", "ID:DISP_001", "Template desc"],
