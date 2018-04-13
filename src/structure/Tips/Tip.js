@@ -28,7 +28,23 @@ export default class Tip{
         }
     }
 
-    //TODO : test mergeliquidintip
+    removeLiquid(liquid){
+        if(this._contents.quantity <= 0){
+            throw new Error("Tip is empty. Please only remove liquid from tips that contain liquid.");
+        }else if(this._available){
+            throw new Error("Tip is available. Please book it before trying to add liquid to it.");
+        }else{
+            let totalHeldQuantity = (this._contents.magnitude === LIQUID_MAGNITUDES.ul ? this._contents.quantity : this._contents.quantity*1000);
+            let totalRemovedQuantity = liquid.magnitude === LIQUID_MAGNITUDES.ul ? liquid.quantity : liquid.quantity*1000;
+            if(totalRemovedQuantity > totalHeldQuantity){
+                throw new Error("Trying to remove more liquid than actually contained in the tip !");
+            }else{
+                this._contents = liquid;
+                this.dirty();
+            }
+        }
+    }
+
     mergeLiquidInTip(liquid, liquidName){
         if(this._contents.quantity === 0 && !this._dirty){
             throw new Error("Tip doesn't contain any liquid and is clean. Please use the addLiquid method to add a first liquid to the tip.");
