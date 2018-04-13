@@ -11,12 +11,12 @@ let tipInit = {
 };
 
 let testTube = new TestTube(tipInit);
+let pipetteTip = new PipetteTip(tipInit);
 
 test('TestTube initialization', () => {
     expect(testTube.getX()).toBe(tipInit.x);
     expect(testTube.getY()).toBe(tipInit.y);
     expect(testTube.getContainer()).toBe(tipInit.container);
-    expect(testTube.getTipSubType()).toBe(tipInit.subType);
 });
 
 test('TestTube type.', () => {
@@ -29,17 +29,10 @@ test('TestTube is empty at init.', () => {
     expect(testTube.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
 });
 
-
-
-
-
-let pipetteTip = new PipetteTip(tipInit);
-
 test('PipetteTip initialization.', () => {
     expect(pipetteTip.getX()).toBe(tipInit.x);
     expect(pipetteTip.getY()).toBe(tipInit.y);
     expect(pipetteTip.getContainer()).toBe(tipInit.container);
-    expect(pipetteTip.getTipSubType()).toBe(tipInit.subType);
 });
 
 test('PipetteTip type.', () => {
@@ -79,4 +72,208 @@ test('PipetteTip throws error when the release() method has been called and the 
     expect(() => {
         pipetteTip.getContents()
     }).toThrow();
+});
+
+test('Availability of tip at initialization.', () => {
+    expect(pipetteTip.isAvailable()).toBe(true);
+    expect(testTube.isAvailable()).toBe(true);
+});
+
+test('Unavailability of tip after booking it.', () => {
+    pipetteTip.book();
+    testTube.book();
+    expect(pipetteTip.isAvailable()).toBe(false);
+    expect(testTube.isAvailable()).toBe(false);
+});
+
+test('Availability of tip after unbooking it.', () => {
+    pipetteTip.unbook();
+    testTube.unbook();
+    expect(pipetteTip.isAvailable()).toBe(true);
+    expect(testTube.isAvailable()).toBe(true);
+});
+
+test('Adding liquid to empty tip but available tip throws error: the tip needs to be booked.', () => {
+    expect(() => {
+        pipetteTip.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    }).toThrow();
+    expect(() => {
+        pipetteTip.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    }).toThrow();
+});
+
+test('Adding liquid to empty, dirty and booked tip throws error: should be clean.', () => {
+    pipetteTip.book();
+    testTube.book();
+    pipetteTip.dirty();
+    testTube.dirty();
+    expect(() => {
+        pipetteTip.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    }).toThrow();
+    expect(() => {
+        testTube.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    }).toThrow();
+    pipetteTip.clean()
+    testTube.clean();
+    pipetteTip.unbook();
+    testTube.unbook();
+
+});
+
+test('Adding liquid to empty, clean and booked tip', () => {
+    pipetteTip.book();
+    testTube.book();
+    pipetteTip.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    pipetteTip.hold();
+    testTube.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    expect(pipetteTip.getContents().liquid).toBe("DNA sample");
+    expect(pipetteTip.getContents().quantity).toBe(2);
+    expect(pipetteTip.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+    expect(testTube.getContents().liquid).toBe("DNA sample");
+    expect(testTube.getContents().quantity).toBe(2);
+    expect(testTube.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+});
+
+test('Adding liquid to tip already containing liquid throws error', () => {
+    expect(() => {
+        pipetteTip.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    }).toThrow();
+    expect(() => {
+        testTube.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    }).toThrow();
+
+});
+
+test("Merging liquid when there isn't any liquid and the tip is clean throws an error", () => {
+    let testTube = new TestTube(tipInit);
+    let pipetteTip = new PipetteTip(tipInit);
+    expect(() => {
+        pipetteTip.mergeLiquidInTip({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    }).toThrow();
+    expect(() => {
+        testTube.mergeLiquidInTip({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    }).toThrow();
+});
+
+test("Merging liquid when there isn't any liquid but the tip is dirty accepts the liquid", () => {
+    let testTube = new TestTube(tipInit);
+    let pipetteTip = new PipetteTip(tipInit);
+    testTube.dirty();
+    pipetteTip.dirty();
+    testTube.book();
+    pipetteTip.book();
+    pipetteTip.hold();
+    pipetteTip.mergeLiquidInTip({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    expect(pipetteTip.getContents().liquid).toBe("DNA sample");
+    expect(pipetteTip.getContents().quantity).toBe(2);
+    expect(pipetteTip.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+    testTube.mergeLiquidInTip({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    expect(testTube.getContents().liquid).toBe("DNA sample");
+    expect(testTube.getContents().quantity).toBe(2);
+    expect(testTube.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+});
+
+test("Merging liquid when the tip is available throws an error.", () => {
+    let testTube = new TestTube(tipInit);
+    let pipetteTip = new PipetteTip(tipInit);
+    testTube.dirty();
+    pipetteTip.dirty();
+    expect(() => {
+        pipetteTip.mergeLiquidInTip({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    }).toThrow();
+    expect(() => {
+        testTube.mergeLiquidInTip({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    }).toThrow();
+});
+
+test("Merging liquid with new liquid adds to the quantity. No name is specified so the initial name is kept.", () => {
+    let testTube = new TestTube(tipInit);
+    let pipetteTip = new PipetteTip(tipInit);
+    pipetteTip.book();
+    pipetteTip.hold();
+    testTube.book();
+    pipetteTip.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    testTube.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    pipetteTip.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    expect(pipetteTip.getContents().liquid).toBe("DNA sample2");
+    testTube.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    expect(testTube.getContents().liquid).toBe("DNA sample2");
+});
+
+test("Merging liquid with new liquid adds to the quantity. A name is specified so the liquid takes the name.", () => {
+    let testTube = new TestTube(tipInit);
+    let pipetteTip = new PipetteTip(tipInit);
+    pipetteTip.book();
+    pipetteTip.hold();
+    testTube.book();
+    pipetteTip.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    testTube.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    pipetteTip.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL}, "liquid name");
+    expect(pipetteTip.getContents().liquid).toBe("liquid name");
+    testTube.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL}, "liquid name2");
+    expect(testTube.getContents().liquid).toBe("liquid name2");
+});
+test("Liquid merge with initial liquid in uL and added liquid in uL", () => {
+    let testTube = new TestTube(tipInit);
+    let pipetteTip = new PipetteTip(tipInit);
+    pipetteTip.book();
+    pipetteTip.hold();
+    testTube.book();
+    pipetteTip.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    testTube.addLiquid({liquid: "DNA sample", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL});
+    pipetteTip.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL}, "liquid name");
+    testTube.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL}, "liquid name2");
+
+    expect(testTube.getContents().quantity).toBe(4);
+    expect(testTube.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+    expect(testTube.getContents().quantity).toBe(4);
+    expect(testTube.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+});
+test("Liquid merge with initial liquid in uL and added liquid in mL", () => {
+    let testTube = new TestTube(tipInit);
+    let pipetteTip = new PipetteTip(tipInit);
+    pipetteTip.book();
+    pipetteTip.hold();
+    testTube.book();
+    pipetteTip.addLiquid({liquid: "DNA sample", quantity: 3, magnitude: LIQUID_MAGNITUDES.uL});
+    testTube.addLiquid({liquid: "DNA sample", quantity: 3, magnitude: LIQUID_MAGNITUDES.uL});
+    pipetteTip.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.mL}, "liquid name");
+    testTube.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.mL}, "liquid name2");
+
+    expect(testTube.getContents().quantity).toBe(2003);
+    expect(testTube.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+    expect(testTube.getContents().quantity).toBe(2003);
+    expect(testTube.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+});
+test("Liquid merge with initial liquid in mL and added liquid in uL", () => {
+    let testTube = new TestTube(tipInit);
+    let pipetteTip = new PipetteTip(tipInit);
+    pipetteTip.book();
+    pipetteTip.hold();
+    testTube.book();
+    pipetteTip.addLiquid({liquid: "DNA sample", quantity: 3, magnitude: LIQUID_MAGNITUDES.mL});
+    testTube.addLiquid({liquid: "DNA sample", quantity: 3, magnitude: LIQUID_MAGNITUDES.mL});
+    pipetteTip.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL}, "liquid name");
+    testTube.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.uL}, "liquid name2");
+
+    expect(testTube.getContents().quantity).toBe(3002);
+    expect(testTube.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+    expect(testTube.getContents().quantity).toBe(3002);
+    expect(testTube.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+});
+test("Liquid merge with initial liquid in mL and added liquid in mL", () => {
+    let testTube = new TestTube(tipInit);
+    let pipetteTip = new PipetteTip(tipInit);
+    pipetteTip.book();
+    pipetteTip.hold();
+    testTube.book();
+    pipetteTip.addLiquid({liquid: "DNA sample", quantity: 3, magnitude: LIQUID_MAGNITUDES.mL});
+    testTube.addLiquid({liquid: "DNA sample", quantity: 3, magnitude: LIQUID_MAGNITUDES.mL});
+    pipetteTip.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.mL}, "liquid name");
+    testTube.mergeLiquidInTip({liquid: "DNA sample2", quantity: 2, magnitude: LIQUID_MAGNITUDES.mL}, "liquid name2");
+
+    expect(testTube.getContents().quantity).toBe(5000);
+    expect(testTube.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+    expect(testTube.getContents().quantity).toBe(5000);
+    expect(testTube.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
 });

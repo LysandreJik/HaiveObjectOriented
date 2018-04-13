@@ -1,5 +1,6 @@
 import Container from "./Container";
 import {CONTAINER_TYPES} from "../../../const/structure";
+import TestTube from "../Tips/TestTube";
 
 
 export default class LiquidContainer extends Container{
