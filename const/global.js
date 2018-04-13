@@ -51,8 +51,7 @@ export const reducers = {
 		ADD_HAIVE_TO_STORE: "Add Haive to inventory",
         REMOVE_HAIVE_FROM_STORE: "Remove Haive from inventory"
 	}
-}
-
+};
 
 export var haiveStore = [
 	['tile0', "DISPENSER", "First dispenser", "ID:DISP_001", "Template desc"],
