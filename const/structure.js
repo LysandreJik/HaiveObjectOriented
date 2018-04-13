@@ -34,3 +34,9 @@ export const CONTAINER_SUBTYPES = {
     MP96_MICRO_PLATE: {name: "96 micro plate", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER, width: 8, height: 12},
     MP24_MICRO_PLATE: {name: "24 micro plate", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER, width: 4, height: 6}
 };
+
+export const HAIVE_TYPES = {
+    DISPENSER: "Dispenser",
+    FREEZER: "Freezer",
+    CENTRIFUGE: "Centrifuge"
+};
