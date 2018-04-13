@@ -20,6 +20,8 @@ export default class Haive{
             middleRight:null,
             bottomRight:null
         };
+
+        //TODO HAIVE POSITION
     }
 
     getName(){
