@@ -4,7 +4,6 @@ import TestTube from "../Tips/TestTube";
 
 export default class Container{
     constructor(args){
-        this._position = args.position;
         this._subType = args.subType;
         this._id = Container.getID();
 
@@ -22,6 +21,10 @@ export default class Container{
 
             }
         }
+    }
+
+    setPosition(position){
+        this._position = position;
     }
 
     static getID(){

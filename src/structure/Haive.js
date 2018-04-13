@@ -1,8 +1,10 @@
+import {CONTAINER_POSITIONS} from "../../const/structure";
+
 export default class Haive{
     constructor(args){
-        this.name = args.name;
-        this.type = args.type;
-        this.containers = {
+        this._name = args.name;
+        this._type = args.type;
+        this._containers = {
             topLeft:null,
             middleLeft:null,
             bottomLeft:null,
@@ -10,7 +12,7 @@ export default class Haive{
             middleRight:null,
             bottomRight:null
         };
-        this.neighbours = {
+        this._neighbours = {
             topLeft:null,
             middleLeft:null,
             bottomLeft:null,
@@ -21,114 +23,140 @@ export default class Haive{
     }
 
     getName(){
-        return this.name;
+        return this._name;
     }
 
     getType(){
-        return this.type;
+        return this._type;
     }
 
     getContainers(){
-        return this.containers;
+        return this._containers;
     }
 
     getNeighbours(){
-        return this.neighbours;
+        return this._neighbours;
     }
 
-    setTopLeftContainer(container){
-        this.containers.topLeft = container;
+    switchContainers(containerPosition1, containerPosition2){
+        let containerTemp = Object.assign({}, this.getContainer(containerPosition1));
+        this.setContainer(Object.assign({}, this.getContainer(containerPosition2)), containerPosition1);
+        this.setContainer(containerTemp, containerPosition2);
     }
 
-    setTopRightContainer(container){
-        this.containers.topRight = container;
+    setContainer(container, containerPosition){
+        switch (containerPosition) {
+            case(CONTAINER_POSITIONS.TOP_LEFT):
+                this._containers.topLeft = container;
+                this._containers.topLeft.setPosition(containerPosition);
+                break;
+            case(CONTAINER_POSITIONS.TOP_RIGHT):
+                this._containers.topRight = container;
+                this._containers.topRight.setPosition(containerPosition);
+                break;
+            case(CONTAINER_POSITIONS.MIDDLE_LEFT):
+                this._containers.middleLeft = container;
+                this._containers.middleLeft.setPosition(containerPosition);
+                break;
+            case(CONTAINER_POSITIONS.MIDDLE_RIGHT):
+                this._containers.middleRight = container;
+                this._containers.middleRight.setPosition(containerPosition);
+                break;
+            case(CONTAINER_POSITIONS.BOTTOM_LEFT):
+                this._containers.bottomLeft = container;
+                this._containers.bottomLeft.setPosition(containerPosition);
+                break;
+            case(CONTAINER_POSITIONS.BOTTOM_RIGHT):
+                this._containers.bottomRight = container;
+                this._containers.bottomRight.setPosition(containerPosition);
+                break;
+        }
     }
 
-    setMiddleLeftContainer(container){
-        this.containers.middleLeft = container;
+    removeContainer(containerPosition){
+        switch (containerPosition) {
+            case(CONTAINER_POSITIONS.TOP_LEFT):
+                this._containers.topLeft.setPosition(null);
+                this._containers.topLeft = null;
+                break;
+            case(CONTAINER_POSITIONS.TOP_RIGHT):
+                this._containers.topRight.setPosition(null);
+                this._containers.topRight = null;
+                break;
+            case(CONTAINER_POSITIONS.MIDDLE_LEFT):
+                this._containers.middleLeft.setPosition(null);
+                this._containers.middleLeft = null;
+                break;
+            case(CONTAINER_POSITIONS.MIDDLE_RIGHT):
+                this._containers.middleRight.setPosition(null);
+                this._containers.middleRight = null;
+                break;
+            case(CONTAINER_POSITIONS.BOTTOM_LEFT):
+                this._containers.bottomLeft.setPosition(null);
+                this._containers.bottomLeft = null;
+                break;
+            case(CONTAINER_POSITIONS.BOTTOM_RIGHT):
+                this._containers.bottomRight.setPosition(null);
+                this._containers.bottomRight = null;
+                break;
+        }
     }
 
-    setMiddleRightContainer(container){
-        this.containers.middleRight = container;
+    getContainer(containerPosition){
+        switch (containerPosition) {
+            case(CONTAINER_POSITIONS.TOP_LEFT):
+                return this._containers.topLeft;
+            case(CONTAINER_POSITIONS.TOP_RIGHT):
+                return this._containers.topRight;
+            case(CONTAINER_POSITIONS.MIDDLE_LEFT):
+                return this._containers.middleLeft;
+            case(CONTAINER_POSITIONS.MIDDLE_RIGHT):
+                return this._containers.middleRight;
+            case(CONTAINER_POSITIONS.BOTTOM_LEFT):
+                return this._containers.bottomLeft;
+            case(CONTAINER_POSITIONS.BOTTOM_RIGHT):
+                return this._containers.bottomRight;
+        }
     }
 
-    setBottomLeftContainer(container){
-        this.containers.bottomLeft = container;
+
+    setNeighbour(neighbour, neighbourPosition){
+        switch (neighbourPosition) {
+            case(CONTAINER_POSITIONS.TOP_LEFT):
+                this._neighbours.topLeft = neighbour;
+                break;
+            case(CONTAINER_POSITIONS.TOP_RIGHT):
+                this._neighbours.topRight = neighbour;
+                break;
+            case(CONTAINER_POSITIONS.MIDDLE_LEFT):
+                this._neighbours.middleLeft = neighbour;
+                break;
+            case(CONTAINER_POSITIONS.MIDDLE_RIGHT):
+                this._neighbours.middleRight = neighbour;
+                break;
+            case(CONTAINER_POSITIONS.BOTTOM_LEFT):
+                this._neighbours.bottomLeft = neighbour;
+                break;
+            case(CONTAINER_POSITIONS.BOTTOM_RIGHT):
+                this._neighbours.bottomRight = neighbour;;
+                break;
+        }
     }
 
-    setBottomRightContainer(container){
-        this.containers.bottomRight = container;
-    }
-
-    removeTopLeftContainer(){
-        this.containers.topLeft = null;
-    }
-
-    removeTopRightContainer(){
-        this.containers.topRight = null;
-    }
-
-    removeMiddleLeftContainer(){
-        this.containers.middleLeft = null;
-    }
-
-    removeMiddleRightContainer(){
-        this.containers.middleRight = null;
-    }
-
-    removeBottomLeftContainer(){
-        this.containers.bottomLeft = null;
-    }
-
-    removeBottomRightContainer(){
-        this.containers.bottomRight = null;
-    }
-
-    setTopLeftNeighbour(neighbour){
-        this.neighbours.topLeft = neighbour;
-    }
-
-    setTopRightNeighbour(neighbour){
-        this.neighbours.topRight = neighbour;
-    }
-
-    setMiddleLeftNeighbour(neighbour){
-        this.neighbours.middleLeft = neighbour;
-    }
-
-    setMiddleRightNeighbour(neighbour){
-        this.neighbours.middleRight = neighbour;
-    }
-
-    setBottomLeftNeighbour(neighbour){
-        this.neighbours.bottomLeft = neighbour;
-    }
-
-    setBottomRightNeighbour(neighbour){
-        this.neighbours.bottomRight = neighbour;
-    }
-
-    removeTopLeftNeighbour(){
-        this.neighbours.topLeft = null;
-    }
-
-    removeTopRightNeighbour(){
-        this.neighbours.topRight = null;
-    }
-
-    removeMiddleLeftNeighbour(){
-        this.neighbours.middleLeft = null;
-    }
-
-    removeMiddleRightNeighbour(){
-        this.neighbours.middleRight = null;
-    }
-
-    removeBottomLeftNeighbour(){
-        this.neighbours.bottomLeft = null;
-    }
-
-    removeBottomRightNeighbour(){
-        this.neighbours.bottomRight = null;
+    getNeighbour(neighbourPosition){
+        switch (neighbourPosition) {
+            case(CONTAINER_POSITIONS.TOP_LEFT):
+                return this._neighbours.topLeft;
+            case(CONTAINER_POSITIONS.TOP_RIGHT):
+                return this._neighbours.topRight;
+            case(CONTAINER_POSITIONS.MIDDLE_LEFT):
+                return this._neighbours.middleLeft;
+            case(CONTAINER_POSITIONS.MIDDLE_RIGHT):
+                return this._neighbours.middleRight;
+            case(CONTAINER_POSITIONS.BOTTOM_LEFT):
+                return this._neighbours.bottomLeft;
+            case(CONTAINER_POSITIONS.BOTTOM_RIGHT):
+                return this._neighbours.bottomRight;
+        }
     }
 }
