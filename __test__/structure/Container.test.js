@@ -39,3 +39,18 @@ test('PipetteTipContainer wrong initialization', () => {
     }).toThrow();
 });
 
+test('Expect id of the first container to be 0.', () => {
+    expect(liquidContainer.getID()).toBe(0);
+});
+
+test('Expect id of the second container to be 1.', () => {
+    expect(tipContainer.getID()).toBe(1);
+});
+
+test('Expect id of the created containers to be incremented', () => {
+    let id = new PipetteTipContainer(pipetteContainerInit).getID();
+    expect(new PipetteTipContainer(pipetteContainerInit).getID()).toBe(id+1);
+    expect(new LiquidContainer(liquidContainerInit).getID()).toBe(id+2);
+    expect(new PipetteTipContainer(pipetteContainerInit).getID()).toBe(id+3);
+    expect(new LiquidContainer(liquidContainerInit).getID()).toBe(id+4);
+});

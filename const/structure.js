@@ -23,14 +23,14 @@ export const CONTAINER_TYPES = {
 };
 
 export const CONTAINER_SUBTYPES = {
-    P1000_NORMAL_CHIP: {name: "P1000 normal chip", containerType: CONTAINER_TYPES.PIPETTE_TIP_CONTAINER},
-    P1000_LONG_CHIP: {name: "P1000 long chip", containerType: CONTAINER_TYPES.PIPETTE_TIP_CONTAINER},
-    P20_NORMAL_CHIP: {name: "P20 normal chip", containerType: CONTAINER_TYPES.PIPETTE_TIP_CONTAINER},
-    P200_NORMAL_CHIP: {name: "P200 normal chip", containerType: CONTAINER_TYPES.PIPETTE_TIP_CONTAINER},
+    P1000_NORMAL_CHIP: {name: "P1000 normal chip", containerType: CONTAINER_TYPES.PIPETTE_TIP_CONTAINER, width: 8, height: 12},
+    P1000_LONG_CHIP: {name: "P1000 long chip", containerType: CONTAINER_TYPES.PIPETTE_TIP_CONTAINER, width: 8, height: 12},
+    P20_NORMAL_CHIP: {name: "P20 normal chip", containerType: CONTAINER_TYPES.PIPETTE_TIP_CONTAINER, width: 8, height: 12},
+    P200_NORMAL_CHIP: {name: "P200 normal chip", containerType: CONTAINER_TYPES.PIPETTE_TIP_CONTAINER, width: 8, height: 12},
 
-    ST15_SCREW_TUBES: {name: "15 screw tubes", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER},
-    FS6_FALCON_STAND: {name: "6 falcon stand", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER},
-    MB_20_MAGNETIC_BEADS: {name: "20 magnetic beads", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER},
-    MP96_MICRO_PLATE: {name: "96 micro plate", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER},
-    MP24_MICRO_PLATE: {name: "24 micro plate", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER}
+    ST15_SCREW_TUBES: {name: "15 screw tubes", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER, width: 3, height: 5},
+    FS6_FALCON_STAND: {name: "6 falcon stand", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER, width: 2, height: 3},
+    MB_20_MAGNETIC_BEADS: {name: "20 magnetic beads", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER, width: 4, height: 5},
+    MP96_MICRO_PLATE: {name: "96 micro plate", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER, width: 8, height: 12},
+    MP24_MICRO_PLATE: {name: "24 micro plate", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER, width: 4, height: 6}
 };

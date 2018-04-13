@@ -19,6 +19,10 @@ export default class PipetteTip extends Tip{
         this._held = false;
     }
 
+    isHeld(){
+        return this._held;
+    }
+
     getContents(){
         if(this._held){
             return super.getContents();
