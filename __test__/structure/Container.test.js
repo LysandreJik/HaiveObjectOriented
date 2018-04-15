@@ -1,9 +1,9 @@
-import Container from "../../src/structure/Containers/Container";
+import Container from "../../src/structure/containers/Container";
 import {CONTAINER_POSITIONS, CONTAINER_SUBTYPES, CONTAINER_TYPES, TIP_TYPES} from "../../const/structure";
-import LiquidContainer from "../../src/structure/Containers/LiquidContainer";
-import PipetteTipContainer from "../../src/structure/Containers/PipetteTipContainer";
-import TestTube from "../../src/structure/Tips/TestTube";
-import PipetteTip from "../../src/structure/Tips/PipetteTip";
+import LiquidContainer from "../../src/structure/containers/LiquidContainer";
+import PipetteTipContainer from "../../src/structure/containers/PipetteTipContainer";
+import TestTube from "../../src/structure/tips/TestTube";
+import PipetteTip from "../../src/structure/tips/PipetteTip";
 
 let liquidContainerInit = {
     position: CONTAINER_POSITIONS.TOP_LEFT,

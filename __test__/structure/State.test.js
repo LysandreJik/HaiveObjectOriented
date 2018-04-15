@@ -1,6 +1,6 @@
 import Haive from "../../src/structure/Haive";
 import {CONTAINER_POSITIONS, CONTAINER_SUBTYPES, HAIVE_TYPES, LIQUID_MAGNITUDES} from "../../const/structure";
-import LiquidContainer from "../../src/structure/Containers/LiquidContainer";
+import LiquidContainer from "../../src/structure/containers/LiquidContainer";
 import State from "../../src/structure/timeline/State";
 
 let haiveInit = {name: "Haive 1", type: HAIVE_TYPES.DISPENSER};

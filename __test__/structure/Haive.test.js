@@ -1,7 +1,7 @@
 import Haive from "../../src/structure/Haive";
 import {CONTAINER_POSITIONS, CONTAINER_SUBTYPES, HAIVE_TYPES} from "../../const/structure";
-import LiquidContainer from "../../src/structure/Containers/LiquidContainer";
-import PipetteTipContainer from "../../src/structure/Containers/PipetteTipContainer";
+import LiquidContainer from "../../src/structure/containers/LiquidContainer";
+import PipetteTipContainer from "../../src/structure/containers/PipetteTipContainer";
 
 let haiveInit = {name: "Haive 1", type: HAIVE_TYPES.DISPENSER};
 let haiveInit2 = {name: "Haive 2", type: HAIVE_TYPES.FREEZER};

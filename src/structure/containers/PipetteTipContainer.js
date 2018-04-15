@@ -1,7 +1,7 @@
 import Container from "./Container";
 import {CONTAINER_TYPES} from "../../../const/structure";
-import TestTube from "../Tips/TestTube";
-import PipetteTip from "../Tips/PipetteTip";
+import TestTube from "../tips/TestTube";
+import PipetteTip from "../tips/PipetteTip";
 
 
 export default class PipetteTipContainer extends Container{

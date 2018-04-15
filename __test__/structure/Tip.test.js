@@ -1,7 +1,7 @@
-import TestTube from "../../src/structure/Tips/TestTube";
-import PipetteTip from "../../src/structure/Tips/PipetteTip";
+import TestTube from "../../src/structure/tips/TestTube";
+import PipetteTip from "../../src/structure/tips/PipetteTip";
 import {TIP_TYPES, LIQUID_MAGNITUDES} from "../../const/structure";
-import PipetteTipContainer from "../../src/structure/Containers/PipetteTipContainer";
+import PipetteTipContainer from "../../src/structure/containers/PipetteTipContainer";
 
 let tipInit = {
     x: 0,
