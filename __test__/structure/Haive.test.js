@@ -135,7 +135,16 @@ test('Set and remove bottom right neighbour', () => {
 //SWITCH CONTAINERS
 test('Switching containers', () => {
     let haive = new Haive(haiveInit);
+    let container1 = new PipetteTipContainer({subType: CONTAINER_SUBTYPES.P20_NORMAL_CHIP});
+    let id1 = container1.getID();
+    let container2 = new PipetteTipContainer({subType: CONTAINER_SUBTYPES.P20_NORMAL_CHIP});
+    let id2 = container2.getID();
 
+    haive.setContainer(container1, CONTAINER_POSITIONS.BOTTOM_RIGHT);
+    haive.setContainer(container2, CONTAINER_POSITIONS.TOP_LEFT);
+    haive.switchContainers(CONTAINER_POSITIONS.BOTTOM_RIGHT, CONTAINER_POSITIONS.TOP_LEFT);
+    expect(haive.getContainer(CONTAINER_POSITIONS.BOTTOM_RIGHT).getID()).toBe(id2);
+    expect(haive.getContainer(CONTAINER_POSITIONS.TOP_LEFT).getID()).toBe(id1);
 });
 
 

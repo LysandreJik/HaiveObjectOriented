@@ -79,8 +79,8 @@ export default class Haive{
     }
 
     switchContainers(containerPosition1, containerPosition2){
-        let containerTemp = Object.assign({}, this.getContainer(containerPosition1));
-        this.setContainer(Object.assign({}, this.getContainer(containerPosition2)), containerPosition1);
+        let containerTemp = this.getContainer(containerPosition1).getClone();
+        this.setContainer(this.getContainer(containerPosition2), containerPosition1);
         this.setContainer(containerTemp, containerPosition2);
     }
 
