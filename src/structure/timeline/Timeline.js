@@ -4,11 +4,17 @@ export default class Timeline{
     constructor(args){
         this._blocks = [];
         this._initialState = args.initialState;
-        this._states = List([Object.assign({}, this._initialState)]);
+        this._initialState.setID();
+        this._states = List([this._initialState]);
     }
 
     updateState(state){
-        this._states.push(Object.assign({}, state));
+        state.setID();
+        this._states.push(state);
+    }
+
+    getTemporaryState(){
+        return this.getCurrentState().getClone();
     }
 
     getStates(){

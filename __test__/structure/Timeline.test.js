@@ -49,3 +49,5 @@ test('Updating current state', () => {
     console.log(timeline.getCurrentState().getHaives()[0].getContainer(CONTAINER_POSITIONS.TOP_LEFT).getContainerSubType().name);
 });
 test('State Immutability', () => {});
+
+//TODO Test saving states and updating IDs.
