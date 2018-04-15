@@ -1,5 +1,6 @@
 export default class State{
     constructor(args){
+        this._storeHaives = args.storeHaives;
         this._haives = args.haives;
         this._held = args.held;
         this._copied = args.copied;
@@ -13,11 +14,32 @@ export default class State{
         }
 
         return new State({
+            storeHaives: this._storeHaives,
             haives: haives,
             held: {liquid: this._held.liquid, quantity: this._held.quantity, magnitude: this._held.magnitude},
             copied: this._copied,
             id: this._id
         });
+    }
+
+    getHaiveFromID(id){
+        for(let i = 0; i < this.getHaives().length; i++){
+            if(this.getHaives()[i].getID() === id){
+                return this.getHaives()[i];
+            }
+        }
+
+
+
+        for(let i = 0; i < this.getStoreHaives().length; i++){
+            if(this.getStoreHaives()[i].getID() === id){
+                return this.getStoreHaives()[i];
+            }
+        }
+    }
+
+    getStoreHaives(){
+        return this._storeHaives;
     }
 
     getHaives(){

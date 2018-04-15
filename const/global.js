@@ -1,8 +1,38 @@
+import Haive from "../src/structure/Haive";
+import {HAIVE_TYPES, LIQUID_MAGNITUDES} from "./structure";
+import Timeline from "../src/structure/timeline/Timeline";
+import State from "../src/structure/timeline/State";
+
 export var imageLoad = 0;
 export var loadingScreen;
 export var loginDone = true;
 export var creatingAccount = false;
-export var temporaryLiquidQuantity = [0,0,0]
+export var temporaryLiquidQuantity = [0,0,0];
+
+//INITIALIZATION CODE
+
+let ownedHaives = [
+    new Haive({name: "First dispenser", type: HAIVE_TYPES.DISPENSER, id: 0}),
+    new Haive({name: "First freezer", type: HAIVE_TYPES.FREEZER, id: 1}),
+    new Haive({name: "First centrifuge", type: HAIVE_TYPES.CENTRIFUGE, id: 2}),
+    new Haive({name: "Second dispenser", type: HAIVE_TYPES.DISPENSER, id: 3}),
+];
+
+let initialState = new State({
+	storeHaives:ownedHaives,
+	haives:[],
+	held:{liquid: "NONE", quantity: 0, magnitude: LIQUID_MAGNITUDES.uL},
+	copied: null,
+});
+
+export let timeline = new Timeline(initialState);
+
+
+
+
+
+
+//END OF INIT CODE
 
 export const acceptedContainerTypes = [
 	"P1000 normal chip",

@@ -1,8 +1,8 @@
 
 export default class Timeline{
-    constructor(args){
+    constructor(initialState){
         this._blocks = [];
-        this._initialState = args.initialState;
+        this._initialState = initialState;
         this._initialState.setID();
         this._states = [this._initialState];
     }

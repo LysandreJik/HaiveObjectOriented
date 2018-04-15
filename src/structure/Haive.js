@@ -4,6 +4,11 @@ export default class Haive{
     constructor(args){
         this._name = args.name;
         this._type = args.type;
+        this._id = args.id;
+        this._description = args.description;
+        this._x = args.x;
+        this._y = args.y;
+
         if(args.containers === undefined){
             this._containers = {
                 topLeft:null,
@@ -56,9 +61,37 @@ export default class Haive{
         return new Haive({
             name: this._name,
             type: this._type,
+            id: this._id,
             containers: containers,
-            _neighbours: neighbours
+            neighbours: neighbours,
+            description: this._description,
+            x: this._x,
+            y: this._y
         });
+    }
+
+    getX(){
+        return this._x;
+    }
+
+    getY(){
+        return this._y;
+    }
+
+    setX(x){
+        this._x = x;
+    }
+
+    setY(y){
+        this._y = y;
+    }
+
+    getDesc(){
+        return this._description;
+    }
+
+    getID(){
+        return this._id;
     }
 
     getName(){

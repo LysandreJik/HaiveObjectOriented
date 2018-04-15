@@ -1,4 +1,4 @@
-const haives = require('../../../const/global').haiveStore;
+const timeline = require('../../../const/global').timeline;
 const gv = require('../../../const/global');
 const Haive = require('../../model/haive').Haive;
 
@@ -19,17 +19,8 @@ export class HaiveSelectorModel{
             }
         }
 
-        for(let i = 0; i < haives.length; i++){
-            this.storeHaives.push(
-                new Haive({
-                    id:haives[i][0],
-                    type:haives[i][1],
-                    name:haives[i][2],
-                    refID:haives[i][3],
-                    desc:haives[i][4]
-                })
-            );
-        }
+        this.storeHaives = timeline.getCurrentState().getStoreHaives();
+        this.dashHaives = timeline.getCurrentState().getHaives();
     }
 
     updateEmptyTiles(){
@@ -150,14 +141,11 @@ export class HaiveSelectorModel{
             }
         }
 
-        console.log("full haives : ", this.getFullHaives());
 
         if(this.getFullHaives().length == 0){
-            console.log("Setting tile haive");
             this.setTileHaive(0, 0, null);
         }
 
-        console.log("All empty haives : ",this.getAllEmptyTiles());
 
         gv.haiveSelectorView.refresh();
         gv.mainAppController.saveState();
@@ -232,12 +220,40 @@ export class HaiveSelectorModel{
                 this.tileHaives[i][0] = haive;
             }
         }
+
+        if(haive !== null && haive !== "empty"){
+            let found = false;
+            for(let i = 0; i < this.dashHaives.length; i++){
+                if(this.dashHaives[i].getID() === haive.getID()){
+                    found = true;
+                }
+            }
+            if(!found){
+                haive.setX(x);
+                haive.setY(y);
+                this.dashHaives.push(haive);
+            }
+        }
     }
 
     addTileHaive(haive, x ,y){
         for(let i = 0; i < this.tileHaives.length; i++) {
             if (this.tileHaives[i][1] == x && this.tileHaives[i][2] == y) {
                 this.tileHaives[i][0] = haive;
+            }
+        }
+
+        if(haive !== null && haive !== "empty"){
+            let found = false;
+            for(let i = 0; i < this.dashHaives.length; i++){
+                if(this.dashHaives[i].getID() === haive.getID()){
+                    found = true;
+                }
+            }
+            if(!found){
+                haive.setX(x);
+                haive.setY(y);
+                this.dashHaives.push(haive);
             }
         }
     }

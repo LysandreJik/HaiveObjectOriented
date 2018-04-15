@@ -17,6 +17,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 const gv = require('../../../const/global');
+const timeline = require('../../../const/global').timeline;
 
 export class HaiveSelectorController {
     constructor() {
@@ -24,8 +25,6 @@ export class HaiveSelectorController {
     }
 
     addDraggables(small, x, y) {
-
-
         if (small) {
             this.addDraggableToStore(x);
         } else if (gv.haiveSelectorModel.getTileHaive(x, y) != null && gv.haiveSelectorModel.getTileHaive(x, y) != "empty") {
@@ -48,10 +47,6 @@ export class HaiveSelectorController {
 
     addDraggableToTiles(x, y) {
         $("#draggable_" + x + "_" + y).draggable({
-            start: function (event, ui) {
-                console.log("Started dragging draggable " + x + " " + y);
-            },
-
             helper: function () {
                 let clone = $(this).clone();
                 clone.height($(this).height());
@@ -68,6 +63,11 @@ export class HaiveSelectorController {
                         clone = clone.getClone();
                     }
                     gv.haiveSelectorModel.addTileHaive(gv.haiveSelectorModel.getTileHaive(x, y), closest[0], closest[1]);
+                    console.log(gv.haiveSelectorModel.getTileHaive(x, y).getID());
+                    let nextState = timeline.getTemporaryState();
+                    let haive = nextState.getHaiveFromID(gv.haiveSelectorModel.getTileHaive(x, y));
+                    console.log("State : ", nextState.getHaives(), nextState.getStoreHaives());
+                    console.log("Found haive : ", haive);
                     if (clone != null) {
                         gv.haiveSelectorModel.addTileHaive(clone, x, y);
                     } else {
@@ -82,10 +82,6 @@ export class HaiveSelectorController {
 
     addDraggableToStore(x) {
         $("#draggable_small_" + x).draggable({
-            start: function (event, ui) {
-                console.log("Started dragging draggable " + x);
-            },
-
             helper: function () {
                 let clone = $(this).clone();
                 clone.height($(this).height());
@@ -104,8 +100,6 @@ export class HaiveSelectorController {
                     gv.haiveSelectorModel.removeStoreHaive(x);
                     gv.haiveSelectorModel.updateEmptyTiles();
                     gv.haiveSelectorView.refresh();
-
-
                 }
             }
         });

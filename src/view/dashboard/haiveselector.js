@@ -100,10 +100,6 @@ export class HaiveBlueprint extends React.Component{
                             );
                         }
                     })}
-
-
-
-
                 </ul>
             </div>
         )

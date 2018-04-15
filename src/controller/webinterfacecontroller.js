@@ -59,6 +59,7 @@ export class WebInterfaceController{
 	}
 
 	saveState(){
+	    /*
         let css = 'background: #fff; color: #5a5a00';
 
         let haives = gv.haiveSelectorModel.getFullHaives();
@@ -98,7 +99,7 @@ export class WebInterfaceController{
         gv.fetchJSONFile('json/read.json', function(data){
             console.log(data);
         });
-
+        */
 
     }
 }
