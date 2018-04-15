@@ -34,7 +34,6 @@ export default class Haive{
     }
 
     getClone(){
-        console.log(this._containers)
         let containers = {
             topLeft: this._containers.topLeft === null ? null : this._containers.topLeft.getClone(),
             middleLeft: this._containers.middleLeft === null ? null : this._containers.middleLeft.getClone(),
@@ -85,6 +84,9 @@ export default class Haive{
     }
 
     setContainer(container, containerPosition){
+        if(this.getContainer(containerPosition) !== null){
+            this.getContainer(containerPosition).setPosition(null);
+        }
         switch (containerPosition) {
             case(CONTAINER_POSITIONS.TOP_LEFT):
                 this._containers.topLeft = container;

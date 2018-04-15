@@ -147,6 +147,18 @@ test('Switching containers', () => {
     expect(haive.getContainer(CONTAINER_POSITIONS.TOP_LEFT).getID()).toBe(id1);
 });
 
+test('Adding a container to an already selected place removes previous container', () => {
+    let haive = new Haive(haiveInit);
+    let liquidContainer = new LiquidContainer(liquidContainerInit);
+    let liquidContainer2 = new LiquidContainer(liquidContainerInit2);
+    haive.setContainer(liquidContainer, CONTAINER_POSITIONS.BOTTOM_RIGHT);
+    expect(haive.getContainer(CONTAINER_POSITIONS.BOTTOM_RIGHT)).toBe(liquidContainer);
+    expect(haive.getContainer(CONTAINER_POSITIONS.BOTTOM_RIGHT).getPosition()).toBe(CONTAINER_POSITIONS.BOTTOM_RIGHT);
+    haive.setContainer(liquidContainer2, CONTAINER_POSITIONS.BOTTOM_RIGHT);
+    expect(haive.getContainer(CONTAINER_POSITIONS.BOTTOM_RIGHT)).toBe(liquidContainer2);
+    expect(liquidContainer.getPosition()).toBe(null);
+});
+
 
 //GET CLONE TEST
 test("Clone creation", () => {
