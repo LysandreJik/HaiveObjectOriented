@@ -6,8 +6,7 @@ import PipetteTipContainer from "../../src/structure/Containers/PipetteTipContai
 let tipInit = {
     x: 0,
     y: 1,
-    container: "NONE",
-    subType: "NONE"
+    container: "NONE"
 };
 
 let testTube = new TestTube(tipInit);
@@ -381,3 +380,56 @@ test("Trying to remove too much mL from mL", () => {
         testTube.removeLiquid({liquid: "DNA sample", quantity: 5, magnitude: LIQUID_MAGNITUDES.mL});
     }).toThrow();
 });
+
+//GET CLONE METHOD
+test("Clone creation", () => {
+    let pipetteTip = new PipetteTip(tipInit).getClone();
+    expect(pipetteTip.getX()).toBe(tipInit.x);
+    expect(pipetteTip.getY()).toBe(tipInit.y);
+    expect(pipetteTip.getContainer()).toBe(tipInit.container);
+    expect(pipetteTip.isDirty()).toBe(false);
+    expect(pipetteTip.isAvailable()).toBe(true);
+    pipetteTip.book();
+    pipetteTip.hold();
+    expect(pipetteTip.getContents().liquid).toBe("NONE");
+    expect(pipetteTip.getContents().quantity).toBe(0);
+    expect(pipetteTip.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+});
+test("Immutability", () => {
+    let pipetteTip = new PipetteTip(tipInit);
+    let pipetteTipClone = pipetteTip.getClone();
+
+    pipetteTipClone._x = 5;
+    expect(pipetteTip.getX()).toBe(tipInit.x);
+    expect(pipetteTipClone.getX()).toBe(5);
+
+    pipetteTipClone._y = 8;
+    expect(pipetteTip.getY()).toBe(tipInit.y);
+    expect(pipetteTipClone.getY()).toBe(8);
+
+    pipetteTipClone._container = "RANDOM CONTAINER";
+    expect(pipetteTip.getContainer()).toBe(tipInit.container);
+    expect(pipetteTipClone.getContainer()).toBe("RANDOM CONTAINER");
+
+    pipetteTipClone._dirty = true;
+    expect(pipetteTip.isDirty()).toBe(false);
+    expect(pipetteTipClone.isDirty()).toBe(true);
+
+    pipetteTipClone.book();
+    expect(pipetteTip.isAvailable()).toBe(true);
+    expect(pipetteTipClone.isAvailable()).toBe(false);
+
+    pipetteTipClone._contents = {liquid: "NO LIQUID YET", quantity: 5, magnitude: LIQUID_MAGNITUDES.mL};
+    pipetteTip.book();
+    pipetteTip.hold();
+    pipetteTipClone.hold();
+    expect(pipetteTip.getContents().liquid).toBe("NONE");
+    expect(pipetteTip.getContents().quantity).toBe(0);
+    expect(pipetteTip.getContents().magnitude).toBe(LIQUID_MAGNITUDES.uL);
+    expect(pipetteTipClone.getContents().liquid).toBe("NO LIQUID YET");
+    expect(pipetteTipClone.getContents().quantity).toBe(5);
+    expect(pipetteTipClone.getContents().magnitude).toBe(LIQUID_MAGNITUDES.mL);
+});
+
+
+

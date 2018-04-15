@@ -57,4 +57,15 @@ export default class PipetteTip extends Tip{
             throw new Error("The pipette tip is not held, it can't contain anything.");
         }
     }
+
+    getClone(){
+        return new PipetteTip({
+            x: this._x,
+            y: this._y,
+            container: this._container,
+            dirty: this._dirty,
+            available: this._available,
+            contents: this._contents,
+        });
+    }
 }

@@ -1,4 +1,4 @@
-import {LIQUID_MAGNITUDES} from "../../../const/structure";
+import {LIQUID_MAGNITUDES, TIP_TYPES} from "../../../const/structure";
 
 
 export default class Tip{
@@ -6,13 +6,9 @@ export default class Tip{
         this._x = args.x;
         this._y = args.y;
         this._container = args.container;
-        this._dirty = false;
-        this._available = true;
-        this._contents = {
-            liquid: "NONE",
-            quantity: 0,
-            magnitude: LIQUID_MAGNITUDES.uL
-        };
+        this._dirty = args.dity === undefined ? false : args.dirty;
+        this._available = args.available === undefined ? true : args.available;
+        this._contents = args.contents === undefined ? {liquid: "NONE", quantity: 0, magnitude: LIQUID_MAGNITUDES.uL} : args.contents;
     }
 
     addLiquid(liquid){

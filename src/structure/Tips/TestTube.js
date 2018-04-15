@@ -9,4 +9,15 @@ export default class TestTube extends Tip{
     getTipType(){
         return TIP_TYPES.TEST_TUBE;
     }
+
+    getClone(){
+        return new TestTube({
+            x: this._x,
+            y: this._y,
+            container: this._container,
+            dirty: this._dirty,
+            available: this._available,
+            contents: this._contents,
+        });
+    }
 }
