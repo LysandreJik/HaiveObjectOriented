@@ -5,21 +5,24 @@ import TestTube from "../Tips/TestTube";
 export default class Container{
     constructor(args){
         this._subType = args.subType;
-        this._id = Container.getID();
+        this._id = args.id === undefined ? Container.getID() : args.id;
 
-        this._tips = [];
-        for(let i = 0; i < this.getWidth(); i++){
-            this._tips.push([]);
-            for(let j = 0; j < this.getHeight(); j++){
-                if(this._subType.containerType === CONTAINER_TYPES.PIPETTE_TIP_CONTAINER){
-                    this._tips[i].push(new PipetteTip({x: i, y: j, container: this}));
-                }else if(this._subType.containerType === CONTAINER_TYPES.TEST_TUBE_CONTAINER){
-                    this._tips[i].push(new TestTube({x: i, y: j, container: this}));
-                }else{
-                    throw new Error("Unknown container type : " + this._subType.containerType);
+        if(args.tips === undefined){
+            this._tips = [];
+            for(let i = 0; i < this.getWidth(); i++){
+                this._tips.push([]);
+                for(let j = 0; j < this.getHeight(); j++){
+                    if(this._subType.containerType === CONTAINER_TYPES.PIPETTE_TIP_CONTAINER){
+                        this._tips[i].push(new PipetteTip({x: i, y: j, container: this}));
+                    }else if(this._subType.containerType === CONTAINER_TYPES.TEST_TUBE_CONTAINER){
+                        this._tips[i].push(new TestTube({x: i, y: j, container: this}));
+                    }else{
+                        throw new Error("Unknown container type : " + this._subType.containerType);
+                    }
                 }
-
             }
+        }else{
+            this._tips = args.tips;
         }
     }
 

@@ -4,24 +4,62 @@ export default class Haive{
     constructor(args){
         this._name = args.name;
         this._type = args.type;
-        this._containers = {
-            topLeft:null,
-            middleLeft:null,
-            bottomLeft:null,
-            topRight:null,
-            middleRight:null,
-            bottomRight:null
-        };
-        this._neighbours = {
-            topLeft:null,
-            middleLeft:null,
-            bottomLeft:null,
-            topRight:null,
-            middleRight:null,
-            bottomRight:null
-        };
+        if(args.containers === undefined){
+            this._containers = {
+                topLeft:null,
+                middleLeft:null,
+                bottomLeft:null,
+                topRight:null,
+                middleRight:null,
+                bottomRight:null
+            };
+        }else{
+            this._containers = args.containers;
+        }
+
+        if(args.neighbours === undefined){
+            this._neighbours = {
+                topLeft:null,
+                middleLeft:null,
+                bottomLeft:null,
+                topRight:null,
+                middleRight:null,
+                bottomRight:null
+            };
+        }else{
+            this._neighbours = args.neighbours;
+        }
 
         //TODO HAIVE POSITION
+    }
+
+    getClone(){
+        console.log(this._containers)
+        let containers = {
+            topLeft: this._containers.topLeft === null ? null : this._containers.topLeft.getClone(),
+            middleLeft: this._containers.middleLeft === null ? null : this._containers.middleLeft.getClone(),
+            bottomLeft: this._containers.bottomLeft === null ? null : this._containers.bottomLeft.getClone(),
+            topRight: this._containers.topRight === null ? null : this._containers.topRight.getClone(),
+            middleRight: this._containers.middleRight === null ? null : this._containers.middleRight.getClone(),
+            bottomRight: this._containers.bottomRight === null ? null : this._containers.bottomRight.getClone()
+        };
+
+        // Returning actual neighbours and not clones because the link is important. The dictionary has to be made again however, so that the link
+        // to previous clones is not kept (neighbours kept, not their positions).
+        let neighbours = {
+            topLeft: this._neighbours.topLeft === null ? null : this._neighbours.topLeft,
+            middleLeft: this._neighbours.middleLeft === null ? null : this._neighbours.middleLeft,
+            bottomLeft: this._neighbours.bottomLeft === null ? null : this._neighbours.bottomLeft,
+            topRight: this._neighbours.topRight === null ? null : this._neighbours.topRight,
+            middleRight: this._neighbours.middleRight === null ? null : this._neighbours.middleRight,
+            bottomRight: this._neighbours.bottomRight === null ? null : this._neighbours.bottomRight
+        };
+        return new Haive({
+            name: this._name,
+            type: this._type,
+            containers: containers,
+            _neighbours: neighbours
+        });
     }
 
     getName(){

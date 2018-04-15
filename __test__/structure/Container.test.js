@@ -94,3 +94,26 @@ test('Booking a tip from the containers', () => {
     expect(liquidTip.isAvailable()).toBe(true);
     expect(pipetteTip.isAvailable()).toBe(true);
 });
+
+liquidContainerInit = {
+    position: CONTAINER_POSITIONS.TOP_LEFT,
+    subType: CONTAINER_SUBTYPES.FS6_FALCON_STAND,
+};
+
+//GET CLONE METHOD
+test("Clone creation", () => {
+    let container = new LiquidContainer(liquidContainerInit).getClone();
+    expect(container.getContainerSubType()).toBe(liquidContainerInit.subType);
+    expect(container.getWidth()).toBe(CONTAINER_SUBTYPES.FS6_FALCON_STAND.width);
+    expect(container.getHeight()).toBe(CONTAINER_SUBTYPES.FS6_FALCON_STAND.height);
+    expect(container.getAvailableTips().every(function(tip){return tip instanceof TestTube})).toBe(true);
+    expect(container.getAvailableTips().length).toBe(liquidContainer.getWidth()*liquidContainer.getHeight());
+
+});
+
+//TODO TEST CONTAINER IMMUTABILITY
+test("Immutability", () => {
+    let container = new LiquidContainer(liquidContainerInit);
+    let containerClone = container.getClone();
+
+});

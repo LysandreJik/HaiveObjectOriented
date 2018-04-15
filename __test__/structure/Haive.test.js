@@ -1,6 +1,7 @@
 import Haive from "../../src/structure/Haive";
 import {CONTAINER_POSITIONS, CONTAINER_SUBTYPES, HAIVE_TYPES} from "../../const/structure";
 import LiquidContainer from "../../src/structure/Containers/LiquidContainer";
+import PipetteTipContainer from "../../src/structure/Containers/PipetteTipContainer";
 
 let haiveInit = {name: "Haive 1", type: HAIVE_TYPES.DISPENSER};
 let haiveInit2 = {name: "Haive 2", type: HAIVE_TYPES.FREEZER};
@@ -136,3 +137,37 @@ test('Switching containers', () => {
     let haive = new Haive(haiveInit);
 
 });
+
+
+//GET CLONE TEST
+test("Clone creation", () => {
+    let haive = new Haive(haiveInit);
+    haive.setContainer(new PipetteTipContainer({position: CONTAINER_POSITIONS.TOP_LEFT,subType: CONTAINER_SUBTYPES.P20_NORMAL_CHIP}), CONTAINER_POSITIONS.TOP_LEFT);
+    haive.setContainer(new PipetteTipContainer({position: CONTAINER_POSITIONS.TOP_RIGHT,subType: CONTAINER_SUBTYPES.P20_NORMAL_CHIP}), CONTAINER_POSITIONS.TOP_RIGHT);
+    haive.setContainer(new PipetteTipContainer({position: CONTAINER_POSITIONS.MIDDLE_LEFT,subType: CONTAINER_SUBTYPES.P20_NORMAL_CHIP}), CONTAINER_POSITIONS.MIDDLE_LEFT);
+    haive.setContainer(new PipetteTipContainer({position: CONTAINER_POSITIONS.MIDDLE_RIGHT,subType: CONTAINER_SUBTYPES.P20_NORMAL_CHIP}), CONTAINER_POSITIONS.MIDDLE_RIGHT);
+    haive.setContainer(new PipetteTipContainer({position: CONTAINER_POSITIONS.BOTTOM_LEFT,subType: CONTAINER_SUBTYPES.P20_NORMAL_CHIP}), CONTAINER_POSITIONS.BOTTOM_LEFT);
+    haive.setContainer(new PipetteTipContainer({position: CONTAINER_POSITIONS.BOTTOM_RIGHT,subType: CONTAINER_SUBTYPES.P20_NORMAL_CHIP}), CONTAINER_POSITIONS.BOTTOM_RIGHT);
+    let haiveClone = haive.getClone();
+    expect(haiveClone.getName()).toBe(haiveInit.name);
+    expect(haiveClone.getType()).toBe(haiveInit.type);
+    expect(haiveClone.getContainer(CONTAINER_POSITIONS.TOP_LEFT).getID()).toBe(haive.getContainer(CONTAINER_POSITIONS.TOP_LEFT).getID());
+    expect(haiveClone.getContainer(CONTAINER_POSITIONS.TOP_RIGHT).getID()).toBe(haive.getContainer(CONTAINER_POSITIONS.TOP_RIGHT).getID());
+    expect(haiveClone.getContainer(CONTAINER_POSITIONS.MIDDLE_LEFT).getID()).toBe(haive.getContainer(CONTAINER_POSITIONS.MIDDLE_LEFT).getID());
+    expect(haiveClone.getContainer(CONTAINER_POSITIONS.MIDDLE_RIGHT).getID()).toBe(haive.getContainer(CONTAINER_POSITIONS.MIDDLE_RIGHT).getID());
+    expect(haiveClone.getContainer(CONTAINER_POSITIONS.BOTTOM_LEFT).getID()).toBe(haive.getContainer(CONTAINER_POSITIONS.BOTTOM_LEFT).getID());
+    expect(haiveClone.getContainer(CONTAINER_POSITIONS.BOTTOM_RIGHT).getID()).toBe(haive.getContainer(CONTAINER_POSITIONS.BOTTOM_RIGHT).getID());
+});
+
+//TODO TEST IMMUTABILITY OF HAIVE GET CLONE METHOD
+
+
+
+
+
+
+
+
+
+
+

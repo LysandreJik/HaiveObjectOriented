@@ -11,8 +11,22 @@ export default class LiquidContainer extends Container{
         }
     }
 
-
     getContainerType(){
         return CONTAINER_TYPES.TEST_TUBE_CONTAINER;
+    }
+
+    getClone(){
+        let cloneTips = [];
+        for(let i = 0; i < this._tips.length; i++){
+            cloneTips.push([]);
+            for(let j = 0; j < this._tips[0].length; j++){
+                cloneTips[i].push(this._tips[i][j].getClone());
+            }
+        }
+        return new LiquidContainer({
+            subType: this._subType,
+            id: this._id,
+            tips: cloneTips
+        });
     }
 }
