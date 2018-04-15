@@ -1,11 +1,10 @@
-const { List } = require('immutable');
 
 export default class Timeline{
     constructor(args){
         this._blocks = [];
         this._initialState = args.initialState;
         this._initialState.setID();
-        this._states = List([this._initialState]);
+        this._states = [this._initialState];
     }
 
     updateState(state){
@@ -22,6 +21,6 @@ export default class Timeline{
     }
 
     getCurrentState(){
-        return this._states.get(this._states.size - 1);
+        return this._states[this._states.length - 1];
     }
 }

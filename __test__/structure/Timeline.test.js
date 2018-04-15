@@ -1,5 +1,5 @@
 import Haive from "../../src/structure/Haive";
-import {CONTAINER_POSITIONS, CONTAINER_SUBTYPES, HAIVE_TYPES} from "../../const/structure";
+import {CONTAINER_POSITIONS, CONTAINER_SUBTYPES, HAIVE_TYPES, LIQUID_MAGNITUDES} from "../../const/structure";
 import LiquidContainer from "../../src/structure/Containers/LiquidContainer";
 import State from "../../src/structure/timeline/State";
 import Timeline from "../../src/structure/timeline/Timeline";
@@ -28,7 +28,7 @@ haive.setContainer(container1, CONTAINER_POSITIONS.TOP_LEFT);
 haive2.setContainer(container2, CONTAINER_POSITIONS.MIDDLE_LEFT);
 
 let haives = [haive, haive2];
-let held = null;
+let held = {liquid: "NONE", quantity: 0, magnitude: LIQUID_MAGNITUDES.uL};
 let copied = null;
 
 let initialState = new State({haives:haives, held:held, copied:copied});
@@ -36,7 +36,7 @@ let initialState = new State({haives:haives, held:held, copied:copied});
 let timeline = new Timeline({initialState: initialState});
 
 test('Initialization test', () => {
-    expect(timeline.getStates()[0]).toBe(initialState)
+    expect(timeline.getCurrentState()).toBe(initialState);
 });
 test('Retrieve current state', () => {
     expect(timeline.getCurrentState()).toBe(initialState)
@@ -51,3 +51,15 @@ test('Updating current state', () => {
 test('State Immutability', () => {});
 
 //TODO Test saving states and updating IDs.
+
+test('Timeline usual operation : adding a Haive component to the state', () => {
+    let initialState = new State({haives:haives, held:held, copied:copied});
+    let timeline = new Timeline({initialState: initialState});
+    let nextState = timeline.getTemporaryState();
+    let nextHaives = nextState.getHaives();
+    nextHaives.push(new Haive(haiveInit2));
+    timeline.updateState(nextState);
+    expect(timeline.getCurrentState().getHaives().length).toBe(3);
+    expect(nextState.getHaives().length).toBe(3);
+    expect(initialState.getHaives().length).toBe(2);
+});
