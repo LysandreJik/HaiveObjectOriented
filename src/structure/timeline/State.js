@@ -13,8 +13,13 @@ export default class State{
             haives.push(this._haives[i].getClone());
         }
 
+        let storeHaives = [];
+        for(let i = 0; i < this._storeHaives.length; i++){
+            storeHaives.push(this._storeHaives[i].getClone());
+        }
+
         return new State({
-            storeHaives: this._storeHaives,
+            storeHaives: storeHaives,
             haives: haives,
             held: {liquid: this._held.liquid, quantity: this._held.quantity, magnitude: this._held.magnitude},
             copied: this._copied,
@@ -28,8 +33,6 @@ export default class State{
                 return this.getHaives()[i];
             }
         }
-
-
 
         for(let i = 0; i < this.getStoreHaives().length; i++){
             if(this.getStoreHaives()[i].getID() === id){

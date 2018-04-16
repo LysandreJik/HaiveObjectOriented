@@ -12,10 +12,10 @@ export var temporaryLiquidQuantity = [0,0,0];
 //INITIALIZATION CODE
 
 let ownedHaives = [
-    new Haive({name: "First dispenser", type: HAIVE_TYPES.DISPENSER, id: 0}),
-    new Haive({name: "First freezer", type: HAIVE_TYPES.FREEZER, id: 1}),
-    new Haive({name: "First centrifuge", type: HAIVE_TYPES.CENTRIFUGE, id: 2}),
-    new Haive({name: "Second dispenser", type: HAIVE_TYPES.DISPENSER, id: 3}),
+    new Haive({name: "First dispenser", type: HAIVE_TYPES.DISPENSER, id: 0, desc: ""}),
+    new Haive({name: "First freezer", type: HAIVE_TYPES.FREEZER, id: 1, desc: ""}),
+    new Haive({name: "First centrifuge", type: HAIVE_TYPES.CENTRIFUGE, id: 2, desc: ""}),
+    new Haive({name: "Second dispenser", type: HAIVE_TYPES.DISPENSER, id: 3, desc: ""}),
 ];
 
 let initialState = new State({
@@ -26,11 +26,6 @@ let initialState = new State({
 });
 
 export let timeline = new Timeline(initialState);
-
-
-
-
-
 
 //END OF INIT CODE
 

@@ -15,7 +15,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	http://molcure.com
 	Author: Lysandre Debut
 */
-
+const timeline = require('../../../const/global').timeline;
 const gv = require('../../../const/global');
 const gi = require('../../../const/globalImages').gi;
 
@@ -56,7 +56,7 @@ export class HaiveSelector extends React.Component{
             <div className={"maincontent"}>
                 <HaiveDispenser/>
                 <HaiveBlueprint/>
-                {this.state.hover != "none" ? <HexagonHoverTypes small={false} keyId={this.state.hover}/> : ""}
+                {this.state.hover != "none" ? <Hexagon HoverTypes small={false} keyId={this.state.hover}/> : ""}
                 {this.state.hoverMisc.split(':')[0] == "setdescofhaive" ? <HaiveDesc id={this.state.hoverMisc.split(':')[1]}/> : ""}
             </div>
         );
@@ -118,6 +118,7 @@ class Hexagon extends React.Component{
         this.width = element.width()+this.offsetX;
         this.height = element.height();
         this.setState({updated:true});
+
     };
 
     componentDidUpdate(){

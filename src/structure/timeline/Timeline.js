@@ -6,10 +6,12 @@ export default class Timeline{
         this._initialState = initialState;
         this._initialState.setID();
         this._states = [this._initialState];
+        console.log("States", this._states);
         this._id = Timeline.getID();
     }
 
     updateState(state){
+        console.log("Updating timeline state");
         state.setID();
         this._states.push(state);
     }

@@ -55,6 +55,7 @@ export class HaiveSelectorController {
             },
 
             stop: function () {
+
                 let closest = gv.getClosestHexagonToMouse();
 
                 if (gv.haiveSelectorModel.getTileHaive(closest[0], closest[1]) != "empty") {
@@ -63,11 +64,6 @@ export class HaiveSelectorController {
                         clone = clone.getClone();
                     }
                     gv.haiveSelectorModel.addTileHaive(gv.haiveSelectorModel.getTileHaive(x, y), closest[0], closest[1]);
-                    console.log(gv.haiveSelectorModel.getTileHaive(x, y).getID());
-                    let nextState = timeline.getTemporaryState();
-                    let haive = nextState.getHaiveFromID(gv.haiveSelectorModel.getTileHaive(x, y));
-                    console.log("State : ", nextState.getHaives(), nextState.getStoreHaives());
-                    console.log("Found haive : ", haive);
                     if (clone != null) {
                         gv.haiveSelectorModel.addTileHaive(clone, x, y);
                     } else {
@@ -76,6 +72,8 @@ export class HaiveSelectorController {
 
                     gv.haiveSelectorView.refresh();
                 }
+
+                gv.haiveSelectorModel.updateState();
             }
         });
     }
@@ -90,6 +88,7 @@ export class HaiveSelectorController {
             },
 
             stop: function () {
+
                 let closest = gv.getClosestHexagonToMouse()
 
                 if (gv.haiveSelectorModel.getTileHaive(closest[0], closest[1]) != "empty") {
@@ -101,6 +100,8 @@ export class HaiveSelectorController {
                     gv.haiveSelectorModel.updateEmptyTiles();
                     gv.haiveSelectorView.refresh();
                 }
+
+                gv.haiveSelectorModel.updateState();
             }
         });
     }
