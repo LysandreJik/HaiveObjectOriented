@@ -70,6 +70,10 @@ export default class State{
         return this._id;
     }
 
+    getHaiveFromName(name){
+        return this.getHaives().map(function(i){if(i.getName() === name){return i;}})[0];
+    }
+
     static getID(){
         if(State.id == undefined){
             State.id = 0;

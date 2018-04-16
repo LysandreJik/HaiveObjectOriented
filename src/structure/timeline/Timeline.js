@@ -1,3 +1,4 @@
+const gv = require('../../../const/global');
 
 export default class Timeline{
     constructor(initialState){
@@ -13,7 +14,9 @@ export default class Timeline{
     updateState(state, description){
         state.save(description);
         this._states.push(state);
-        console.log(JSON.stringify(this.getStates().map(function(i){return i.getID()+": "+i.getDescription();}), null, 2));
+        console.log(JSON.stringify(this.getStates().map(function(i){return i.getID()+": "+i.getDescription()+" "+i;}), null, 2));
+        console.log(JSON.stringify(this.getStates().map(function(i){if(i.getHaives().length > 0){return i.getID()+": "+i.getHaives()[0].getX();}} ), null, 2));
+        gv.haiveSelectorModel.refreshModel();
     }
 
     getTemporaryState(){

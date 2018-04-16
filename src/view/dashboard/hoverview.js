@@ -33,14 +33,13 @@ export class HexagonHoverTypes extends React.Component{
 		this.state = {desc:false};
 	}
 
-	componentDidMount(){
-	    console.log("mountes maggle");
-    }
-
 	render(){
 	    if(gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]) == null){
 	        return <div></div>
-        }
+        }else{
+	    	var haive = gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]);
+	    	haive = gv.timeline.getTemporaryState().getHaiveFromID(haive.getID());
+		}
 
         const parent = this;
         return(
@@ -49,16 +48,15 @@ export class HexagonHoverTypes extends React.Component{
                 <HexImageHover/>
                 <div id={"hovercontent"+this.props.keyId} className="lightboxdiv animated fadeIn">
 
-                    <h1>{gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]).getType()+" HAIVE"}</h1>
-                    <h4>{gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]).getName()}</h4>
-                    <p>{gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]).getDesc()}</p>
+                    <h1>{haive.getType()+" HAIVE"}</h1>
+                    <h4>{haive.getName()}</h4>
+                    <p>{haive.getDesc()}</p>
 
                     <button className="btnghost" onClick={
                         function(){
-
                             gv.myAssets.setSelected(2);
-                            gv.currentlySelectedHaive = gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]);
-                            gv.protocolDesignController.timeline = gv.currentlySelectedHaive.getTimeline()
+                            gv.currentlySelectedHaive = haive;
+                            gv.protocolDesignController.timeline = gv.timeline;
                             if(gv.currentlySelectedHaive.containers.length > 0){
                                 gv.myAssets.setState({button:[false, false, false]});
                             }else{
@@ -70,8 +68,8 @@ export class HexagonHoverTypes extends React.Component{
                     	function(){
                     		let desc = "Removed " + gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]).getName() + " from dashboard to the store.";
                     		gv.haiveSelectorView.refresh("hover", "none");
-                    		gv.haiveSelectorModel.addStoreHaive(gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]));
-                    		gv.haiveSelectorModel.removeTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1])
+                    		gv.haiveSelectorModel.addStoreHaive(haive);
+                    		gv.haiveSelectorModel.removeTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]);
                             gv.haiveSelectorModel.updateState(desc);
                     	}
 
@@ -107,21 +105,22 @@ export class HaiveDesc extends React.Component{
 					<span>CHANGE DETAILS</span>
 					<label htmlFor="field1" style={{"margin":"20px"}}>
 						<span id="liquidtype_pipettetipsdialogspan">Haive's name</span>
-                        <input id="haivename_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveSelectorModel.getTileHaive(this.props.id.split("_")[0], this.props.id.split("_")[1]).getName()}/>
+                        <input id="haivename_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveSelectorModel.getDashHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]).getName()}/>
 					</label>
 					<label htmlFor="field1" style={{"margin":"20px"}}>
 						<span id="liquidtype_pipettetipsdialogspan">Haive's description</span>
-                        <input id="haivedesc_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveSelectorModel.getTileHaive(this.props.id.split("_")[0], this.props.id.split("_")[1]).getDesc()}/>
+                        <input id="haivedesc_dialog" type="text" name="field1" required="true" defaultValue={gv.haiveSelectorModel.getDashHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]).getDesc()}/>
 					</label>
 					<button onClick={
 							function(){
-								console.log(gv.haiveSelectorModel.getDashHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]));
-                                gv.haiveSelectorModel.getDashHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]).setName($('#haivename_dialog').val());
-                                gv.haiveSelectorModel.getDashHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]).setDesc($('#haivedesc_dialog').val());
+								let haive = gv.haiveSelectorModel.getDashHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]);
+                                let state = gv.timeline.getTemporaryState();
+                                let stateHaive = state.getHaiveFromID(haive.getID());
+                                stateHaive.setName($('#haivename_dialog').val());
+                                stateHaive.setDesc($('#haivedesc_dialog').val());
+                                gv.timeline.updateState(state, "Changed Haive description and/or name to : "+$('#haivename_dialog').val()+", "+$('#haivedesc_dialog').val());
 								window.location="#_";
 								gv.haiveSelectorView.refresh("hovermisc", "");
-								let state = gv.timeline.getTemporaryState();
-
 							}
 						}>Ok</button>
 					<button onClick={
