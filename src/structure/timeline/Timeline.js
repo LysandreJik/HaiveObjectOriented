@@ -11,9 +11,9 @@ export default class Timeline{
     }
 
     updateState(state, description){
-        console.log("Updating timeline state");
         state.save(description);
         this._states.push(state);
+        console.log(JSON.stringify(this.getStates().map(function(i){return i.getID()+": "+i.getDescription();}), null, 2));
     }
 
     getTemporaryState(){

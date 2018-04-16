@@ -185,16 +185,6 @@ export class HaiveSelectorModel{
                 return tot;
             }
         )));
-
-        console.log(JSON.stringify(timeline.getStates().map(
-            function(i){
-                let tot = [i.getID()];
-                for(let j = 0; j < i.getHaives().length; j++){
-                    tot.push(i.getDescription());
-                }
-                return tot;
-            }
-        )));
     }
 
     getNeighbours(x, y){

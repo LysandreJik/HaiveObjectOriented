@@ -120,6 +120,8 @@ export class HaiveDesc extends React.Component{
                                 gv.haiveSelectorModel.getDashHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]).setDesc($('#haivedesc_dialog').val());
 								window.location="#_";
 								gv.haiveSelectorView.refresh("hovermisc", "");
+								let state = gv.timeline.getTemporaryState();
+
 							}
 						}>Ok</button>
 					<button onClick={
