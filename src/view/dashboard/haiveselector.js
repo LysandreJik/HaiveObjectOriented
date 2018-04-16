@@ -56,7 +56,7 @@ export class HaiveSelector extends React.Component{
             <div className={"maincontent"}>
                 <HaiveDispenser/>
                 <HaiveBlueprint/>
-                {this.state.hover != "none" ? <Hexagon HoverTypes small={false} keyId={this.state.hover}/> : ""}
+                {this.state.hover != "none" ? <HexagonHoverTypes small={false} keyId={this.state.hover}/> : ""}
                 {this.state.hoverMisc.split(':')[0] == "setdescofhaive" ? <HaiveDesc id={this.state.hoverMisc.split(':')[1]}/> : ""}
             </div>
         );
@@ -204,10 +204,12 @@ class Hexagon extends React.Component{
                 </li>
             );
         }else{
+            console.log("REFRESHED", this.props);
             return(
                 <li className="hexsmall" style={this.getStyle(this.props.small)} id={this.props.small ? "draggable_small_"+this.props.x : "draggable_"+this.props.x+"_"+this.props.y}>
                     <div className={"animated fadeIn hexsmallIn"} onClick={!this.props.small ?
                         function(){
+                            console.log(parent.props, parent.props.type);
                             gv.haiveSelectorView.refresh("hover", parent.props.x+"_"+parent.props.y);
                             setTimeout(function(){window.location = "#"+parent.props.x+"_"+parent.props.y;}, 1);
                         } : ""}>
