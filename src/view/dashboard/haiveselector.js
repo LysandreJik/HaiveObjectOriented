@@ -204,7 +204,6 @@ class Hexagon extends React.Component{
                 </li>
             );
         }else{
-            console.log("REFRESHED", this.props);
             return(
                 <li className="hexsmall" style={this.getStyle(this.props.small)} id={this.props.small ? "draggable_small_"+this.props.x : "draggable_"+this.props.x+"_"+this.props.y}>
                     <div className={"animated fadeIn hexsmallIn"} onClick={!this.props.small ?
