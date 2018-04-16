@@ -38,7 +38,15 @@ export class HexagonHoverTypes extends React.Component{
 	        return <div></div>
         }else{
 	    	var haive = gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]);
-	    	haive = gv.timeline.getTemporaryState().getHaiveFromID(haive.getID());
+
+	    	try{
+                haive = gv.timeline.getTemporaryState().getHaiveFromID(haive.getID());
+			}catch(e){
+	    		console.error("Error in HexagonHoverTypes !");
+                console.log(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]);
+                console.log(JSON.stringify(gv.timeline.getTemporaryState().getHaives()), null, 2);
+			}
+
 		}
 
         const parent = this;

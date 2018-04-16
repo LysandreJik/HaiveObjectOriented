@@ -35,14 +35,10 @@ export class HaiveSelectorModel{
         this.storeHaives = this.state.getStoreHaives();
         this.dashHaives = this.state.getHaives();
 
-        console.log(JSON.stringify(this.dashHaives.map(function(i){return i.getX()}), null, 2));
-
         let tempTiles = [];
 
         for(let i = 0; i < this.tileHaives.length; i++){
             if(this.tileHaives[i][0] !== "empty" && this.tileHaives[i][0] !== null){
-                console.log(this.tileHaives[i][1], this.tileHaives[i][2]);
-                console.log(this.getDashHaive(this.tileHaives[i][1], this.tileHaives[i][2]));
                 tempTiles.push([this.getDashHaive(this.tileHaives[i][1], this.tileHaives[i][2]).getClone(), this.tileHaives[i][1], this.tileHaives[i][2]]);
             }else{
                 tempTiles.push(this.tileHaives[i]);
@@ -306,8 +302,6 @@ export class HaiveSelectorModel{
                 this.dashHaives.push(haive);
             }
         }
-
-        console.log(JSON.stringify(this.dashHaives));
     }
 
     getNonEmptyTiles(){

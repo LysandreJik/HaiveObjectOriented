@@ -15,7 +15,6 @@ export default class Timeline{
         state.save(description);
         this._states.push(state);
         console.log(JSON.stringify(this.getStates().map(function(i){return i.getID()+": "+i.getDescription()+" "+i;}), null, 2));
-        console.log(JSON.stringify(this.getStates().map(function(i){if(i.getHaives().length > 0){return i.getID()+": "+i.getHaives()[0].getX();}} ), null, 2));
         gv.haiveSelectorModel.refreshModel();
     }
 
