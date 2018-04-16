@@ -158,8 +158,8 @@ export class HaiveSelectorModel{
 
     }
 
-    updateState(){
-        timeline.updateState(this.state);
+    updateState(description){
+        timeline.updateState(this.state, description);
         this.state = timeline.getTemporaryState();
         this.storeHaives = this.state.getStoreHaives();
         this.dashHaives = this.state.getHaives();
@@ -181,6 +181,16 @@ export class HaiveSelectorModel{
                 let tot = [i.getID()];
                 for(let j = 0; j < i.getHaives().length; j++){
                     tot.push([i.getHaives()[j].getX(), i.getHaives()[j].getY()])
+                }
+                return tot;
+            }
+        )));
+
+        console.log(JSON.stringify(timeline.getStates().map(
+            function(i){
+                let tot = [i.getID()];
+                for(let j = 0; j < i.getHaives().length; j++){
+                    tot.push(i.getDescription());
                 }
                 return tot;
             }
@@ -240,6 +250,10 @@ export class HaiveSelectorModel{
 
     getStoreHaives(){
         return this.storeHaives;
+    }
+
+    getDashHaive(x, y){
+        return this.dashHaives.filter(function(i){if(i.getX() == x && i.getY() == y){return i;}})[0];
     }
 
     getTileHaive(x, y){

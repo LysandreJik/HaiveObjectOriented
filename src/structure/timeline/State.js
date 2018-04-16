@@ -57,8 +57,13 @@ export default class State{
         return this._copied;
     }
 
-    setID(){
+    save(description){
         this._id = State.getID();
+        this._description = description;
+    }
+
+    getDescription(){
+        return this._description;
     }
 
     getID(){

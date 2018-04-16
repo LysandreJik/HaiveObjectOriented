@@ -74,6 +74,14 @@ export default class Haive{
         return this._x;
     }
 
+    setName(name){
+        this._name = name;
+    }
+
+    setDesc(desc){
+        this._description = desc;
+    }
+
     getY(){
         return this._y;
     }

@@ -4,15 +4,15 @@ export default class Timeline{
         console.log("Creating new Timeline");
         this._blocks = [];
         this._initialState = initialState;
-        this._initialState.setID();
+        this._initialState.save("Initial state");
         this._states = [this._initialState];
         console.log("States", this._states);
         this._id = Timeline.getID();
     }
 
-    updateState(state){
+    updateState(state, description){
         console.log("Updating timeline state");
-        state.setID();
+        state.save(description);
         this._states.push(state);
     }
 

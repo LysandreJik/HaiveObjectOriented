@@ -106,8 +106,9 @@ export class HaiveDesc extends React.Component{
 					</label>
 					<button onClick={
 							function(){
-                                gv.haiveSelectorModel.getTileHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]).setName($('#haivename_dialog').val());
-                                gv.haiveSelectorModel.getTileHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]).setDesc($('#haivedesc_dialog').val());
+								console.log(gv.haiveSelectorModel.getDashHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]));
+                                gv.haiveSelectorModel.getDashHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]).setName($('#haivename_dialog').val());
+                                gv.haiveSelectorModel.getDashHaive(parent.props.id.split("_")[0], parent.props.id.split("_")[1]).setDesc($('#haivedesc_dialog').val());
 								window.location="#_";
 								gv.haiveSelectorView.refresh("hovermisc", "");
 							}
