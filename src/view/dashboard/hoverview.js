@@ -66,7 +66,16 @@ export class HexagonHoverTypes extends React.Component{
                             }
                         }
                     }>START</button>{"\u00a0\u00a0\u00a0"}
-                    <button className="btnghost" onClick={function(){gv.haiveSelectorView.refresh("hover", "none");gv.haiveSelectorModel.addStoreHaive(gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]));gv.haiveSelectorModel.removeTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1])}}>Remove</button>{"\u00a0\u00a0\u00a0"}
+                    <button className="btnghost" onClick={
+                    	function(){
+                    		let desc = "Removed " + gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]).getName() + " from dashboard to the store.";
+                    		gv.haiveSelectorView.refresh("hover", "none");
+                    		gv.haiveSelectorModel.addStoreHaive(gv.haiveSelectorModel.getTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]));
+                    		gv.haiveSelectorModel.removeTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1])
+                            gv.haiveSelectorModel.updateState(desc);
+                    	}
+
+                    }>Remove</button>{"\u00a0\u00a0\u00a0"}
                     <button className="btnghost" onClick={() => gv.haiveSelectorController.hoverMisc("setdescofhaive", this.props.keyId)}>+</button>
                 </div>
             </a>

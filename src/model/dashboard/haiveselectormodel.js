@@ -240,6 +240,8 @@ export class HaiveSelectorModel{
             }
         }
 
+        console.log("Removed tile, adding state");
+
         this.updateEmptyTiles();
         gv.haiveSelectorView.refresh();
     }
