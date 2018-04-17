@@ -269,17 +269,17 @@ export function getClosestContainer(x, y){
 	}
 
 	if(min == distance_mouse_topleft){
-		return "top-left";
+		return CONTAINER_POSITIONS.TOP_LEFT;
 	}else if (min == distance_mouse_topright) {
-		return "top-right";
+		return CONTAINER_POSITIONS.TOP_RIGHT;
 	}else if (min == distance_mouse_middleleft) {
-		return "middle-left";
+		return CONTAINER_POSITIONS.MIDDLE_LEFT;
 	}else if (min == distance_mouse_middleright) {
-		return "middle-right";
+		return CONTAINER_POSITIONS.MIDDLE_RIGHT;
 	}else if (min == distance_mouse_bottomleft) {
-		return "bottom-left";
+		return CONTAINER_POSITIONS.BOTTOM_LEFT;
 	}else if (min == distance_mouse_bottomright) {
-		return "bottom-right";
+		return CONTAINER_POSITIONS.BOTTOM_RIGHT;
 	}
 
 }
