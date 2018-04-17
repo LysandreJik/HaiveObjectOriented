@@ -19,7 +19,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 import React from 'react';
 import {ContainersHover} from "../protocolconceptionview";
-import {CONTAINER_POSITIONS} from "../../../const/structure";
+import {CONTAINER_POSITIONS, CONTAINER_SUBTYPES} from "../../../const/structure";
 
 const gv = require('../../../const/global');
 const containerImgBaseSize = 150;
@@ -114,11 +114,11 @@ class Containers extends React.Component{
         const containers = model.containersAvailable.getAvailableContainersPerType(containerType);
         if(containers.length > 0){
 			return (
-				<a id={"golink"+gv.acceptedContainerTypes.indexOf(containerType)}>
+				<a id={"golink"+gv.acceptedContainerTypes.indexOf(containerType.name)}>
 					<div className="containercenter animated speed-ultrafast pulse">
-						<div id={"container_"+gv.acceptedContainerTypes.indexOf(containerType)} className="containerimg">
-                            <span>{containerType}</span><br></br>
-							<img id={"img"+"golink"+gv.acceptedContainerTypes.indexOf(containerType)} src={"images/containers/container_main_images/"+(containerType).replace(/ /g,'_')+".png"} width={containerImgBaseSize*ratio} draggable="false"/>
+						<div id={"container_"+gv.acceptedContainerTypes.indexOf(containerType.name)} className="containerimg">
+                            <span>{containerType.name}</span><br></br>
+							<img id={"img"+"golink"+gv.acceptedContainerTypes.indexOf(containerType.name)} src={"images/containers/container_main_images/"+(containerType.name).replace(/ /g,'_')+".png"} width={containerImgBaseSize*ratio} draggable="false"/>
 							<h1 className="displaynumbercontainers">{containers.length}</h1>
 						</div>
 					</div>
@@ -133,8 +133,10 @@ class Containers extends React.Component{
         const parent = this;
         return(
 			<div id="allcontainers" className="containers animated">
-				{gv.acceptedContainerTypes.map(function(containerType, index){
-					return <div key={index}>{parent.getContainers(containerType)}</div>;
+				{Object.keys(CONTAINER_SUBTYPES).map(function(containerType, index){
+				    console.log(containerType);
+				    console.log(CONTAINER_SUBTYPES[containerType])
+					return <div key={index}>{parent.getContainers(CONTAINER_SUBTYPES[containerType])}</div>;
 				})}
 			</div>
 		);

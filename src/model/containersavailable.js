@@ -37,8 +37,11 @@ export class ContainersAvailable{
 	getAvailableContainersPerType(type){
 		let containersTemp = [];
 
+		console.log(type);
 		for(let i = 0; i < this.containers.length; i++){
-			if(this.containers[i].getType() == type){
+		    console.log(" ", this.containers[i].getContainerSubType().containerType);
+		    console.log(this.containers[i]);
+			if(this.containers[i].getContainerSubType() === type){
 				containersTemp.push(this.containers[i]);
 			}
 		}
@@ -69,7 +72,7 @@ export class ContainersAvailable{
      */
 	removeFirstContainerByType(type){
 		for(let i = 0; i < this.containers.length; i++){
-			if(this.containers[i].getType() == type){
+			if(this.containers[i].getContainerSubType() == type){
 				this.containers.splice(i,1);
 				return;
 			}
