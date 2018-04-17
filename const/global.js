@@ -325,17 +325,17 @@ export function getDivStylePosition(container_location){
 }
 
 export function getContainerLocNumberFromLocString(str){
-	if(str == "top-left"){
+	if(str == CONTAINER_POSITIONS.TOP_LEFT){
 		return 0;
-	}else if(str == "top-right"){
+	}else if(str == CONTAINER_POSITIONS.TOP_RIGHT){
 		return 1;
-	}else if(str == "middle-left"){
+	}else if(str == CONTAINER_POSITIONS.MIDDLE_LEFT){
 		return 2;
-	}else if(str == "middle-right"){
+	}else if(str == CONTAINER_POSITIONS.MIDDLE_RIGHT){
 		return 3;
-	}else if(str == "bottom-left"){
+	}else if(str == CONTAINER_POSITIONS.BOTTOM_LEFT){
 		return 4;
-	}else if(str == "bottom-right"){
+	}else if(str == CONTAINER_POSITIONS.BOTTOM_RIGHT){
 		return 5;
 	}
 }
