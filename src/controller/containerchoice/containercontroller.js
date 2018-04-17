@@ -16,9 +16,11 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 	Author: Lysandre Debut
 */
 
+import LiquidContainer from "../../structure/containers/LiquidContainer";
+import PipetteTipContainer from "../../structure/containers/PipetteTipContainer";
+
 const gv = require('../../../const/global');
 const TipContainer = require('../../model/tipcontainer').TipContainer;
-const LiquidContainer = require('../../model/liquidcontainer').LiquidContainer;
 
 /**
  * Controller class for the container select. Any action taken on the container select screen is redirected and managed here.
@@ -79,10 +81,10 @@ export class ContainerSelectController{
                             let id_tag = gv.getClosestContainer((gv.mouseX-background.offset().left), (gv.mouseY-background.offset().top));
 
 							if(gv.currentlySelectedHaive.getContainer(id_tag) != ""){
-							    if(gv.currentlySelectedHaive.getContainer(id_tag).isLiquidContainer()){
+							    if(gv.currentlySelectedHaive.getContainer(id_tag) instanceof LiquidContainer){
                                     gv.availableContainers.addContainer(new LiquidContainer({type:gv.currentlySelectedHaive.getContainer(id_tag).getType(), name:"none", id:"none", loc:"containerbar"}));
                                 }else{
-                                    gv.availableContainers.addContainer(new TipContainer({type:gv.currentlySelectedHaive.getContainer(id_tag).getType(), name:"none", id:"none", loc:"containerbar"}));
+                                    gv.availableContainers.addContainer(new PipetteTipContainer({type:gv.currentlySelectedHaive.getContainer(id_tag).getType(), name:"none", id:"none", loc:"containerbar"}));
                                 }
 
 							}
