@@ -65,7 +65,7 @@ export class HexagonHoverTypes extends React.Component{
                             gv.myAssets.setSelected(2);
                             gv.currentlySelectedHaive = haive;
                             gv.protocolDesignController.timeline = gv.timeline;
-                            if(gv.currentlySelectedHaive.containers.length > 0){
+                            if(gv.currentlySelectedHaive.getContainers().length > 0){
                                 gv.myAssets.setState({button:[false, false, false]});
                             }else{
                                 gv.myAssets.setState({button:[false, false, true]});

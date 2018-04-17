@@ -182,6 +182,9 @@ export default class Haive{
                 this._containers.bottomRight.setPosition(null);
                 this._containers.bottomRight = null;
                 break;
+            default:
+                return "";
+                break;
         }
     }
 

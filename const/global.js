@@ -1,5 +1,5 @@
 import Haive from "../src/structure/Haive";
-import {HAIVE_TYPES, LIQUID_MAGNITUDES} from "./structure";
+import {CONTAINER_POSITIONS, HAIVE_TYPES, LIQUID_MAGNITUDES} from "./structure";
 import Timeline from "../src/structure/timeline/Timeline";
 import State from "../src/structure/timeline/State";
 
@@ -288,32 +288,32 @@ export function getDivStylePosition(container_location){
 
 	var ratio = 0.888*($(window).width()/1920);
 
-	if(container_location == "top-left"){
+	if(container_location == CONTAINER_POSITIONS.TOP_LEFT){
 		return {
 			top: ((pos_top_left[1]+0.01)*$('#background').height()-ratio*50)+'px',
 			left: ((pos_top_left[0]+0.01)*$('#background').width()-ratio*100)+'px'
 		}
-	}else if (container_location == "top-right") {
+	}else if (container_location == CONTAINER_POSITIONS.TOP_RIGHT) {
 		return {
 			top: ((pos_top_right[1]+0.01)*$('#background').height()-ratio*50)+'px',
 			left: ((pos_top_right[0]+0.05)*$('#background').width()-ratio*100)+'px'
 		}
-	}else if (container_location == "middle-left") {
+	}else if (container_location == CONTAINER_POSITIONS.MIDDLE_LEFT) {
 		return {
 			top: ((pos_middle_left[1])*$('#background').height()-ratio*50)+'px',
 			left: ((pos_middle_left[0]+0.03)*$('#background').width()-ratio*100)+'px'
 		}
-	}else if (container_location == "middle-right") {
+	}else if (container_location == CONTAINER_POSITIONS.MIDDLE_RIGHT) {
 		return {
 			top: ((pos_middle_right[1])*$('#background').height()-ratio*50)+'px',
 			left: ((pos_middle_right[0]+0.05)*$('#background').width()-ratio*100)+'px'
 		}
-	}else if (container_location == "bottom-left") {
+	}else if (container_location == CONTAINER_POSITIONS.BOTTOM_LEFT) {
 		return {
 			top: ((pos_bottom_left[1]-0.02)*$('#background').height()-ratio*50)+'px',
 			left: ((pos_bottom_left[0]+0.01)*$('#background').width()-ratio*100)+'px'
 		}
-	}else if (container_location == "bottom-right") {
+	}else if (container_location == CONTAINER_POSITIONS.BOTTOM_RIGHT) {
 		return {
 			top: ((pos_bottom_right[1]-0.02)*$('#background').height()-ratio*50)+'px',
 			left: ((pos_bottom_right[0]+0.05)*$('#background').width()-ratio*100)+'px'

@@ -19,6 +19,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 import React from 'react';
 import {ContainersHover} from "../protocolconceptionview";
+import {CONTAINER_POSITIONS} from "../../../const/structure";
 
 const gv = require('../../../const/global');
 const containerImgBaseSize = 150;
@@ -218,6 +219,8 @@ class Canvas extends React.Component{
 			var ratio = 0.888*(windowWidth/1920);
 		}
 
+		console.log(gv.currentlySelectedHaive);
+
         const divStyle = gv.getDivStylePosition(container_location);
 
         return (
@@ -237,27 +240,27 @@ class Canvas extends React.Component{
 			<div id="canvasContainers" className="canvascontainers">
 				<img id="background" src="images/canvas_background.png" className="canvascontainersimagebackground" draggable = {false}/>
 
-					{gv.currentlySelectedHaive.getContainer("top-left") == "" ? <img id="top-left" src="images/protocol_design_hexagon_configuration/top_left.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
-						this.getContainersInHaive("top-left", gv.currentlySelectedHaive.getContainer("top-left"), this.state.hover == "top-left")}
+					{gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.TOP_LEFT) === null ? <img id="top-left" src="images/protocol_design_hexagon_configuration/top_left.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
+						this.getContainersInHaive(CONTAINER_POSITIONS.TOP_LEFT, gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.TOP_LEFT), this.state.hover == CONTAINER_POSITIONS.TOP_LEFT)}
 
-					{gv.currentlySelectedHaive.getContainer("top-right") == "" ? <img id="top-right" src="images/protocol_design_hexagon_configuration/top_right.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
-						this.getContainersInHaive("top-right", gv.currentlySelectedHaive.getContainer("top-right"), this.state.hover == "top-right")}
+					{gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.TOP_RIGHT) === null  ? <img id="top-right" src="images/protocol_design_hexagon_configuration/top_right.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
+						this.getContainersInHaive(CONTAINER_POSITIONS.TOP_RIGHT, gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.TOP_RIGHT), this.state.hover == CONTAINER_POSITIONS.TOP_RIGHT)}
 
-					{gv.currentlySelectedHaive.getContainer("middle-left") == "" ? <img id="middle-left" src="images/protocol_design_hexagon_configuration/middle_left.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
-						this.getContainersInHaive("middle-left", gv.currentlySelectedHaive.getContainer("middle-left"), this.state.hover == "middle-left")}
+					{gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.MIDDLE_LEFT) === null  ? <img id="middle-left" src="images/protocol_design_hexagon_configuration/middle_left.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
+						this.getContainersInHaive(CONTAINER_POSITIONS.MIDDLE_LEFT, gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.MIDDLE_LEFT), this.state.hover == CONTAINER_POSITIONS.MIDDLE_LEFT)}
 
-					{gv.currentlySelectedHaive.getContainer("middle-right") == "" ? <img id="middle-right" src="images/protocol_design_hexagon_configuration/middle_right.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
-						this.getContainersInHaive("middle-right", gv.currentlySelectedHaive.getContainer("middle-right"), this.state.hover == "middle-right")}
+					{gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.MIDDLE_RIGHT) === null  ? <img id="middle-right" src="images/protocol_design_hexagon_configuration/middle_right.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
+						this.getContainersInHaive(CONTAINER_POSITIONS.MIDDLE_RIGHT, gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.MIDDLE_RIGHT), this.state.hover == CONTAINER_POSITIONS.MIDDLE_RIGHT)}
 
-					{gv.currentlySelectedHaive.getContainer("bottom-left") == "" ? <img id="bottom-left" src="images/protocol_design_hexagon_configuration/bottom_left.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
-						this.getContainersInHaive("bottom-left", gv.currentlySelectedHaive.getContainer("bottom-left"), this.state.hover == "bottom-left")}
+					{gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.BOTTOM_LEFT) === null  ? <img id="bottom-left" src="images/protocol_design_hexagon_configuration/bottom_left.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
+						this.getContainersInHaive(CONTAINER_POSITIONS.BOTTOM_LEFT, gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.BOTTOM_LEFT), this.state.hover == CONTAINER_POSITIONS.BOTTOM_LEFT)}
 
-					{gv.currentlySelectedHaive.getContainer("bottom-right") == "" ? <img id="bottom-right" src="images/protocol_design_hexagon_configuration/bottom_right.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
-						this.getContainersInHaive("bottom-right", gv.currentlySelectedHaive.getContainer("bottom-right"), this.state.hover == "bottom-right")}
+					{gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.BOTTOM_RIGHT) === null  ? <img id="bottom-right" src="images/protocol_design_hexagon_configuration/bottom_right.png" className="canvascontainersimagebackground canvascontainerstopimages" draggable = {false}/> :
+						this.getContainersInHaive(CONTAINER_POSITIONS.BOTTOM_RIGHT, gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.BOTTOM_RIGHT), this.state.hover == CONTAINER_POSITIONS.BOTTOM_RIGHT)}
 
 
-				{gv.currentlySelectedHaive.getContainer("top-left") != "" || gv.currentlySelectedHaive.getContainer("top-right") != "" || gv.currentlySelectedHaive.getContainer("middle-left") != "" ||
-					gv.currentlySelectedHaive.getContainer("middle-right") != "" || gv.currentlySelectedHaive.getContainer("bottom-left") != ""|| gv.currentlySelectedHaive.getContainer("bottom-right") != "" ?
+				{gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.TOP_LEFT) !== null  || gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.TOP_RIGHT) !== null  || gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.MIDDLE_LEFT) !== null  ||
+					gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.MIDDLE_RIGHT) !== null  || gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.BOTTOM_LEFT) !== null || gv.currentlySelectedHaive.getContainer(CONTAINER_POSITIONS.BOTTOM_RIGHT) !== null  ?
 					<button className="protocols animated fadeInLeft btnghostdarker canvascontainertext" onClick={
 					    function(){
 					        gv.myAssets.setSelected(3);
