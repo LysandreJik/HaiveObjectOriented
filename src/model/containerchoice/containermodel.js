@@ -20,8 +20,6 @@ import React from 'react';
 
 const gv = require('../../../const/global');
 const ContainersAvailable = require('../containersavailable').ContainersAvailable;
-const TipContainer = require('../tipcontainer').TipContainer;
-const LiquidContainer = require('../liquidcontainer').LiquidContainer;
 
 let controller;
 

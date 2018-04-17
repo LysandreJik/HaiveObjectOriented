@@ -1,6 +1,5 @@
 const timeline = require('../../../const/global').timeline;
 const gv = require('../../../const/global');
-const Haive = require('../../model/haive').Haive;
 
 export class HaiveSelectorModel{
     constructor(){

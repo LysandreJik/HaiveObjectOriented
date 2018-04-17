@@ -20,7 +20,6 @@ import LiquidContainer from "../../structure/containers/LiquidContainer";
 import PipetteTipContainer from "../../structure/containers/PipetteTipContainer";
 
 const gv = require('../../../const/global');
-const TipContainer = require('../../model/tipcontainer').TipContainer;
 
 /**
  * Controller class for the container select. Any action taken on the container select screen is redirected and managed here.
