@@ -17,32 +17,15 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 const gv = require('../../const/global');
-const PipetteTipContainer = require('../structure/containers/PipetteTipContainer');
-const LiquidContainer = require('../structure/containers/LiquidContainer');
+import PipetteTipContainer from '../structure/containers/PipetteTipContainer';
+import LiquidContainer from '../structure/containers/LiquidContainer';
 
 /**
  * Class that contains all the information about the available containers.
  */
 export class ContainersAvailable{
 	constructor(){
-		this.containers = [];
-		for(let i = 0; i < gv.containersAvailable.length; i++){
-		    let type = gv.containersAvailable[i][0];
-            if(type == "P20 normal chip" || type == "P200 normal chip" || type == "P1000 normal chip" || type == "P1000 long chip") {
-                this.containers.push(new PipetteTipContainer({
-                    type:gv.containersAvailable[i][0],
-                    name:gv.containersAvailable[i][1],
-                    id:gv.containersAvailable[i][2],
-                }));
-            }else{
-                this.containers.push(new LiquidContainer({
-                    type:gv.containersAvailable[i][0],
-                    name:gv.containersAvailable[i][1],
-                    id:gv.containersAvailable[i][2],
-                }));
-            }
-
-		}
+		this.containers = gv.containersAvailable;
 		gv.availableContainers = this;
 	}
 

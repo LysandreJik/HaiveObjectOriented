@@ -1,7 +1,9 @@
 import Haive from "../src/structure/Haive";
-import {CONTAINER_POSITIONS, HAIVE_TYPES, LIQUID_MAGNITUDES} from "./structure";
+import {CONTAINER_POSITIONS, CONTAINER_SUBTYPES, HAIVE_TYPES, LIQUID_MAGNITUDES} from "./structure";
 import Timeline from "../src/structure/timeline/Timeline";
 import State from "../src/structure/timeline/State";
+import PipetteTipContainer from "../src/structure/containers/PipetteTipContainer";
+import LiquidContainer from "../src/structure/containers/LiquidContainer";
 
 export var imageLoad = 0;
 export var loadingScreen;
@@ -10,6 +12,16 @@ export var creatingAccount = false;
 export var temporaryLiquidQuantity = [0,0,0];
 
 //INITIALIZATION CODE
+
+export var containersAvailable = [
+    new PipetteTipContainer({subType:CONTAINER_SUBTYPES.P1000_NORMAL_CHIP}),
+    new PipetteTipContainer({subType:CONTAINER_SUBTYPES.P1000_LONG_CHIP}),
+    new PipetteTipContainer({subType:CONTAINER_SUBTYPES.P20_NORMAL_CHIP}),
+    new PipetteTipContainer({subType:CONTAINER_SUBTYPES.P200_NORMAL_CHIP}),
+    new PipetteTipContainer({subType:CONTAINER_SUBTYPES.P1000_NORMAL_CHIP}),
+    new LiquidContainer({subType:CONTAINER_SUBTYPES.ST15_SCREW_TUBES}),
+    new LiquidContainer({subType:CONTAINER_SUBTYPES.FS6_FALCON_STAND})
+];
 
 let ownedHaives = [
     new Haive({name: "First dispenser", type: HAIVE_TYPES.DISPENSER, id: 0, desc: ""}),
@@ -91,15 +103,7 @@ export const centrifuge =  "CENTRIFUGE";
 export const empty =       "openslot";
 
 
-export var containersAvailable = [
-	["P1000 normal chip", "My first P1000 normal chip container", "P1000N:001"],
-	["P1000 long chip", "My first P1000 long chip container", "P1000L:001"],
-	["P20 normal chip", "My first P20 normal chip container", "P20N:001"],
-	["P200 normal chip", "My first P200 normal chip container", "P200N:001"],
-	["15 screw tubes", "My first 15 screw tubes container", "15SC:001"],
-	["6 falcon stand", "My first 6 falcon stand container", "6FS:001"],
-	["P1000 normal chip", "My second P1000 normal chip container", "P1000N:002"]
-];
+
 
 export var containerSelectModel;
 
