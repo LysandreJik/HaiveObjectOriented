@@ -19,7 +19,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 import React from 'react';
 import {ContainersHover} from "../protocolconceptionview";
-import {CONTAINER_POSITIONS, CONTAINER_SUBTYPES} from "../../../const/structure";
+import {CONTAINER_POSITIONS, CONTAINER_SUBTYPES, getContainerIDFromPosition} from "../../../const/structure";
 
 const gv = require('../../../const/global');
 const containerImgBaseSize = 150;
@@ -224,7 +224,7 @@ class Canvas extends React.Component{
 		console.log(container);
 
         return (
-				<div id={container_location} className="canvascontainersontop animated speed-ultrafast pulse"  draggable = {false} style={divStyle}>
+				<div id={getContainerIDFromPosition(container_location)} className="canvascontainersontop animated speed-ultrafast pulse"  draggable = {false} style={divStyle}>
 					<img id={"img_"+container_location} src={("images/containers/container_main_images/"+container.getContainerSubType().name.replace(/ /g,'_'))+(dark ? "_dark" : "") + ".png"} draggable = {false} width={containerImgBaseSize*ratio} />
 					{<button style={{"left":0, "position":"absolute"}} onClick={
 					    function(){
