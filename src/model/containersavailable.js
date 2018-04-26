@@ -17,8 +17,6 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 const gv = require('../../const/global');
-import PipetteTipContainer from '../structure/containers/PipetteTipContainer';
-import LiquidContainer from '../structure/containers/LiquidContainer';
 
 /**
  * Class that contains all the information about the available containers.
@@ -39,8 +37,6 @@ export class ContainersAvailable{
 
 		console.log(type);
 		for(let i = 0; i < this.containers.length; i++){
-		    console.log(" ", this.containers[i].getContainerSubType().containerType);
-		    console.log(this.containers[i]);
 			if(this.containers[i].getContainerSubType() === type){
 				containersTemp.push(this.containers[i]);
 			}

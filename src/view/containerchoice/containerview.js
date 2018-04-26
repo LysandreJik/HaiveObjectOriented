@@ -134,8 +134,7 @@ class Containers extends React.Component{
         return(
 			<div id="allcontainers" className="containers animated">
 				{Object.keys(CONTAINER_SUBTYPES).map(function(containerType, index){
-				    console.log(containerType);
-				    console.log(CONTAINER_SUBTYPES[containerType])
+
 					return <div key={index}>{parent.getContainers(CONTAINER_SUBTYPES[containerType])}</div>;
 				})}
 			</div>

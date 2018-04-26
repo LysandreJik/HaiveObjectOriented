@@ -76,14 +76,14 @@ export class ContainerSelectController{
 						let id_tag = gv.getClosestContainer((gv.mouseX-background.offset().left), (gv.mouseY-background.offset().top));
 
 						if(id_tag != null){
-							//Gets the closest container from the drop point
+							//Gets the closest container from the drop point*
                             let id_tag = gv.getClosestContainer((gv.mouseX-background.offset().left), (gv.mouseY-background.offset().top));
 
 							if(gv.currentlySelectedHaive.getContainer(id_tag) != ""){
 							    if(gv.currentlySelectedHaive.getContainer(id_tag) instanceof LiquidContainer){
-                                    gv.availableContainers.addContainer(new LiquidContainer({type:gv.currentlySelectedHaive.getContainer(id_tag).getType(), name:"none", id:"none", loc:"containerbar"}));
+                                    gv.availableContainers.addContainer(new LiquidContainer({type:gv.currentlySelectedHaive.getContainer(id_tag).getContainerSubType(), name:"none", id:"none", loc:"containerbar"}));
                                 }else{
-                                    gv.availableContainers.addContainer(new PipetteTipContainer({type:gv.currentlySelectedHaive.getContainer(id_tag).getType(), name:"none", id:"none", loc:"containerbar"}));
+                                    gv.availableContainers.addContainer(new PipetteTipContainer({type:gv.currentlySelectedHaive.getContainer(id_tag).getContainerSubType(), name:"none", id:"none", loc:"containerbar"}));
                                 }
 
 							}
