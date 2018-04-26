@@ -213,25 +213,24 @@ class Canvas extends React.Component{
 		this.setState({containers:containersTemp});
 	}
 
-	getContainersInHaive(container_location, container_type, dark){
+	getContainersInHaive(container_location, container, dark){
 		if(typeof ratio == 'undefined'){
             const windowWidth = $(window).width();
             //The ratio is 0.888 when the window width is 1920.
 			var ratio = 0.888*(windowWidth/1920);
 		}
 
-		console.log(gv.currentlySelectedHaive);
-
         const divStyle = gv.getDivStylePosition(container_location);
+		console.log(container);
 
         return (
 				<div id={container_location} className="canvascontainersontop animated speed-ultrafast pulse"  draggable = {false} style={divStyle}>
-					<img id={"img_"+container_location} src={("images/containers/container_main_images/"+container_type.getType().replace(/ /g,'_'))+(dark ? "_dark" : "") + ".png"} draggable = {false} width={containerImgBaseSize*ratio} />
+					<img id={"img_"+container_location} src={("images/containers/container_main_images/"+container.getContainerSubType().name.replace(/ /g,'_'))+(dark ? "_dark" : "") + ".png"} draggable = {false} width={containerImgBaseSize*ratio} />
 					{<button style={{"left":0, "position":"absolute"}} onClick={
 					    function(){
                             gv.protocolConceptionController.clickedContainer(gv.currentlySelectedHaive.getContainer(container_location));
 					    }
-					} className="btnghostinvisiblebutclickable">{"Remove "+container_type.getType()}</button>}
+					} className="btnghostinvisiblebutclickable">{"Remove "+container.getContainerSubType().name}</button>}
 				</div>
 			);
 	}

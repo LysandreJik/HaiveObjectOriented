@@ -18,6 +18,7 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 
 import LiquidContainer from "../../structure/containers/LiquidContainer";
 import PipetteTipContainer from "../../structure/containers/PipetteTipContainer";
+import {CONTAINER_SUBTYPES, getContainerPositionFromID, getContainerSubtypeFromName} from "../../../const/structure";
 
 const gv = require('../../../const/global');
 
@@ -79,18 +80,13 @@ export class ContainerSelectController{
 							//Gets the closest container from the drop point*
                             let id_tag = gv.getClosestContainer((gv.mouseX-background.offset().left), (gv.mouseY-background.offset().top));
 
-							if(gv.currentlySelectedHaive.getContainerFromID(id_tag) != null){
-							    if(gv.currentlySelectedHaive.getContainerFromID(id_tag) instanceof LiquidContainer){
-                                    gv.availableContainers.addContainer(new LiquidContainer({type:gv.currentlySelectedHaive.getContainerFromID(id_tag).getContainerSubType(), name:"none", id:"none", loc:"containerbar"}));
-                                }else{
-							        console.log(gv.currentlySelectedHaive.getContainerFromID(id_tag));
-                                    gv.availableContainers.addContainer(new PipetteTipContainer({type:gv.currentlySelectedHaive.getContainerFromID(id_tag).getContainerSubType(), name:"none", id:"none", loc:"containerbar"}));
-                                }
+							if(gv.currentlySelectedHaive.getContainer(getContainerPositionFromID(id_tag)) != null){
+                                gv.availableContainers.addContainer(gv.currentlySelectedHaive.getContainer(getContainerPositionFromID(id_tag)).getClone());
 
 							}
 
-							//gv.availableContainers.removeFirstContainerByType(gv.acceptedContainerTypes[ui.draggable.prop('id').substring(6)]);
-                            gv.currentlySelectedHaive.addContainer(id_tag, gv.acceptedContainerTypes[ui.draggable.prop('id').substring(6)]);
+							let selectedContainer = gv.availableContainers.getFirstContainerByType(getContainerSubtypeFromName(gv.acceptedContainerTypes[ui.draggable.prop('id').substring(6)]));
+                            gv.currentlySelectedHaive.setContainer(selectedContainer, getContainerPositionFromID(id_tag));
 							gv.containerViewCanvas.refresh();
 							gv.containerBar.refresh();
 						}
@@ -140,6 +136,8 @@ export class ContainerSelectController{
 		let mouseY = event.pageY;
         let background = $('#background');
 		let id_tag = gv.getClosestContainer((mouseX-background.offset().left), (mouseY-background.offset().top));
+
+		console.log(id_tag);
 
 		$(".canvascontainerstopimages").css({opacity:0.2});
 		$("#"+id_tag).css({opacity:1});

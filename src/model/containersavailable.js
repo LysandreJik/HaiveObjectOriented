@@ -66,12 +66,24 @@ export class ContainersAvailable{
      * Remove the first container of passed type
      * @param type String
      */
-	removeFirstContainerByType(type){
-		for(let i = 0; i < this.containers.length; i++){
-			if(this.containers[i].getContainerSubType() == type){
-				this.containers.splice(i,1);
-				return;
-			}
-		}
-	}
+    removeFirstContainerByType(type){
+        for(let i = 0; i < this.containers.length; i++){
+            if(this.containers[i].getContainerSubType() == type){
+                this.containers.splice(i,1);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Returns the first container of passed type
+     * @param type String
+     */
+    getFirstContainerByType(type){
+        for(let i = 0; i < this.containers.length; i++){
+            if(this.containers[i].getContainerSubType() == type){
+                return this.containers[i];
+            }
+        }
+    }
 }

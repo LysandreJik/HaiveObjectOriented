@@ -31,6 +31,32 @@ export const CONTAINER_TYPES = {
     TEST_TUBE_CONTAINER: 1
 };
 
+export function getContainerPositionFromID(id){
+    switch(id){
+        case CONTAINER_POSITIONS_IDS.TOP_LEFT:
+            return CONTAINER_POSITIONS.TOP_LEFT;
+        case CONTAINER_POSITIONS_IDS.MIDDLE_LEFT:
+            return CONTAINER_POSITIONS.MIDDLE_LEFT;
+        case CONTAINER_POSITIONS_IDS.BOTTOM_LEFT:
+            return CONTAINER_POSITIONS.BOTTOM_LEFT;
+        case CONTAINER_POSITIONS_IDS.TOP_RIGHT:
+            return CONTAINER_POSITIONS.TOP_RIGHT;
+        case CONTAINER_POSITIONS_IDS.MIDDLE_RIGHT:
+            return CONTAINER_POSITIONS.MIDDLE_RIGHT;
+        case CONTAINER_POSITIONS_IDS.BOTTOM_RIGHT:
+            return CONTAINER_POSITIONS.BOTTOM_RIGHT;
+
+    }
+}
+
+export function getContainerSubtypeFromName(name){
+    for (const [key, value] of Object.entries(CONTAINER_SUBTYPES)) {
+        if(value.name === name){
+            return value;
+        }
+    }
+}
+
 export const CONTAINER_SUBTYPES = {
     P1000_NORMAL_CHIP: {name: "P1000 normal chip", containerType: CONTAINER_TYPES.PIPETTE_TIP_CONTAINER, width: 8, height: 12},
     P1000_LONG_CHIP: {name: "P1000 long chip", containerType: CONTAINER_TYPES.PIPETTE_TIP_CONTAINER, width: 8, height: 12},

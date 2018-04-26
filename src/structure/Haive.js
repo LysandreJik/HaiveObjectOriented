@@ -205,24 +205,6 @@ export default class Haive{
         }
     }
 
-    getContainerFromID(containerPositionID){
-        switch (containerPositionID) {
-            case(CONTAINER_POSITIONS_IDS.TOP_LEFT):
-                return this._containers.topLeft;
-            case(CONTAINER_POSITIONS_IDS.TOP_RIGHT):
-                return this._containers.topRight;
-            case(CONTAINER_POSITIONS_IDS.MIDDLE_LEFT):
-                return this._containers.middleLeft;
-            case(CONTAINER_POSITIONS_IDS.MIDDLE_RIGHT):
-                return this._containers.middleRight;
-            case(CONTAINER_POSITIONS_IDS.BOTTOM_LEFT):
-                return this._containers.bottomLeft;
-            case(CONTAINER_POSITIONS_IDS.BOTTOM_RIGHT):
-                return this._containers.bottomRight;
-        }
-    }
-
-
     setNeighbour(neighbour, neighbourPosition){
         switch (neighbourPosition) {
             case(CONTAINER_POSITIONS.TOP_LEFT):
