@@ -87,6 +87,7 @@ export class ContainerSelectController{
 
 							let selectedContainer = gv.availableContainers.getFirstContainerByType(getContainerSubtypeFromName(gv.acceptedContainerTypes[ui.draggable.prop('id').substring(6)]));
                             gv.currentlySelectedHaive.setContainer(selectedContainer, getContainerPositionFromID(id_tag));
+                            gv.availableContainers.removeContainer(selectedContainer);
 							gv.containerViewCanvas.refresh();
 							gv.containerBar.refresh();
 						}
@@ -136,8 +137,6 @@ export class ContainerSelectController{
 		let mouseY = event.pageY;
         let background = $('#background');
 		let id_tag = gv.getClosestContainer((mouseX-background.offset().left), (mouseY-background.offset().top));
-
-		console.log(id_tag);
 
 		$(".canvascontainerstopimages").css({opacity:0.2});
 		$("#"+id_tag).css({opacity:1});

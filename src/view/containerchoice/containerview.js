@@ -221,7 +221,6 @@ class Canvas extends React.Component{
 		}
 
         const divStyle = gv.getDivStylePosition(container_location);
-		console.log(container);
 
         return (
 				<div id={getContainerIDFromPosition(container_location)} className="canvascontainersontop animated speed-ultrafast pulse"  draggable = {false} style={divStyle}>

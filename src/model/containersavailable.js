@@ -34,8 +34,6 @@ export class ContainersAvailable{
      */
 	getAvailableContainersPerType(type){
 		let containersTemp = [];
-
-		console.log(type);
 		for(let i = 0; i < this.containers.length; i++){
 			if(this.containers[i].getContainerSubType() === type){
 				containersTemp.push(this.containers[i]);
