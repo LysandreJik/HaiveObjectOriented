@@ -1,5 +1,8 @@
 import Haive from "../src/structure/Haive";
-import {CONTAINER_POSITIONS, CONTAINER_SUBTYPES, HAIVE_TYPES, LIQUID_MAGNITUDES} from "./structure";
+import {
+    CONTAINER_POSITIONS, CONTAINER_POSITIONS_IDS, CONTAINER_SUBTYPES, HAIVE_TYPES,
+    LIQUID_MAGNITUDES
+} from "./structure";
 import Timeline from "../src/structure/timeline/Timeline";
 import State from "../src/structure/timeline/State";
 import PipetteTipContainer from "../src/structure/containers/PipetteTipContainer";
@@ -273,17 +276,17 @@ export function getClosestContainer(x, y){
 	}
 
 	if(min == distance_mouse_topleft){
-		return CONTAINER_POSITIONS.TOP_LEFT;
+		return CONTAINER_POSITIONS_IDS.TOP_LEFT;
 	}else if (min == distance_mouse_topright) {
-		return CONTAINER_POSITIONS.TOP_RIGHT;
+		return CONTAINER_POSITIONS_IDS.TOP_RIGHT;
 	}else if (min == distance_mouse_middleleft) {
-		return CONTAINER_POSITIONS.MIDDLE_LEFT;
+		return CONTAINER_POSITIONS_IDS.MIDDLE_LEFT;
 	}else if (min == distance_mouse_middleright) {
-		return CONTAINER_POSITIONS.MIDDLE_RIGHT;
+		return CONTAINER_POSITIONS_IDS.MIDDLE_RIGHT;
 	}else if (min == distance_mouse_bottomleft) {
-		return CONTAINER_POSITIONS.BOTTOM_LEFT;
+		return CONTAINER_POSITIONS_IDS.BOTTOM_LEFT;
 	}else if (min == distance_mouse_bottomright) {
-		return CONTAINER_POSITIONS.BOTTOM_RIGHT;
+		return CONTAINER_POSITIONS_IDS.BOTTOM_RIGHT;
 	}
 
 }

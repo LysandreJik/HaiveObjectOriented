@@ -17,6 +17,15 @@ export const CONTAINER_POSITIONS = {
     BOTTOM_RIGHT: 5
 };
 
+export const CONTAINER_POSITIONS_IDS = {
+    TOP_LEFT: "top-left",
+    MIDDLE_LEFT: "middle-left",
+    BOTTOM_LEFT: "bottom-left",
+    TOP_RIGHT: "top-right",
+    MIDDLE_RIGHT: "middle-right",
+    BOTTOM_RIGHT: "bottom-right"
+};
+
 export const CONTAINER_TYPES = {
     PIPETTE_TIP_CONTAINER: 0,
     TEST_TUBE_CONTAINER: 1

@@ -1,4 +1,4 @@
-import {CONTAINER_POSITIONS} from "../../const/structure";
+import {CONTAINER_POSITIONS, CONTAINER_POSITIONS_IDS} from "../../const/structure";
 
 export default class Haive{
     constructor(args){
@@ -201,6 +201,23 @@ export default class Haive{
             case(CONTAINER_POSITIONS.BOTTOM_LEFT):
                 return this._containers.bottomLeft;
             case(CONTAINER_POSITIONS.BOTTOM_RIGHT):
+                return this._containers.bottomRight;
+        }
+    }
+
+    getContainerFromID(containerPositionID){
+        switch (containerPositionID) {
+            case(CONTAINER_POSITIONS_IDS.TOP_LEFT):
+                return this._containers.topLeft;
+            case(CONTAINER_POSITIONS_IDS.TOP_RIGHT):
+                return this._containers.topRight;
+            case(CONTAINER_POSITIONS_IDS.MIDDLE_LEFT):
+                return this._containers.middleLeft;
+            case(CONTAINER_POSITIONS_IDS.MIDDLE_RIGHT):
+                return this._containers.middleRight;
+            case(CONTAINER_POSITIONS_IDS.BOTTOM_LEFT):
+                return this._containers.bottomLeft;
+            case(CONTAINER_POSITIONS_IDS.BOTTOM_RIGHT):
                 return this._containers.bottomRight;
         }
     }
