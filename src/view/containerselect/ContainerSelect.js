@@ -1,5 +1,6 @@
 import React from 'react';
 import {CONTAINER_POSITIONS, HAIVE_TYPES} from "../../../const/structure";
+import {ContainerSelectController} from "../../controller/containerchoice/ContainerSelectController";
 const gi = require('../../../const/globalImages').gi;
 const gv = require('../../../const/global');
 const SVG = require('svg.js');
@@ -9,12 +10,15 @@ var hexagon;
 export class ContainerSelect extends React.Component{
     constructor(props){
         super(props);
+        gv.containerSelectView = this;
+        this.state = {haive: gv.currentlySelectedHaive};
+        new ContainerSelectController();
     }
 
     render(){
         return(
             <div className="container-select-background">
-                <CenterHexagon hexagon={gv.currentlySelectedHaive}/>
+                <CenterHexagon hexagon={this.state.haive}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.TOP_LEFT}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_LEFT}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_LEFT}/>
@@ -114,6 +118,7 @@ export class CenterHexagon extends React.Component{
         this.state = {init:false};
         this.updateDimensions = this.updateDimensions.bind(this);
         this.mouseMoved = this.mouseMoved.bind(this);
+        this.mouseClicked = this.mouseClicked.bind(this);
         hexagon = this;
         console.log(this.props.hexagon.getNeighbours());
         this.logo = this.getHaiveTypeImage(this.props.hexagon.getType());
@@ -129,6 +134,10 @@ export class CenterHexagon extends React.Component{
             case HAIVE_TYPES.FREEZER:
                 return gi.getImage('FREEZER_DEPTH');
         }
+    }
+
+    componentDidUpdate(){
+        this.logo = this.getHaiveTypeImage(this.props.hexagon.getType());
     }
 
     componentDidMount(){
@@ -248,6 +257,7 @@ export class CenterHexagon extends React.Component{
 
         window.addEventListener("resize", this.updateDimensions);
         window.addEventListener("mousemove", this.mouseMoved);
+        window.addEventListener("click", this.mouseClicked);
 
 
     }
@@ -301,6 +311,7 @@ export class CenterHexagon extends React.Component{
     componentWillUnmount() {
         window.removeEventListener("resize", this.updateDimensions);
         window.removeEventListener("mousemove", this.mouseMoved);
+        window.removeEventListener("click", this.mouseClicked);
     }
 
     rotate(point, angle) {
@@ -325,6 +336,22 @@ export class CenterHexagon extends React.Component{
                 if(this.isInside([e.pageX - this.loc.left, e.pageY - this.loc.top], this.hexagonNeighbours[i].points)){
                     this.showPolylines(this.hexagonNeighbours[i].relatedPolylines);
                     this.updateNeighbours(i);
+                }
+            }
+        }
+    }
+
+    mouseClicked(e){
+        console.log("clicked")
+        let rect = document.getElementById("center-hexagon").getBoundingClientRect();
+        this.loc = {
+            top:rect.top,
+            left:rect.left
+        };
+        if(this.hexagonNeighbours !== undefined){
+            for(let i = 0; i < this.hexagonNeighbours.length; i++){
+                if(this.isInside([e.pageX - this.loc.left, e.pageY - this.loc.top], this.hexagonNeighbours[i].points)){
+                    gv.containerSelectController.switchHaive(i);
                 }
             }
         }

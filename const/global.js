@@ -172,6 +172,9 @@ export var containerView;
 export var containerViewCanvas;
 export var containerViewMainContent;
 
+export var containerSelectController;
+export var containerSelectView;
+
 export var protocolConceptionView;
 export var protocolConceptionController;
 
