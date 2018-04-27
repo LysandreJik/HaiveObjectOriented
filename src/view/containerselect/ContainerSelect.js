@@ -1,6 +1,8 @@
 import React from 'react';
-import {CONTAINER_POSITIONS} from "../../../const/structure";
-const logo = require('../../../images/logo.png');
+import {CONTAINER_POSITIONS, HAIVE_TYPES} from "../../../const/structure";
+const dispenser = require('../../../images/haive_types/dispenser.png');
+const freezer = require('../../../images/haive_types/freezer.png');
+const centrifuge = require('../../../images/haive_types/centrifuge.png');
 const SVG = require('svg.js');
 
 var hexagon;
@@ -8,12 +10,13 @@ var hexagon;
 export class ContainerSelect extends React.Component{
     constructor(props){
         super(props);
+        console.log(this.props.focusedHexagon);
     }
 
     render(){
         return(
             <div className="container-select-background">
-                <CenterHexagon/>
+                <CenterHexagon hexagon={this.props.focusedHexagon}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.TOP_LEFT}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_LEFT}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_LEFT}/>
@@ -93,7 +96,13 @@ export class SingleContainers extends React.Component{
 
     render(){
         return(
-            <div id={"single-container"} className="single-container" style={this.style} onMouseOver={hexagon === undefined  ? function(){console.log("Clicked !")} : () => hexagon.showHoverContainer(this.props.loc)}>
+            <div
+                id={"single-container"}
+                className="single-container"
+                style={this.style}
+                onMouseOver={hexagon === undefined  ? function(){console.log("Entered !")} : () => hexagon.showHoverContainer(this.props.loc)}
+                onMouseLeave={hexagon === undefined  ? function(){console.log("Left !")} : () => hexagon.showHoverContainer()}
+            >
                 <div id={'single-container-svg-'+this.props.loc} className={"single-container-svg"}></div>
                 <div className="initial-button-wrapper"><span className="initial-button-text">SELECT CONTAINER</span></div>
             </div>
@@ -104,9 +113,24 @@ export class SingleContainers extends React.Component{
 export class CenterHexagon extends React.Component{
     constructor(props) {
         super(props);
+        this.state = {init:false};
         this.updateDimensions = this.updateDimensions.bind(this);
         this.mouseMoved = this.mouseMoved.bind(this);
         hexagon = this;
+        console.log(this.props.hexagon.getNeighbours());
+        this.logo = this.getHaiveTypeImage(this.props.hexagon.getType());
+
+    }
+
+    getHaiveTypeImage(type){
+        switch(type){
+            case HAIVE_TYPES.DISPENSER:
+                return dispenser;
+            case HAIVE_TYPES.CENTRIFUGE:
+                return centrifuge;
+            case HAIVE_TYPES.FREEZER:
+                return freezer;
+        }
     }
 
     componentDidMount(){
@@ -163,6 +187,24 @@ export class CenterHexagon extends React.Component{
             }
 
             parent.hexagonNeighbours = [
+                {name:"top-left", points:[
+                    [parent.d/2+parent.other_points[5].x, parent.d/2-parent.other_points[5].y],
+                    [parent.d/2+parent.points[5].x, parent.d/2-parent.points[5].y],
+                    [parent.d/2+parent.points[0].x, parent.d/2-parent.points[0].y],
+                    [parent.d/2+parent.other_points[0].x, parent.d/2-parent.other_points[0].y]
+                ], relatedPolylines: [parent.other_polylines[5], parent.other_polylines[0]]},
+                {name:"middle-left", points:[
+                    [parent.d/2+parent.other_points[4].x, parent.d/2-parent.other_points[4].y],
+                    [parent.d/2+parent.points[4].x, parent.d/2-parent.points[4].y],
+                    [parent.d/2+parent.points[5].x, parent.d/2-parent.points[5].y],
+                    [parent.d/2+parent.other_points[5].x, parent.d/2-parent.other_points[5].y]
+                ], relatedPolylines: [parent.other_polylines[4], parent.other_polylines[5]]},
+                {name:"bottom-left", points:[
+                    [parent.d/2+parent.other_points[3].x, parent.d/2-parent.other_points[3].y],
+                    [parent.d/2+parent.points[3].x, parent.d/2-parent.points[3].y],
+                    [parent.d/2+parent.points[4].x, parent.d/2-parent.points[4].y],
+                    [parent.d/2+parent.other_points[4].x, parent.d/2-parent.other_points[4].y]
+                ], relatedPolylines: [parent.other_polylines[3], parent.other_polylines[4]]},
                 {name:"top-right", points:[
                     [parent.d/2+parent.other_points[0].x, parent.d/2-parent.other_points[0].y],
                     [parent.d/2+parent.points[0].x, parent.d/2-parent.points[0].y],
@@ -180,34 +222,36 @@ export class CenterHexagon extends React.Component{
                     [parent.d/2+parent.points[2].x, parent.d/2-parent.points[2].y],
                     [parent.d/2+parent.points[3].x, parent.d/2-parent.points[3].y],
                     [parent.d/2+parent.other_points[3].x, parent.d/2-parent.other_points[3].y]
-                ], relatedPolylines: [parent.other_polylines[2], parent.other_polylines[3]]},
-                {name:"bottom-left", points:[
-                    [parent.d/2+parent.other_points[3].x, parent.d/2-parent.other_points[3].y],
-                    [parent.d/2+parent.points[3].x, parent.d/2-parent.points[3].y],
-                    [parent.d/2+parent.points[4].x, parent.d/2-parent.points[4].y],
-                    [parent.d/2+parent.other_points[4].x, parent.d/2-parent.other_points[4].y]
-                ], relatedPolylines: [parent.other_polylines[3], parent.other_polylines[4]]},
-                {name:"middle-left", points:[
-                    [parent.d/2+parent.other_points[4].x, parent.d/2-parent.other_points[4].y],
-                    [parent.d/2+parent.points[4].x, parent.d/2-parent.points[4].y],
-                    [parent.d/2+parent.points[5].x, parent.d/2-parent.points[5].y],
-                    [parent.d/2+parent.other_points[5].x, parent.d/2-parent.other_points[5].y]
-                ], relatedPolylines: [parent.other_polylines[4], parent.other_polylines[5]]}
-                ,
-                {name:"top-left", points:[
-                    [parent.d/2+parent.other_points[5].x, parent.d/2-parent.other_points[5].y],
-                    [parent.d/2+parent.points[5].x, parent.d/2-parent.points[5].y],
-                    [parent.d/2+parent.points[0].x, parent.d/2-parent.points[0].y],
-                    [parent.d/2+parent.other_points[0].x, parent.d/2-parent.other_points[0].y]
-                ], relatedPolylines: [parent.other_polylines[5], parent.other_polylines[0]]}
+                ], relatedPolylines: [parent.other_polylines[2], parent.other_polylines[3]]}
             ];
+
+            parent.setState({init:true});
         }, 1500);
 
         this.upper_polyline.animate(1000, '>').rotate(360, this.d/2, this.d/2);
         this.lesser_polyline.animate(1000, '>').rotate(360, this.d/2, this.d/2);
 
+        this.bottomRight = {
+            x:(parent.d/2+parent.points[5].x)/4 + (parent.d/2+parent.points[0].x)/4 + (parent.d/2),
+            y:(parent.d/2+parent.points[5].y)/4 + (parent.d/2+parent.points[0].y)/4 + (parent.d/2)
+        };
+
+        this.topRight = this.rotate({x:0, y:this.a*1.3}, -30);
+        this.middleRight = this.rotate({x:this.topRight.x, y:this.topRight.y}, -60);
+        this.bottomRight = this.rotate({x:this.middleRight.x, y:this.middleRight.y}, -60);
+        this.bottomLeft = this.rotate({x:this.bottomRight.x, y:this.bottomRight.y}, -60);
+        this.middleLeft = this.rotate({x:this.bottomLeft.x, y:this.bottomLeft.y}, -60);
+        this.topLeft = this.rotate({x:this.middleLeft.x, y:this.middleLeft.y}, -60);
+        console.log("top left defined");
+
+        // let test = parent.draw.polyline([[this.d/2+this.topLeft.x, this.d/2-this.topLeft.y], [this.d/2, this.d/2]]);
+        // test.fill('none');
+        // test.stroke({ color: '#75aaff', width: 4, linecap: 'round', linejoin: 'round', dasharray: '1,5'});
+
         window.addEventListener("resize", this.updateDimensions);
         window.addEventListener("mousemove", this.mouseMoved);
+
+
     }
 
     showHoverContainer(loc){
@@ -277,12 +321,49 @@ export class CenterHexagon extends React.Component{
 
         if(this.hexagonNeighbours !== undefined){
             this.showPolylines([]);
-
+            this.updateNeighbours(-1);
             for(let i = 0; i < this.hexagonNeighbours.length; i++){
                 if(this.isInside([e.pageX - this.loc.left, e.pageY - this.loc.top], this.hexagonNeighbours[i].points)){
                     this.showPolylines(this.hexagonNeighbours[i].relatedPolylines);
+                    this.updateNeighbours(i);
                 }
             }
+        }
+    }
+
+    updateNeighbours(loc){
+        this.topRight = this.rotate({x:0, y:this.a*1.3}, -30);
+        this.middleRight = this.rotate({x:this.topRight.x, y:this.topRight.y}, -60);
+        this.bottomRight = this.rotate({x:this.middleRight.x, y:this.middleRight.y}, -60);
+        this.bottomLeft = this.rotate({x:this.bottomRight.x, y:this.bottomRight.y}, -60);
+        this.middleLeft = this.rotate({x:this.bottomLeft.x, y:this.bottomLeft.y}, -60);
+        this.topLeft = this.rotate({x:this.middleLeft.x, y:this.middleLeft.y}, -60);
+
+        switch(loc){
+            case CONTAINER_POSITIONS.TOP_LEFT:
+                this.topLeft = this.rotate({x:0, y:this.a*1.5}, -330);
+                this.setState({updateIt:!this.state.updateIt});
+                break;
+            case CONTAINER_POSITIONS.MIDDLE_LEFT:
+                this.middleLeft = this.rotate({x:0, y:this.a*1.5}, -270);
+                this.setState({updateIt:!this.state.updateIt});
+                break;
+            case CONTAINER_POSITIONS.BOTTOM_LEFT:
+                this.bottomLeft = this.rotate({x:0, y:this.a*1.5}, -210);
+                this.setState({updateIt:!this.state.updateIt});
+                break;
+            case CONTAINER_POSITIONS.TOP_RIGHT:
+                this.topRight = this.rotate({x:0, y:this.a*1.5}, -30);
+                this.setState({updateIt:!this.state.updateIt});
+                break;
+            case CONTAINER_POSITIONS.MIDDLE_RIGHT:
+                this.middleRight = this.rotate({x:0, y:this.a*1.5}, -90);
+                this.setState({updateIt:!this.state.updateIt});
+                break;
+            case CONTAINER_POSITIONS.BOTTOM_RIGHT:
+                this.bottomRight = this.rotate({x:0, y:this.a*1.5}, -150);
+                this.setState({updateIt:!this.state.updateIt});
+                break;
         }
     }
 
@@ -360,42 +441,42 @@ export class CenterHexagon extends React.Component{
             {x:(this.points[5].x-this.points[0].x)*2  , y: this.a}
         ];
 
-        this.hexagonNeighbours[0].points = [
+        this.hexagonNeighbours[3].points = [
             [this.d/2+this.other_points[0].x, this.d/2-this.other_points[0].y],
             [this.d/2+this.points[0].x, this.d/2-this.points[0].y],
             [this.d/2+this.points[1].x, this.d/2-this.points[1].y],
             [this.d/2+this.other_points[1].x, this.d/2-this.other_points[1].y]
         ];
 
-        this.hexagonNeighbours[1].points = [
+        this.hexagonNeighbours[4].points = [
             [this.d/2+this.other_points[1].x, this.d/2-this.other_points[1].y],
             [this.d/2+this.points[1].x, this.d/2-this.points[1].y],
             [this.d/2+this.points[2].x, this.d/2-this.points[2].y],
             [this.d/2+this.other_points[2].x, this.d/2-this.other_points[2].y]
         ];
 
-        this.hexagonNeighbours[2].points = [
+        this.hexagonNeighbours[5].points = [
             [this.d/2+this.other_points[2].x, this.d/2-this.other_points[2].y],
             [this.d/2+this.points[2].x, this.d/2-this.points[2].y],
             [this.d/2+this.points[3].x, this.d/2-this.points[3].y],
             [this.d/2+this.other_points[3].x, this.d/2-this.other_points[3].y]
         ];
 
-        this.hexagonNeighbours[3].points = [
+        this.hexagonNeighbours[2].points = [
             [this.d/2+this.other_points[3].x, this.d/2-this.other_points[3].y],
             [this.d/2+this.points[3].x, this.d/2-this.points[3].y],
             [this.d/2+this.points[4].x, this.d/2-this.points[4].y],
             [this.d/2+this.other_points[4].x, this.d/2-this.other_points[4].y]
         ];
 
-        this.hexagonNeighbours[4].points = [
+        this.hexagonNeighbours[1].points = [
             [this.d/2+this.other_points[4].x, this.d/2-this.other_points[4].y],
             [this.d/2+this.points[4].x, this.d/2-this.points[4].y],
             [this.d/2+this.points[5].x, this.d/2-this.points[5].y],
             [this.d/2+this.other_points[5].x, this.d/2-this.other_points[5].y]
         ];
 
-        this.hexagonNeighbours[5].points = [
+        this.hexagonNeighbours[0].points = [
             [this.d/2+this.other_points[5].x, this.d/2-this.other_points[5].y],
             [this.d/2+this.points[5].x, this.d/2-this.points[5].y],
             [this.d/2+this.points[0].x, this.d/2-this.points[0].y],
@@ -408,13 +489,73 @@ export class CenterHexagon extends React.Component{
 
         this.upper_polyline.plot([[this.d/2+this.points[0].x, this.d/2-this.points[0].y], [this.d/2+this.points[1].x, this.d/2-this.points[1].y], [this.d/2+this.points[2].x, this.d/2-this.points[2].y], [this.d/2+this.points[3].x, this.d/2-this.points[3].y]]);
         this.lesser_polyline.plot([[this.d/2+this.points[3].x, this.d/2-this.points[3].y], [this.d/2+this.points[4].x, this.d/2-this.points[4].y], [this.d/2+this.points[5].x, this.d/2-this.points[5].y], [this.d/2+this.points[0].x, this.d/2-this.points[0].y]]);
+
+        this.topRight = this.rotate({x:0, y:this.a*1.3}, -30);
+        this.middleRight = this.rotate({x:this.topRight.x, y:this.topRight.y}, -60);
+        this.bottomRight = this.rotate({x:this.middleRight.x, y:this.middleRight.y}, -60);
+        this.bottomLeft = this.rotate({x:this.bottomRight.x, y:this.bottomRight.y}, -60);
+        this.middleLeft = this.rotate({x:this.bottomLeft.x, y:this.bottomLeft.y}, -60);
+        this.topLeft = this.rotate({x:this.middleLeft.x, y:this.middleLeft.y}, -60);
+
+        this.setState({updateIt:!this.state.updateIt});
+    }
+
+    getStyle(loc){
+        this.loc = {
+            top:document.getElementById("center-hexagon").offsetTop,
+            left:document.getElementById("center-hexagon").offsetLeft
+        };
+
+        switch(loc){
+            case CONTAINER_POSITIONS.TOP_LEFT:
+                return {position:"absolute", left:this.d/2+this.topLeft.x, top:this.d/2-this.topLeft.y};
+            case CONTAINER_POSITIONS.MIDDLE_LEFT:
+                return {position:"absolute", left:this.d/2+this.middleLeft.x, top:this.d/2-this.middleLeft.y};
+            case CONTAINER_POSITIONS.BOTTOM_LEFT:
+                return {position:"absolute", left:this.d/2+this.bottomLeft.x, top:this.d/2-this.bottomLeft.y};
+            case CONTAINER_POSITIONS.TOP_RIGHT:
+                return {position:"absolute", left:this.d/2+this.topRight.x, top:this.d/2-this.topRight.y};
+            case CONTAINER_POSITIONS.MIDDLE_RIGHT:
+                return {position:"absolute", left:this.d/2+this.middleRight.x, top:this.d/2-this.middleRight.y};
+            case CONTAINER_POSITIONS.BOTTOM_RIGHT:
+                return {position:"absolute", left:this.d/2+this.bottomRight.x, top:this.d/2-this.bottomRight.y};
+        }
+
+    }
+
+    getNeighbours(){
+        this.neighbours = [];
+        for (const [key, value] of Object.entries(this.props.hexagon.getNeighbours())) {
+            if(value !== null){
+                switch(key){
+                    case "topLeft": this.neighbours.push({loc:CONTAINER_POSITIONS.TOP_LEFT, neighbour:value}); break;
+                    case "middleLeft": this.neighbours.push({loc:CONTAINER_POSITIONS.MIDDLE_LEFT, neighbour:value}); break;
+                    case "bottomLeft": this.neighbours.push({loc:CONTAINER_POSITIONS.BOTTOM_LEFT, neighbour:value}); break;
+                    case "topRight": this.neighbours.push({loc:CONTAINER_POSITIONS.TOP_RIGHT, neighbour:value}); break;
+                    case "middleRight": this.neighbours.push({loc:CONTAINER_POSITIONS.MIDDLE_RIGHT, neighbour:value}); break;
+                    case "bottomRight": this.neighbours.push({loc:CONTAINER_POSITIONS.BOTTOM_RIGHT, neighbour:value}); break;
+                }
+
+            }
+        }
+
+        let parent = this;
+        return <div>
+            {this.neighbours.map(function(item, key){
+                return <img key={key} className="center-hexagon-logo-tiny" style={parent.getStyle(item.loc)} src={parent.getHaiveTypeImage(item.neighbour.getType())}></img>
+            })}
+        </div>
     }
 
     render(){
         return(
             <div id="center-hexagon" className="center-hexagon">
                 <div id="center-hexagon-hex"></div>
-                    <img className="animated fadeIn center-hexagon-logo" src={logo}></img>
+                <img className="animated fadeIn center-hexagon-logo" src={this.logo}></img>
+                {this.state.init === true ?
+                    this.getNeighbours()
+                : ""}
+
             </div>
         );
     }

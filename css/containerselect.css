@@ -46,7 +46,7 @@
     top:50%;
     left:50%;
     transform: translate(-50%, -50%);
-    width: 25%;
+    width: 50%;
     transition: all 1s;
 }
 
@@ -71,7 +71,23 @@
     left:50%;
     transform: translate(-50%, -50%);
     width: 50%;
-    max-width: 135px;
+    max-width: 300px;
+}
+
+.center-hexagon-logo-tiny{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width: 25%;
+    max-width: 150px;
+    transition: all ease 0.3s;
+    animation: fade 1s forwards;
+}
+
+@keyframes fade {
+    from {opacity: 0}
+    to {opacity: 0.2}
 }
 
 @font-face {
