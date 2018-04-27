@@ -11,10 +11,10 @@
 
 .center-hexagon{
     position: relative;
-    width:50vw;
-    height: 50vw;
-    left: calc(50% - 25vw);
-    top: calc(50% - 25vw);
+    width: 40vw;
+    height: 40vw;
+    left: calc(50% - 20vw);
+    top: calc(50% - 20vw);
 }
 
 .initial-button-wrapper{

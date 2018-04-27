@@ -1,8 +1,7 @@
 import React from 'react';
 import {CONTAINER_POSITIONS, HAIVE_TYPES} from "../../../const/structure";
-const dispenser = require('../../../images/haive_types/dispenser.png');
-const freezer = require('../../../images/haive_types/freezer.png');
-const centrifuge = require('../../../images/haive_types/centrifuge.png');
+const gi = require('../../../const/globalImages').gi;
+const gv = require('../../../const/global');
 const SVG = require('svg.js');
 
 var hexagon;
@@ -10,13 +9,12 @@ var hexagon;
 export class ContainerSelect extends React.Component{
     constructor(props){
         super(props);
-        console.log(this.props.focusedHexagon);
     }
 
     render(){
         return(
             <div className="container-select-background">
-                <CenterHexagon hexagon={this.props.focusedHexagon}/>
+                <CenterHexagon hexagon={gv.currentlySelectedHaive}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.TOP_LEFT}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_LEFT}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_LEFT}/>
@@ -125,11 +123,11 @@ export class CenterHexagon extends React.Component{
     getHaiveTypeImage(type){
         switch(type){
             case HAIVE_TYPES.DISPENSER:
-                return dispenser;
+                return gi.getImage('DISPENSER_DEPTH');
             case HAIVE_TYPES.CENTRIFUGE:
-                return centrifuge;
+                return gi.getImage('CENTRIFUGE_DEPTH');
             case HAIVE_TYPES.FREEZER:
-                return freezer;
+                return gi.getImage('FREEZER_DEPTH');
         }
     }
 
@@ -314,9 +312,10 @@ export class CenterHexagon extends React.Component{
     }
 
     mouseMoved(e){
+        let rect = document.getElementById("center-hexagon").getBoundingClientRect();
         this.loc = {
-            top:document.getElementById("center-hexagon").offsetTop,
-            left:document.getElementById("center-hexagon").offsetLeft
+            top:rect.top,
+            left:rect.left
         };
 
         if(this.hexagonNeighbours !== undefined){

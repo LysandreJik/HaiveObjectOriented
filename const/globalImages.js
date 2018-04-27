@@ -127,3 +127,7 @@ gi.addImage("BOTTOM_RIGHT", "images/protocol_design_hexagon_configuration/bottom
 
 gi.addImage("CANVAS_BACKGROUND", "images/canvas_background.png");
 gi.addImage("EMPTY", "images/empty.png");
+
+gi.addImage("CENTRIFUGE_DEPTH", "images/haive_types/centrifuge.png");
+gi.addImage("FREEZER_DEPTH", "images/haive_types/freezer.png");
+gi.addImage("DISPENSER_DEPTH", "images/haive_types/dispenser.png");

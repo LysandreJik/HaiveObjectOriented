@@ -31,13 +31,13 @@ import { AddLiquids } from '../view/protocolconceptionview';
 import { ProtocolDesign } from '../view/protocoldesignview';
 
 import React from 'react';
-import {ContainerSelect} from "./containerchoice/containerview";
+import {ContainerSelect} from "./containerselect/ContainerSelect";
 
 const gv = require('../../const/global');
 
 let containerSelectController = new ContainerSelectController();
 let containerSelectModel = new ContainerSelectModel({controller:containerSelectController});
-let containerSelect = <div className="myassetsmaincontent" id={"myassetsmaincontent"}><ContainerSelect model={containerSelectModel}/></div>;
+let containerSelect = <div className="myassetsmaincontent" id={"myassetsmaincontent"}><ContainerSelect/></div>;
 
 let protocolConceptionController = new ProtocolConceptionController();
 let protocolConceptionModel = new ProtocolConceptionModel({controller:protocolConceptionController});
