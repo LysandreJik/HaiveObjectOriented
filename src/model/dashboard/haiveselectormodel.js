@@ -1,3 +1,5 @@
+import {CONTAINER_POSITIONS} from "../../../const/structure";
+
 const timeline = require('../../../const/global').timeline;
 const gv = require('../../../const/global');
 
@@ -176,31 +178,70 @@ export class HaiveSelectorModel{
     }
 
     updateState(description){
+        this.updateNeighbours();
         timeline.updateState(this.state, description);
+    }
+
+    updateNeighbours(){
+        console.log("Current dash haives : ");
+        for(let i = 0; i < this.getDashHaives().length; i++){
+            this.updateHaiveNeighbours(this.getDashHaives()[i]);
+        }
     }
 
     getNeighbours(x, y){
         if(y % 2 == 0){
-            let tileLeft = this.getTileHaive(x-1, y);
-            let tileRight = this.getTileHaive(x+1, y);
-            let tileBottomLeft = this.getTileHaive(x-1, y+1);
-            let tileBottomRight = this.getTileHaive(x, y+1);
-            let tileTopLeft = this.getTileHaive(x-1, y-1);
-            let tileTopRight = this.getTileHaive(x, y-1);
+            let tileLeft = this.getDashHaive(x-1, y);
+            let tileRight = this.getDashHaive(x+1, y);
+            let tileBottomLeft = this.getDashHaive(x-1, y+1);
+            let tileBottomRight = this.getDashHaive(x, y+1);
+            let tileTopLeft = this.getDashHaive(x-1, y-1);
+            let tileTopRight = this.getDashHaive(x, y-1);
             //console.log("Result", "L "+tileLeft, "R "+tileRight, "BL "+tileBottomLeft, "BR "+tileBottomRight, "TL "+tileTopLeft, "TR "+tileTopRight);
 
             return [tileLeft, tileRight, tileBottomLeft, tileBottomRight, tileTopLeft, tileTopRight];
         }else{
-            let tileLeft = this.getTileHaive(x-1, y);
-            let tileRight = this.getTileHaive(x+1, y);
-            let tileBottomLeft = this.getTileHaive(x, y+1);
-            let tileBottomRight = this.getTileHaive(x+1, y+1);
-            let tileTopLeft = this.getTileHaive(x, y-1);
-            let tileTopRight = this.getTileHaive(x+1, y-1);
+            let tileLeft = this.getDashHaive(x-1, y);
+            let tileRight = this.getDashHaive(x+1, y);
+            let tileBottomLeft = this.getDashHaive(x, y+1);
+            let tileBottomRight = this.getDashHaive(x+1, y+1);
+            let tileTopLeft = this.getDashHaive(x, y-1);
+            let tileTopRight = this.getDashHaive(x+1, y-1);
             //console.log("Result", "L "+tileLeft, "R "+tileRight, "BL "+tileBottomLeft, "BR "+tileBottomRight, "TL "+tileTopLeft, "TR "+tileTopRight);
 
             return [tileLeft, tileRight, tileBottomLeft, tileBottomRight, tileTopLeft, tileTopRight];
         }
+    }
+
+    updateHaiveNeighbours(haive){
+        let x = haive.getX();
+        let y = haive.getY();
+
+        let middleLeft, middleRight, topLeft, topRight, bottomLeft, bottomRight;
+
+        if(y % 2 == 0){
+            middleLeft = this.getDashHaive(x-1, y);
+            middleRight = this.getDashHaive(x+1, y);
+            bottomLeft = this.getDashHaive(x-1, y+1);
+            bottomRight = this.getDashHaive(x, y+1);
+            topLeft = this.getDashHaive(x-1, y-1);
+            topRight = this.getDashHaive(x, y-1);
+        }else{
+            middleLeft = this.getDashHaive(x-1, y);
+            middleRight = this.getDashHaive(x+1, y);
+            bottomLeft = this.getDashHaive(x, y+1);
+            bottomRight = this.getDashHaive(x+1, y+1);
+            topLeft = this.getDashHaive(x, y-1);
+            topRight = this.getDashHaive(x+1, y-1);
+        }
+
+        middleLeft !== undefined ? haive.setNeighbour(middleLeft, CONTAINER_POSITIONS.MIDDLE_LEFT) : "";
+        middleRight !== undefined ? haive.setNeighbour(middleRight, CONTAINER_POSITIONS.MIDDLE_RIGHT) : "";
+        topLeft !== undefined ? haive.setNeighbour(topLeft, CONTAINER_POSITIONS.TOP_LEFT) : "";
+        topRight !== undefined ? haive.setNeighbour(topRight, CONTAINER_POSITIONS.TOP_RIGHT) : "";
+        bottomLeft !== undefined ? haive.setNeighbour(bottomLeft, CONTAINER_POSITIONS.BOTTOM_LEFT) : "";
+        bottomRight !== undefined ? haive.setNeighbour(bottomRight, CONTAINER_POSITIONS.BOTTOM_RIGHT) : "";
+
     }
     
     addStoreHaive(haive){
