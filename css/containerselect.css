@@ -1,0 +1,76 @@
+.container-select-background{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: #4B4F58;
+    transition: all 1s;
+}
+
+.center-hexagon{
+    position: relative;
+    width:30vw;
+    height: 30vw;
+    left: calc(50% - 15vw);
+    top: calc(50% - 15vw);
+}
+
+.initial-button-wrapper{
+    position: absolute;
+    font-family: "Uni";
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 3vw;
+    transition: all 1s;
+}
+
+@media screen and (min-width: 1200px) {
+    .initial-button-wrapper {
+        font-size: 36px;
+    }
+}
+
+.initial-button-text{
+    position: absolute;
+    top:50%;
+    transform: translate(-50%, -50%);
+}
+
+.center-hexagon-molcure-icon{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    transition: all 1s;
+}
+
+.single-container{
+    max-width: 300px;
+    width:20vw;
+    height:20vh;
+    text-align: center;
+    background-color: #5B5F68;
+}
+
+.single-container-svg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.center-hexagon-logo{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    max-width: 135px;
+}
+
+@font-face {
+    font-family: "Uni";
+    src: url("../fonts/uni/Uni Sans Thin.otf");
+}
