@@ -108,7 +108,7 @@ export class CenterHexagon extends React.Component{
         };
 
         let d = this.dimensions.height;
-        let a = d/2;
+        let a = d/4;
         let offset = 3;
 
         this.draw = SVG('center-hexagon-hex').size(this.dimensions.width, this.dimensions.height);
@@ -116,23 +116,46 @@ export class CenterHexagon extends React.Component{
         let point = {x:0, y:a-offset};
         let points = [point, this.rotate(point, -60), this.rotate(point, -60*2), this.rotate(point, -60*3), this.rotate(point, -60*4), this.rotate(point, -60*5)];
 
-        this.upper_polyline = this.draw.polyline([[a+point.x, a-point.y]]);
+        this.upper_polyline = this.draw.polyline([[d/2+point.x, d/2-point.y]]);
         this.upper_polyline.fill('none');
         this.upper_polyline.stroke({ color: '#75aaff', width: 4, linecap: 'round', linejoin: 'round'});
-        this.upper_polyline.animate(200, '>').plot([[a+points[0].x, a-points[0].y], [a+points[1].x, a-points[1].y]]);
-        this.upper_polyline.animate(200, '>').plot([[a+points[0].x, a-points[0].y], [a+points[1].x, a-points[1].y], [a+points[2].x, a-points[2].y]]);
-        this.upper_polyline.animate(200, '>').plot([[a+points[0].x, a-points[0].y], [a+points[1].x, a-points[1].y], [a+points[2].x, a-points[2].y], [a+points[3].x, a-points[3].y]]);
+        this.upper_polyline.animate(200, '>').plot([[d/2+points[0].x, d/2-points[0].y], [d/2+points[1].x, d/2-points[1].y]]);
+        this.upper_polyline.animate(200, '>').plot([[d/2+points[0].x, d/2-points[0].y], [d/2+points[1].x, d/2-points[1].y], [d/2+points[2].x, d/2-points[2].y]]);
+        this.upper_polyline.animate(200, '>').plot([[d/2+points[0].x, d/2-points[0].y], [d/2+points[1].x, d/2-points[1].y], [d/2+points[2].x, d/2-points[2].y], [d/2+points[3].x, d/2-points[3].y]]);
 
 
-        this.lesser_polyline = this.draw.polyline([[a+points[3].x, a-points[3].y]]);
+        this.lesser_polyline = this.draw.polyline([[d/2+points[3].x, d/2-points[3].y]]);
         this.lesser_polyline.fill('none');
         this.lesser_polyline.stroke({ color: '#75aaff', width: 4, linecap: 'round', linejoin: 'round'});
-        this.lesser_polyline.animate(200, '>').plot([[a+points[3].x, a-points[3].y], [a+points[4].x, a-points[4].y]]);
-        this.lesser_polyline.animate(200, '>').plot([[a+points[3].x, a-points[3].y], [a+points[4].x, a-points[4].y], [a+points[5].x, a-points[5].y]]);
-        this.lesser_polyline.animate(200, '>').plot([[a+points[3].x, a-points[3].y], [a+points[4].x, a-points[4].y], [a+points[5].x, a-points[5].y], [a+points[0].x, a-points[0].y]]);
+        this.lesser_polyline.animate(200, '>').plot([[d/2+points[3].x, d/2-points[3].y], [d/2+points[4].x, d/2-points[4].y]]);
+        this.lesser_polyline.animate(200, '>').plot([[d/2+points[3].x, d/2-points[3].y], [d/2+points[4].x, d/2-points[4].y], [d/2+points[5].x, d/2-points[5].y]]);
+        this.lesser_polyline.animate(200, '>').plot([[d/2+points[3].x, d/2-points[3].y], [d/2+points[4].x, d/2-points[4].y], [d/2+points[5].x, d/2-points[5].y], [d/2+points[0].x, d/2-points[0].y]]);
 
-        this.upper_polyline.animate(1000, '>').rotate(360, a, a);
-        this.lesser_polyline.animate(1000, '>').rotate(360, a, a);
+        this.other_points = [
+            {x: 0, y: a*2},
+            {x: points[1].x*2  , y: a},
+            {x: points[2].x*2  , y: a-d/2},
+            {x: 0, y: -a*2},
+            {x:(points[5].x-points[0].x)*2  , y: a-d/2},
+            {x:(points[5].x-points[0].x)*2  , y: a}
+        ];
+
+        this.other_polylines = [];
+
+        let parent = this;
+        setTimeout(function(){
+            for(let i = 0; i < parent.other_points.length; i++){
+                let other_polyline = parent.draw.polyline([[d/2+points[i].x, d/2-points[i].y]]);
+                other_polyline.fill('none');
+                other_polyline.stroke({ color: '#75aaff', width: 4, linecap: 'round', linejoin: 'round'});
+                other_polyline.animate(200, '>').plot([[d/2+points[i].x, d/2-points[i].y], [d/2+parent.other_points[i].x, d/2-parent.other_points[i].y]]);
+                parent.other_polylines.push(other_polyline);
+            }
+        }, 1500);
+
+
+        this.upper_polyline.animate(1000, '>').rotate(360, d/2, d/2);
+        this.lesser_polyline.animate(1000, '>').rotate(360, d/2, d/2);
 
         window.addEventListener("resize", this.updateDimensions);
     }
