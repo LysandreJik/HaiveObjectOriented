@@ -8,6 +8,11 @@ import State from "../src/structure/timeline/State";
 import PipetteTipContainer from "../src/structure/containers/PipetteTipContainer";
 import LiquidContainer from "../src/structure/containers/LiquidContainer";
 
+if(typeof jQuery == 'undefined'){
+    document.write('<script type="text/javascript" src="../js/jquery.min.js"></'+'script>');
+}
+
+
 export var imageLoad = 0;
 export var loadingScreen;
 export var loginDone = true;
@@ -186,7 +191,6 @@ export var protocolDesignBlueprintcontentView;
 export var mainApp;
 export var mainAppController;
 
-export var currentlySelectedHaiveID;
 export var currentlySelectedHaive;
 
 export var pos_middle_left = [0.3,0.5];

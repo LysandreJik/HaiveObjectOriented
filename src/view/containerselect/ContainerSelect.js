@@ -1,6 +1,7 @@
 import React from 'react';
 import {CONTAINER_POSITIONS, HAIVE_TYPES} from "../../../const/structure";
 import {ContainerSelectController} from "../../controller/containerchoice/ContainerSelectController";
+import {SingleContainers} from "./SingleContainer";
 const gi = require('../../../const/globalImages').gi;
 const gv = require('../../../const/global');
 const SVG = require('svg.js');
@@ -15,102 +16,23 @@ export class ContainerSelect extends React.Component{
         new ContainerSelectController();
     }
 
+
     render(){
         return(
             <div className="container-select-background">
                 <CenterHexagon hexagon={this.state.haive}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.TOP_LEFT}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_LEFT}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_LEFT}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.TOP_RIGHT}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_RIGHT}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_RIGHT}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.TOP_LEFT} hexagon={hexagon}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_LEFT} hexagon={hexagon}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_LEFT} hexagon={hexagon}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.TOP_RIGHT} hexagon={hexagon}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_RIGHT} hexagon={hexagon}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_RIGHT} hexagon={hexagon}/>
             </div>
         );
     }
 }
 
-export class SingleContainers extends React.Component{
-    constructor(props){
-        super(props);
-        if(this.props.loc === undefined){
-            this.style = {position:"absolute", top:"100px", left:"100px"};
-        }else{
-            switch(this.props.loc){
-                case CONTAINER_POSITIONS.TOP_LEFT:
-                    this.style = {position:"absolute", top:"10%", left:"2%"};
-                    break;
-                case CONTAINER_POSITIONS.MIDDLE_LEFT:
-                    this.style = {position:"absolute", top:"40%", left:"2%"};
-                    break;
-                case CONTAINER_POSITIONS.BOTTOM_LEFT:
-                    this.style = {position:"absolute", top:"70%", left:"2%"};
-                    break;
-                case CONTAINER_POSITIONS.TOP_RIGHT:
-                    this.style = {position:"absolute", top:"10%", right:"2%"};
-                    break;
-                case CONTAINER_POSITIONS.MIDDLE_RIGHT:
-                    this.style = {position:"absolute", top:"40%", right:"2%"};
-                    break;
-                case CONTAINER_POSITIONS.BOTTOM_RIGHT:
-                    this.style = {position:"absolute", top:"70%", right:"2%"};
-                    break;
-                default:
-                    this.style = {position:"absolute", top:"100px", left:"100px"};
-                    break;
-            }
-        }
 
-        this.updateDimensions = this.updateDimensions.bind(this);
-    }
-
-    componentDidMount(){
-        this.dimensions = {
-            height:document.getElementById('single-container-svg-'+this.props.loc).clientHeight,
-            width:document.getElementById('single-container-svg-'+this.props.loc).clientWidth
-        };
-        this.draw = SVG('single-container-svg-'+this.props.loc).size(this.dimensions.width, this.dimensions.height);
-        this.polyline = this.draw.polyline([[2, 2]]);
-        this.polyline.fill('none');
-        this.polyline.stroke({ color: '#75aaff', width: 4, linecap: 'round', linejoin: 'round'});
-        this.polyline.animate(200, '>').plot([[2, 2], [this.dimensions.width-2, 2]]);
-        this.polyline.animate(200, '>').plot([[2, 2], [this.dimensions.width-2, 2], [this.dimensions.width-2, this.dimensions.height-2]]);
-        this.polyline.animate(200, '>').plot([[2, 2], [this.dimensions.width-2, 2], [this.dimensions.width-2, this.dimensions.height-2], [2, this.dimensions.height-2]]);
-        this.polyline.animate(200, '>').plot([[2, 2], [this.dimensions.width-2, 2], [this.dimensions.width-2, this.dimensions.height-2], [2, this.dimensions.height-2], [2, 2]]);
-
-
-        window.addEventListener("resize", this.updateDimensions);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.updateDimensions);
-    }
-
-
-    updateDimensions(){
-        this.dimensions = {
-            height:document.getElementById('single-container-svg-'+this.props.loc).clientHeight,
-            width:document.getElementById('single-container-svg-'+this.props.loc).clientWidth
-        };
-        this.draw.size(this.dimensions.width, this.dimensions.height);
-        this.polyline.plot([[2, 2], [this.dimensions.width-2, 2], [this.dimensions.width-2, this.dimensions.height-2], [2, this.dimensions.height-2], [2, 2]]);
-    }
-
-    render(){
-        return(
-            <div
-                id={"single-container"}
-                className="single-container"
-                style={this.style}
-                onMouseOver={hexagon === undefined  ? function(){console.log("Entered !")} : () => hexagon.showHoverContainer(this.props.loc)}
-                onMouseLeave={hexagon === undefined  ? function(){console.log("Left !")} : () => hexagon.showHoverContainer()}
-            >
-                <div id={'single-container-svg-'+this.props.loc} className={"single-container-svg"}></div>
-                <div className="initial-button-wrapper"><span className="initial-button-text">SELECT CONTAINER</span></div>
-            </div>
-        );
-    }
-}
 
 export class CenterHexagon extends React.Component{
     constructor(props) {
@@ -120,6 +42,7 @@ export class CenterHexagon extends React.Component{
         this.mouseMoved = this.mouseMoved.bind(this);
         this.mouseClicked = this.mouseClicked.bind(this);
         hexagon = this;
+        gv.containerSelectView.setState({update:true});
         console.log(this.props.hexagon.getNeighbours());
         this.logo = this.getHaiveTypeImage(this.props.hexagon.getType());
 

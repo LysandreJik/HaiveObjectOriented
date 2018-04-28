@@ -88,6 +88,21 @@ export const CONTAINER_SUBTYPES = {
     MP24_MICRO_PLATE: {name: "24 micro plate", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER, width: 4, height: 6}
 };
 
+export function getContainersByTypeAndSize(type, size){
+    let containers = [];
+    for (const [key, value] of Object.entries(CONTAINER_SUBTYPES)) {
+        console.log(key, value);
+        console.log(value.containerType, type);
+        console.log(value.width, size.width);
+        console.log(value.height, size.height);
+        if(value.containerType === type && value.width === size.width && value.height === size.height){
+            containers.push(value);
+        }
+    }
+
+    return containers;
+}
+
 export const HAIVE_TYPES = {
     DISPENSER: "Dispenser",
     FREEZER: "Freezer",

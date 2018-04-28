@@ -131,3 +131,5 @@ gi.addImage("EMPTY", "images/empty.png");
 gi.addImage("CENTRIFUGE_DEPTH", "images/haive_types/centrifuge.png");
 gi.addImage("FREEZER_DEPTH", "images/haive_types/freezer.png");
 gi.addImage("DISPENSER_DEPTH", "images/haive_types/dispenser.png");
+
+gi.addImage("LIQUID", "images/haive_types/liquid.png");
