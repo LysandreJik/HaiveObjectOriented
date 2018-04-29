@@ -20,6 +20,18 @@ class GlobalImages{
 		return "404 : "+name;
 	}
 
+	getContainerThumb(size){
+	    if(size.width === 2 && size.height === 3){
+	        return this.getImage("2_3");
+        }else if(size.width === 3 && size.height === 5){
+            return this.getImage("3_5");
+        }else if(size.width === 4 && size.height === 5){
+            return this.getImage("4_5");
+        }else if(size.width === 8 && size.height === 12){
+            return this.getImage("8_12");
+        }
+    }
+
 	loadImages(){
 		this.counter = 0;
 		for (var image in this.images) {

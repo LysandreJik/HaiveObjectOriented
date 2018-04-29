@@ -28,7 +28,8 @@ export var containersAvailable = [
     new PipetteTipContainer({subType:CONTAINER_SUBTYPES.P200_NORMAL_CHIP}),
     new PipetteTipContainer({subType:CONTAINER_SUBTYPES.P1000_NORMAL_CHIP}),
     new LiquidContainer({subType:CONTAINER_SUBTYPES.ST15_SCREW_TUBES}),
-    new LiquidContainer({subType:CONTAINER_SUBTYPES.FS6_FALCON_STAND})
+    new LiquidContainer({subType:CONTAINER_SUBTYPES.FS6_FALCON_STAND}),
+    new LiquidContainer({subType:CONTAINER_SUBTYPES.MB_20_MAGNETIC_BEADS})
 ];
 
 let ownedHaives = [

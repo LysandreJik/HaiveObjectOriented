@@ -88,9 +88,23 @@ export const CONTAINER_SUBTYPES = {
     MP24_MICRO_PLATE: {name: "24 micro plate", containerType: CONTAINER_TYPES.TEST_TUBE_CONTAINER, width: 4, height: 6}
 };
 
+export const TYPE_STRING_TO_ID = {
+    "Tip container": 0,
+    "Liquid container": 1,
+};
+
+export const SIZE_STRING_TO_ID = {
+    "2 by 3": {width: 2, height: 3},
+    "3 by 5": {width: 3, height: 5},
+    "4 by 5": {width: 4, height: 5},
+    "8 by 12": {width: 8, height: 12},
+};
+
 export function getContainersByTypeAndSize(type, size){
+    console.log(type, size);
     let containers = [];
     for (const [key, value] of Object.entries(CONTAINER_SUBTYPES)) {
+        console.log(value.containerType, value.width, value.height)
         if(value.containerType === type && value.width === size.width && value.height === size.height){
             containers.push(value);
         }
