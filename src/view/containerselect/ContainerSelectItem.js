@@ -133,7 +133,8 @@ export class ContainerSelectItem extends React.Component{
             <div className="container-select-item-container-2 large-comp">
                 <div className={"back-button"} onClick={this.switchToPreviousState}><span className="back-button-text">GO BACK</span></div>
                 <div className="container-select-item-smaller-container-2-1">
-                    {getContainersByTypeAndSize(TYPE_STRING_TO_ID[this.state.container], SIZE_STRING_TO_ID[this.state.size]).map(function(item, key){
+                    {availableContainers.getAvailableContainersTypesFromSizeAndSupertype(SIZE_STRING_TO_ID[this.state.size],  TYPE_STRING_TO_ID[this.state.container]).map(function(item, key){
+
                         return <button key={key} className="text-desc animated fadeInUp" onClick={() => containerSelectController.placeContainer(parent.props.loc, item)}>{item.name}</button>
                     })}
                 </div>

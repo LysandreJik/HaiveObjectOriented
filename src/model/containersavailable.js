@@ -70,7 +70,7 @@ export class ContainersAvailable{
         let types = [];
         let containers = this.getAvailableContainersPerSupertypeAndSize(superType, size);
         for(let i = 0; i < containers.length; i++){
-            let type = containers[i].getContainerSubType().name;
+            let type = containers[i].getContainerSubType();
             let found = false;
             for(let j = 0; j < types.length; j++){
                 if(type === types[j]){
