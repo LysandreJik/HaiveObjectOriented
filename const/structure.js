@@ -91,10 +91,6 @@ export const CONTAINER_SUBTYPES = {
 export function getContainersByTypeAndSize(type, size){
     let containers = [];
     for (const [key, value] of Object.entries(CONTAINER_SUBTYPES)) {
-        console.log(key, value);
-        console.log(value.containerType, type);
-        console.log(value.width, size.width);
-        console.log(value.height, size.height);
         if(value.containerType === type && value.width === size.width && value.height === size.height){
             containers.push(value);
         }

@@ -71,6 +71,13 @@
     right: 0;
 }
 
+.container-select-item-smaller-container-2-1{
+    position: absolute;
+    width: 40vh;
+    height: 100%;
+    right: 0;
+}
+
 .container-select-item-smaller-container-1-2{
     position: absolute;
     width: 20vh;
@@ -133,6 +140,27 @@
     color:#5B5F68;
     transition: 0.5s all;
     font-family: Uni;
+}
+
+.text-desc{
+    margin: 0 5px 5px 0;
+    position: relative;
+    top: 5px;
+    left:5px;
+    width: calc(100% - 10px);
+    text-align: center;
+    font-family: Uni;
+    border: 0;
+    font-size: 15px;
+    color: white;
+    padding: 5px;
+    transition: 0.2s all;
+    background-color: #6B6F78;
+}
+
+.text-desc:hover{
+    color: #95CAFF;
+    font-size: 120%;
 }
 
 .back-button{

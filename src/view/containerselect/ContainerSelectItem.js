@@ -19,12 +19,13 @@ let AVAILABLE_SELECTIONS = {
     LIQUID_CONTAINER: CONTAINER_TYPES.TEST_TUBE_CONTAINER,
     S2_3: {width: 2, height: 3},
     S3_5: {width: 3, height: 5},
-    S4_5: {width: 4, height: 5}
+    S4_5: {width: 4, height: 5},
+    S8_12: {width: 8, height: 12}
 };
 
 let STATES = [
     [AVAILABLE_SELECTIONS.TIP_CONTAINER, AVAILABLE_SELECTIONS.LIQUID_CONTAINER],
-    [AVAILABLE_SELECTIONS.S2_3, AVAILABLE_SELECTIONS.S3_5, AVAILABLE_SELECTIONS.S4_5]
+    [[AVAILABLE_SELECTIONS.S8_12], [AVAILABLE_SELECTIONS.S2_3, AVAILABLE_SELECTIONS.S3_5, AVAILABLE_SELECTIONS.S4_5]]
 ];
 
 export class ContainerSelectItem extends React.Component{
@@ -71,8 +72,16 @@ export class ContainerSelectItem extends React.Component{
             }
 
         }else if(this.state.current === TYPES.TYPE_SELECTION){
-            console.log(this.state);
-            console.log(getContainersByTypeAndSize(this.state.container, this.state.size));
+            return(
+                <div className="container-select-item-container-2 large-comp">
+                    <div className={"back-button"} onClick={this.switchToPreviousState}><span className="back-button-text">GO BACK</span></div>
+                    <div className="container-select-item-smaller-container-2-1">
+                        {getContainersByTypeAndSize(this.state.container, this.state.size).map(function(item, key){
+                            return <button key={key} className="text-desc animated fadeInUp">{item.name}</button>
+                        })}
+                    </div>
+                </div>
+            );
         }
     }
 
@@ -81,13 +90,15 @@ export class ContainerSelectItem extends React.Component{
         if(this.state.current === TYPES.SUPERTYPE_SELECTION){
             this.setState({current: TYPES.SIZE_SELECTION, container: STATES[this.state.current][index]});
         }else if(this.state.current === TYPES.SIZE_SELECTION){
-            this.setState({current: TYPES.TYPE_SELECTION, size:STATES[this.state.current][index]})
+            this.setState({current: TYPES.TYPE_SELECTION, size:STATES[this.state.current][this.state.container][index]})
         }
     }
 
     switchToPreviousState(){
         if(this.state.current === TYPES.SIZE_SELECTION){
             this.setState({current: TYPES.SUPERTYPE_SELECTION});
+        }if(this.state.current === TYPES.TYPE_SELECTION){
+            this.setState({current: TYPES.SIZE_SELECTION});
         }
     }
 
