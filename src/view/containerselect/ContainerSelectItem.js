@@ -1,5 +1,6 @@
 import React from 'react';
 import {CONTAINER_TYPES, getContainersByTypeAndSize} from "../../../const/structure";
+import {availableContainers, containerSelectController} from "../../../const/global";
 const gi = require('../../../const/globalImages').gi;
 
 var dispenser_depth = gi.getImage("DISPENSER_DEPTH");
@@ -35,9 +36,21 @@ export class ContainerSelectItem extends React.Component{
         this.state = {current: TYPES.SUPERTYPE_SELECTION};
 
         this.switchToPreviousState  =this .switchToPreviousState.bind(this);
+
+        let superTypes = availableContainers.getAvailableContainersSubtypes();
+        console.log(superTypes);
+
+        for(let i = 0; i < superTypes.length; i++){
+            let av = availableContainers.getAvailableContainersSizesFromSupertypes(superTypes[i]);
+            console.log("    ", av);
+            for(let j = 0; j < av.length; j++){
+                console.log("        ", availableContainers.getAvailableContainersTypesFromSizeAndSupertype(av[j], superTypes[i]));
+            }
+        }
     }
 
     getCurrentState(){
+        let parent = this;
         if(this.state.current === TYPES.SUPERTYPE_SELECTION){
             return(
                 <div className="container-select-item-container-2">
@@ -78,7 +91,7 @@ export class ContainerSelectItem extends React.Component{
                     <div className={"back-button"} onClick={this.switchToPreviousState}><span className="back-button-text">GO BACK</span></div>
                     <div className="container-select-item-smaller-container-2-1">
                         {getContainersByTypeAndSize(this.state.container, this.state.size).map(function(item, key){
-                            return <button key={key} className="text-desc animated fadeInUp">{item.name}</button>
+                            return <button key={key} className="text-desc animated fadeInUp" onClick={() => containerSelectController.placeContainer(parent.props.loc, item)}>{item.name}</button>
                         })}
                     </div>
                 </div>

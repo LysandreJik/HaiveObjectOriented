@@ -13,7 +13,7 @@ export class ContainerSelect extends React.Component{
     constructor(props){
         super(props);
         gv.containerSelectView = this;
-        this.state = {haive: gv.currentlySelectedHaive, choose: false};
+        this.state = {haive: gv.currentlySelectedHaive, choose: false, loc: -1};
         new ContainerSelectController();
     }
 
@@ -29,7 +29,7 @@ export class ContainerSelect extends React.Component{
                 <SingleContainers loc={CONTAINER_POSITIONS.TOP_RIGHT} hexagon={hexagon}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_RIGHT} hexagon={hexagon}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_RIGHT} hexagon={hexagon}/>
-                {this.state.choose ? <ContainerSelectItem cancel={gv.containerSelectController.cancelSelection}/> : "" }
+                {this.state.choose ? <ContainerSelectItem cancel={gv.containerSelectController.cancelSelection} loc={this.state.loc}/> : "" }
             </div>
         );
     }

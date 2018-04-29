@@ -40,14 +40,18 @@ export class ContainerSelectController{
     }
 
     selectContainer(loc){
-        gv.containerSelectView.setState({choose: true});
+        gv.containerSelectView.setState({choose: true, loc: loc});
     }
 
     cancelSelection(){
-        gv.containerSelectView.setState({choose: false});
+        gv.containerSelectView.setState({choose: false, loc: -1});
     }
 
     placeContainer(loc, container){
-
+        console.log("Placing ", container, "on ", loc);
+        console.log(gv.currentlySelectedHaive.getContainers());
+        gv.currentlySelectedHaive.setContainer(container, loc);
+        console.log(gv.currentlySelectedHaive.getContainers());
+        gv.containerSelectView.setState({choose: false, loc: -1});
     }
 }

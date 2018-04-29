@@ -27,21 +27,102 @@ export class ContainersAvailable{
 		gv.availableContainers = this;
 	}
 
+    getAvailableContainersSubtypes(){
+        let types = [];
+        for(let i = 0; i < this.containers.length; i++){
+            let type = this.containers[i].getContainerSubType().containerType;
+            let found = false;
+            for(let j = 0; j < types.length; j++){
+                if(type === types[j]){
+                    found = true;
+                }
+            }
+
+            if(!found){
+                types.push(type);
+            }
+        }
+
+        return types;
+    }
+
+    getAvailableContainersSizesFromSupertypes(type){
+        let sizes = [];
+        let containers = this.getAvailableContainersPerSupertype(type);
+        for(let i = 0; i < containers.length; i++){
+            let size = {width: containers[i].getWidth(), height: containers[i].getHeight()};
+            let found = false;
+            for(let j = 0; j < sizes.length; j++){
+                if(size.width === sizes[j].width && size.height === sizes[j].height){
+                    found = true;
+                }
+            }
+
+            if(!found){
+                sizes.push(size);
+            }
+        }
+
+        return sizes;
+    }
+
+    getAvailableContainersTypesFromSizeAndSupertype(size, superType){
+        let types = [];
+        let containers = this.getAvailableContainersPerSupertypeAndSize(superType, size);
+        for(let i = 0; i < containers.length; i++){
+            let type = containers[i].getContainerSubType().name;
+            let found = false;
+            for(let j = 0; j < types.length; j++){
+                if(type === types[j]){
+                    found = true;
+                }
+            }
+
+            if(!found){
+                types.push(type);
+            }
+        }
+
+        return types;
+    }
+
     /**
      * Retusn all available containers of the passed type
      * @param type String
      * @returns {Array} Container object array
      */
-	getAvailableContainersPerType(type){
-		let containersTemp = [];
-		for(let i = 0; i < this.containers.length; i++){
-			if(this.containers[i].getContainerSubType() === type){
-				containersTemp.push(this.containers[i]);
-			}
-		}
+    getAvailableContainersPerType(type){
+        let containersTemp = [];
+        for(let i = 0; i < this.containers.length; i++){
+            if(this.containers[i].getContainerSubType() === type){
+                containersTemp.push(this.containers[i]);
+            }
+        }
 
-		return containersTemp;
-	}
+        return containersTemp;
+    }
+
+    getAvailableContainersPerSupertype(type){
+        let containersTemp = [];
+        for(let i = 0; i < this.containers.length; i++){
+            if(this.containers[i].getContainerSubType().containerType === type){
+                containersTemp.push(this.containers[i]);
+            }
+        }
+
+        return containersTemp;
+    }
+
+    getAvailableContainersPerSupertypeAndSize(type, size){
+        let containersTemp = [];
+        for(let i = 0; i < this.containers.length; i++){
+            if(this.containers[i].getContainerSubType().containerType === type && this.containers[i].getWidth() === size.width && this.containers[i].getHeight() === size.height){
+                containersTemp.push(this.containers[i]);
+            }
+        }
+
+        return containersTemp;
+    }
 
     /**
      * Add a container to the available containers.
