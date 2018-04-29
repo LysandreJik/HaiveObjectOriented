@@ -124,9 +124,19 @@ export class ContainerSelectItem extends React.Component{
         );
     }
 
+    componentDidMount(){
+        let parent = this;
+        $('.container-select-item').on('click', function(e) {
+            if (e.target !== this)
+                return;
+
+            parent.props.cancel();
+        });
+    }
+
     render(){
         return(
-            <div className="container-select-item" onClick={this.props.cancel}>
+            <div className="container-select-item" >
                 {this.getCurrentState()}
             </div>
         );
