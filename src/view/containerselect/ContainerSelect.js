@@ -2,6 +2,7 @@ import React from 'react';
 import {CONTAINER_POSITIONS, HAIVE_TYPES} from "../../../const/structure";
 import {ContainerSelectController} from "../../controller/containerchoice/ContainerSelectController";
 import {SingleContainers} from "./SingleContainer";
+import {ContainerSelectItem} from "./ContainerSelectItem";
 const gi = require('../../../const/globalImages').gi;
 const gv = require('../../../const/global');
 const SVG = require('svg.js');
@@ -12,12 +13,13 @@ export class ContainerSelect extends React.Component{
     constructor(props){
         super(props);
         gv.containerSelectView = this;
-        this.state = {haive: gv.currentlySelectedHaive};
+        this.state = {haive: gv.currentlySelectedHaive, choose: false};
         new ContainerSelectController();
     }
 
 
     render(){
+        console.log(this.state.choose);
         return(
             <div className="container-select-background">
                 <CenterHexagon hexagon={this.state.haive}/>
@@ -27,6 +29,7 @@ export class ContainerSelect extends React.Component{
                 <SingleContainers loc={CONTAINER_POSITIONS.TOP_RIGHT} hexagon={hexagon}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_RIGHT} hexagon={hexagon}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_RIGHT} hexagon={hexagon}/>
+                {this.state.choose ? <ContainerSelectItem cancel={gv.containerSelectController.cancelSelection}/> : "" }
             </div>
         );
     }
@@ -246,26 +249,27 @@ export class CenterHexagon extends React.Component{
     }
 
     mouseMoved(e){
-        let rect = document.getElementById("center-hexagon").getBoundingClientRect();
-        this.loc = {
-            top:rect.top,
-            left:rect.left
-        };
+        if(!gv.containerSelectView.state.choose){
+            let rect = document.getElementById("center-hexagon").getBoundingClientRect();
+            this.loc = {
+                top:rect.top,
+                left:rect.left
+            };
 
-        if(this.hexagonNeighbours !== undefined){
-            this.showPolylines([]);
-            this.updateNeighbours(-1);
-            for(let i = 0; i < this.hexagonNeighbours.length; i++){
-                if(this.isInside([e.pageX - this.loc.left, e.pageY - this.loc.top], this.hexagonNeighbours[i].points)){
-                    this.showPolylines(this.hexagonNeighbours[i].relatedPolylines);
-                    this.updateNeighbours(i);
+            if(this.hexagonNeighbours !== undefined){
+                this.showPolylines([]);
+                this.updateNeighbours(-1);
+                for(let i = 0; i < this.hexagonNeighbours.length; i++){
+                    if(this.isInside([e.pageX - this.loc.left, e.pageY - this.loc.top], this.hexagonNeighbours[i].points)){
+                        this.showPolylines(this.hexagonNeighbours[i].relatedPolylines);
+                        this.updateNeighbours(i);
+                    }
                 }
             }
         }
     }
 
     mouseClicked(e){
-        console.log("clicked")
         let rect = document.getElementById("center-hexagon").getBoundingClientRect();
         this.loc = {
             top:rect.top,

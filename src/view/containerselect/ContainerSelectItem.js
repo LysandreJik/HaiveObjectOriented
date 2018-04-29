@@ -1,12 +1,13 @@
 import React from 'react';
 import {CONTAINER_TYPES, getContainersByTypeAndSize} from "../../../const/structure";
+const gi = require('../../../const/globalImages').gi;
 
-var dispenser_depth = require('../../../images/haive_types/dispenser.png');
-var liquid_depth = require('../../../images/haive_types/liquid.png');
-var S8_12 = require('../../../images/container_sizes/8_12.png');
-var S2_3 = require('../../../images/container_sizes/2_3.png');
-var S3_5 = require('../../../images/container_sizes/3_5.png');
-var S4_5 = require('../../../images/container_sizes/4_5.png');
+var dispenser_depth = gi.getImage("DISPENSER_DEPTH");
+var liquid_depth = gi.getImage("LIQUID");
+var S8_12 = gi.getImage("8_12");
+var S2_3 = gi.getImage("2_3");
+var S3_5 = gi.getImage("3_5");
+var S4_5 = gi.getImage("4_5");
 
 let TYPES = {
     SUPERTYPE_SELECTION: 0,
@@ -125,7 +126,7 @@ export class ContainerSelectItem extends React.Component{
 
     render(){
         return(
-            <div className="container-select-item">
+            <div className="container-select-item" onClick={this.props.cancel}>
                 {this.getCurrentState()}
             </div>
         );

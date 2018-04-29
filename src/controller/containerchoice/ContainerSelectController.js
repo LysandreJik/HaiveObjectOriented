@@ -38,4 +38,16 @@ export class ContainerSelectController{
             gv.containerSelectView.setState({haive:gv.currentlySelectedHaive});
         }
     }
+
+    selectContainer(loc){
+        gv.containerSelectView.setState({choose: true});
+    }
+
+    cancelSelection(){
+        gv.containerSelectView.setState({choose: false});
+    }
+
+    placeContainer(loc, container){
+
+    }
 }

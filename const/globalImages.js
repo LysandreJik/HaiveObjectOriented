@@ -133,3 +133,7 @@ gi.addImage("FREEZER_DEPTH", "images/haive_types/freezer.png");
 gi.addImage("DISPENSER_DEPTH", "images/haive_types/dispenser.png");
 
 gi.addImage("LIQUID", "images/haive_types/liquid.png");
+gi.addImage("8_12", 'images/container_sizes/8_12.png');
+gi.addImage("2_3", 'images/container_sizes/2_3.png');
+gi.addImage("3_5", 'images/container_sizes/3_5.png');
+gi.addImage("4_5", 'images/container_sizes/4_5.png');

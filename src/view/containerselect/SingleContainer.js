@@ -1,5 +1,6 @@
 import React from 'react';
 import {CONTAINER_POSITIONS} from "../../../const/structure";
+import {containerSelectController} from "../../../const/global";
 const gi = require('../../../const/globalImages').gi;
 
 export class SingleContainers extends React.Component{
@@ -33,6 +34,7 @@ export class SingleContainers extends React.Component{
             }
         }
 
+        this.selectContainer = this.selectContainer.bind(this);
         this.updateDimensions = this.updateDimensions.bind(this);
         this.hideContainerChoice = this.hideContainerChoice.bind(this);
         this.displayContainerChoice = this.displayContainerChoice.bind(this);
@@ -80,6 +82,10 @@ export class SingleContainers extends React.Component{
         this.setState({global:"empty"});
     }
 
+    selectContainer(){
+        containerSelectController.selectContainer(this.props.loc);
+    }
+
     render(){
         let parent = this;
         return(
@@ -87,8 +93,9 @@ export class SingleContainers extends React.Component{
                 id={"single-container"+this.props.loc}
                 className="single-container"
                 style={this.style}
-                onMouseOver={this.props.hexagon === undefined  ? function(){console.log("Entered !")} : function(){parent.displayContainerChoice();parent.props.hexagon.showHoverContainer(parent.props.loc)}}
-                onMouseLeave={this.props.hexagon === undefined  ? function(){console.log("Left !")} : function(){parent.hideContainerChoice();parent.props.hexagon.showHoverContainer()}}
+                onClick={this.selectContainer}
+                onMouseOver={this.props.hexagon === undefined  ? function(){console.log("Entered !")} : function(){parent.props.hexagon.showHoverContainer(parent.props.loc)}}
+                onMouseLeave={this.props.hexagon === undefined  ? function(){console.log("Left !")} : function(){parent.props.hexagon.showHoverContainer()}}
             >
                 <div id={'single-container-svg-'+this.props.loc} className={"single-container-svg"}></div>
                 {this.state.global === "empty" ?
