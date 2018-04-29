@@ -189,49 +189,52 @@ export class CenterHexagon extends React.Component{
     }
 
     showHoverContainer(loc){
-        let indicator;
-        switch(loc){
-            case CONTAINER_POSITIONS.TOP_LEFT:
-                indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[5].x, y:this.d/2-this.points[5].y}, {x:this.d/2+this.points[0].x, y:this.d/2-this.points[0].y}]);
-                this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
-                this.hoverIndicator.fill('#a5daff');
-                this.hoverIndicator.stroke({ color: '#a5daff'});
-                break;
-            case CONTAINER_POSITIONS.TOP_RIGHT:
-                indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[0].x, y:this.d/2-this.points[0].y}, {x:this.d/2+this.points[1].x, y:this.d/2-this.points[1].y}]);
-                this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
-                this.hoverIndicator.fill('#a5daff');
-                this.hoverIndicator.stroke({ color: '#a5daff'});
-                break;
-            case CONTAINER_POSITIONS.MIDDLE_RIGHT:
-                indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[1].x, y:this.d/2-this.points[1].y}, {x:this.d/2+this.points[2].x, y:this.d/2-this.points[2].y}]);
-                this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
-                this.hoverIndicator.fill('#a5daff');
-                this.hoverIndicator.stroke({ color: '#a5daff'});
-                break;
-            case CONTAINER_POSITIONS.BOTTOM_RIGHT:
-                indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[2].x, y:this.d/2-this.points[2].y}, {x:this.d/2+this.points[3].x, y:this.d/2-this.points[3].y}]);
-                this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
-                this.hoverIndicator.fill('#a5daff');
-                this.hoverIndicator.stroke({ color: '#a5daff'});
-                break;
-            case CONTAINER_POSITIONS.BOTTOM_LEFT:
-                indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[3].x, y:this.d/2-this.points[3].y}, {x:this.d/2+this.points[4].x, y:this.d/2-this.points[4].y}]);
-                this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
-                this.hoverIndicator.fill('#a5daff');
-                this.hoverIndicator.stroke({ color: '#a5daff'});
-                break;
-            case CONTAINER_POSITIONS.MIDDLE_LEFT:
-                indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[4].x, y:this.d/2-this.points[4].y}, {x:this.d/2+this.points[5].x, y:this.d/2-this.points[5].y}]);
-                this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
-                this.hoverIndicator.fill('#a5daff');
-                this.hoverIndicator.stroke({ color: '#a5daff'});
-                break;
-            default:
-                this.hoverIndicator.fill('none');
-                this.hoverIndicator.stroke({ color: 'none'});
+        if(this.state.init){
+            let indicator;
+            switch(loc){
+                case CONTAINER_POSITIONS.TOP_LEFT:
+                    indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[5].x, y:this.d/2-this.points[5].y}, {x:this.d/2+this.points[0].x, y:this.d/2-this.points[0].y}]);
+                    this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
+                    this.hoverIndicator.fill('#a5daff');
+                    this.hoverIndicator.stroke({ color: '#a5daff'});
+                    break;
+                case CONTAINER_POSITIONS.TOP_RIGHT:
+                    indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[0].x, y:this.d/2-this.points[0].y}, {x:this.d/2+this.points[1].x, y:this.d/2-this.points[1].y}]);
+                    this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
+                    this.hoverIndicator.fill('#a5daff');
+                    this.hoverIndicator.stroke({ color: '#a5daff'});
+                    break;
+                case CONTAINER_POSITIONS.MIDDLE_RIGHT:
+                    indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[1].x, y:this.d/2-this.points[1].y}, {x:this.d/2+this.points[2].x, y:this.d/2-this.points[2].y}]);
+                    this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
+                    this.hoverIndicator.fill('#a5daff');
+                    this.hoverIndicator.stroke({ color: '#a5daff'});
+                    break;
+                case CONTAINER_POSITIONS.BOTTOM_RIGHT:
+                    indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[2].x, y:this.d/2-this.points[2].y}, {x:this.d/2+this.points[3].x, y:this.d/2-this.points[3].y}]);
+                    this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
+                    this.hoverIndicator.fill('#a5daff');
+                    this.hoverIndicator.stroke({ color: '#a5daff'});
+                    break;
+                case CONTAINER_POSITIONS.BOTTOM_LEFT:
+                    indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[3].x, y:this.d/2-this.points[3].y}, {x:this.d/2+this.points[4].x, y:this.d/2-this.points[4].y}]);
+                    this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
+                    this.hoverIndicator.fill('#a5daff');
+                    this.hoverIndicator.stroke({ color: '#a5daff'});
+                    break;
+                case CONTAINER_POSITIONS.MIDDLE_LEFT:
+                    indicator = this.getHexagonShownSelector([{x:this.d/2+this.points[4].x, y:this.d/2-this.points[4].y}, {x:this.d/2+this.points[5].x, y:this.d/2-this.points[5].y}]);
+                    this.hoverIndicator.plot([[indicator[0].x, indicator[0].y], [indicator[1].x, indicator[1].y], [indicator[2].x, indicator[2].y], [indicator[3].x, indicator[3].y]]);
+                    this.hoverIndicator.fill('#a5daff');
+                    this.hoverIndicator.stroke({ color: '#a5daff'});
+                    break;
+                default:
+                    this.hoverIndicator.fill('none');
+                    this.hoverIndicator.stroke({ color: 'none'});
 
+            }
         }
+
     }
 
     componentWillUnmount() {
