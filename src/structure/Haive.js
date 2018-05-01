@@ -8,6 +8,7 @@ export default class Haive{
         this._description = args.description;
         this._x = args.x;
         this._y = args.y;
+        this._getObjectID = Haive.genID();
 
         if(args.containers === undefined){
             this._containers = {
@@ -36,6 +37,16 @@ export default class Haive{
         }
 
         //TODO HAIVE POSITION
+    }
+
+    static genID(){
+        if(Haive.id === undefined){
+            Haive.id = 0;
+        }else{
+            Haive.id++;
+        }
+
+        return Haive.id;
     }
 
     getClone(){
@@ -223,7 +234,7 @@ export default class Haive{
                 this._neighbours.bottomLeft = neighbour;
                 break;
             case(CONTAINER_POSITIONS.BOTTOM_RIGHT):
-                this._neighbours.bottomRight = neighbour;;
+                this._neighbours.bottomRight = neighbour;
                 break;
         }
     }
@@ -243,5 +254,46 @@ export default class Haive{
             case(CONTAINER_POSITIONS.BOTTOM_RIGHT):
                 return this._neighbours.bottomRight;
         }
+    }
+
+    clearNeighbours(){
+
+        //console.log("Clearing neighbours of ", this);
+        //console.log(this.getNeighbours());
+
+        if(this.getNeighbour(CONTAINER_POSITIONS.TOP_LEFT) !== null){
+            this.getNeighbour(CONTAINER_POSITIONS.TOP_LEFT).setNeighbour(null, CONTAINER_POSITIONS.BOTTOM_RIGHT);
+            this.setNeighbour(null, CONTAINER_POSITIONS.TOP_LEFT);
+        }
+
+        if(this.getNeighbour(CONTAINER_POSITIONS.MIDDLE_LEFT) !== null){
+            //console.log("Has neighbour in the middle left ! ");
+            //console.log(this.getNeighbour(CONTAINER_POSITIONS.MIDDLE_LEFT));
+            this.getNeighbour(CONTAINER_POSITIONS.MIDDLE_LEFT).setNeighbour(null, CONTAINER_POSITIONS.MIDDLE_RIGHT);
+            //console.log(this.getNeighbour(CONTAINER_POSITIONS.MIDDLE_LEFT));
+            this.setNeighbour(null, CONTAINER_POSITIONS.MIDDLE_LEFT);
+        }
+
+        if(this.getNeighbour(CONTAINER_POSITIONS.BOTTOM_LEFT) !== null){
+            this.getNeighbour(CONTAINER_POSITIONS.BOTTOM_LEFT).setNeighbour(null, CONTAINER_POSITIONS.TOP_RIGHT);
+            this.setNeighbour(null, CONTAINER_POSITIONS.BOTTOM_LEFT);
+        }
+
+        if(this.getNeighbour(CONTAINER_POSITIONS.TOP_RIGHT) !== null){
+            this.getNeighbour(CONTAINER_POSITIONS.TOP_RIGHT).setNeighbour(null, CONTAINER_POSITIONS.BOTTOM_LEFT);
+            this.setNeighbour(null, CONTAINER_POSITIONS.TOP_RIGHT);
+        }
+
+        if(this.getNeighbour(CONTAINER_POSITIONS.MIDDLE_RIGHT) !== null){
+            this.getNeighbour(CONTAINER_POSITIONS.MIDDLE_RIGHT).setNeighbour(null, CONTAINER_POSITIONS.MIDDLE_LEFT);
+            this.setNeighbour(null, CONTAINER_POSITIONS.MIDDLE_RIGHT);
+        }
+
+        if(this.getNeighbour(CONTAINER_POSITIONS.BOTTOM_RIGHT) !== null){
+            this.getNeighbour(CONTAINER_POSITIONS.BOTTOM_RIGHT).setNeighbour(null, CONTAINER_POSITIONS.TOP_LEFT);
+            this.setNeighbour(null, CONTAINER_POSITIONS.BOTTOM_RIGHT);
+        }
+
+        //console.log(this.getNeighbours());
     }
 }
