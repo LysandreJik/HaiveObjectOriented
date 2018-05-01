@@ -34,10 +34,9 @@ export class ContainerSelectController{
 
     switchHaive(loc){
         console.log("Clicked on loc", loc);
-        if(gv.currentlySelectedHaive.getNeighbour(loc) !== null){
-            console.log(gv.currentlySelectedHaive.getNeighbour(loc));
-            gv.currentlySelectedHaive = gv.currentlySelectedHaive.getNeighbour(loc);
-            gv.containerSelectView.setState({haive:gv.currentlySelectedHaive});
+        if(this.model.getCurrentlySelectedHaive().getNeighbour(loc) !== null){
+            this.model.setCurrentlySelectedHaive(this.model.getCurrentlySelectedHaive().getNeighbour(loc));
+            gv.containerSelectView.setState({haive:this.model.getCurrentlySelectedHaive()});
         }
     }
 
@@ -53,9 +52,12 @@ export class ContainerSelectController{
         container = gv.availableContainers.getFirstContainerByType(container);
         console.log("Placing ", container, "on ", loc);
         console.log(this.model.getCurrentlySelectedHaive().getContainers());
+        console.log(container ,loc);
         this.model.getCurrentlySelectedHaive().setContainer(container, loc);
+        console.log(this.model.getCurrentlySelectedHaive().getContainer(loc));
         console.log(this.model.getCurrentlySelectedHaive().getContainers());
         gv.availableContainers.removeContainer(container);
+        console.log(this.model.getCurrentlySelectedHaive().getContainers());
         gv.containerSelectView.setState({choose: false, loc: -1}) ;
         this.model.updateState("Placed container "+container.getContainerSubType().name+" at "+loc);
 

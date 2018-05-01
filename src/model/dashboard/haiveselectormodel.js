@@ -45,13 +45,13 @@ export class HaiveSelectorModel{
         this.storeHaives = this.state.getStoreHaives();
         this.dashHaives = this.state.getHaives();
 
-        console.log(this.dashHaives);
+        //console.log(this.dashHaives);
 
         let tempTiles = [];
 
         for(let i = 0; i < this.tileHaives.length; i++){
             if(this.tileHaives[i][0] !== "empty" && this.tileHaives[i][0] !== null){
-                console.log("Temp tile in ", this.tileHaives[i][0]);
+                //console.log("Temp tile in ", this.tileHaives[i][0]);
                 tempTiles.push([this.getDashHaive(this.tileHaives[i][1], this.tileHaives[i][2]).getClone(), this.tileHaives[i][1], this.tileHaives[i][2]]);
             }else{
                 tempTiles.push(this.tileHaives[i]);
@@ -159,9 +159,9 @@ export class HaiveSelectorModel{
 
         let allEmpty = this.getAllEmptyTiles();
         for(let i = 0; i < allEmpty.length; i++){
-            console.log(allEmpty[i]);
+            //console.log(allEmpty[i]);
             let neighbours = this.getTileNeighbours(allEmpty[i][1], allEmpty[i][2]);
-            console.log("Neighbours : ", neighbours);
+            //console.log("Neighbours : ", neighbours);
 
             let alone = true;
 
@@ -280,7 +280,7 @@ export class HaiveSelectorModel{
     
     addStoreHaive(haive){
         this.storeHaives.push(haive);
-        console.log("Added haive to store with containers : ", haive.getContainers());
+        //console.log("Added haive to store with containers : ", haive.getContainers());
     }
 
     removeStoreHaive(x){
@@ -288,8 +288,8 @@ export class HaiveSelectorModel{
     }
 
     removeTileHaive(x, y){
-        console.log(x, y);
-        console.log(JSON.stringify(this.tileHaives));
+        //console.log(x, y);
+        //console.log(JSON.stringify(this.tileHaives));
         for(let i = 0; i < this.tileHaives.length; i++) {
             if (this.tileHaives[i][1] == x && this.tileHaives[i][2] == y) {
                 if(this.tileHaives[i][0] !== null && this.tileHaives[i][0] !== "empty"){
@@ -300,7 +300,7 @@ export class HaiveSelectorModel{
             }
         }
 
-        console.log(this.tileHaives);
+        //console.log(this.tileHaives);
         this.updateEmptyTiles();
         gv.haiveSelectorView.refresh();
     }
@@ -403,7 +403,7 @@ export class HaiveSelectorModel{
             }
         }
 
-        console.log(allEmptyTiles);
+        //console.log(allEmptyTiles);
 
         return allEmptyTiles;
     }

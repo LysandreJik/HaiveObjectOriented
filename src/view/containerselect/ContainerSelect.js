@@ -18,7 +18,6 @@ export class ContainerSelect extends React.Component{
         this.model = new ContainerSelectModel();
         this.state = {haive: this.model.getCurrentlySelectedHaive(), choose: false, loc: -1};
         this.controller = new ContainerSelectController(this.model);
-        console.log(this.state.haive);
     }
 
     render(){
@@ -273,15 +272,17 @@ export class CenterHexagon extends React.Component{
     }
 
     mouseClicked(e){
-        let rect = document.getElementById("center-hexagon").getBoundingClientRect();
-        this.loc = {
-            top:rect.top,
-            left:rect.left
-        };
-        if(this.hexagonNeighbours !== undefined){
-            for(let i = 0; i < this.hexagonNeighbours.length; i++){
-                if(this.isInside([e.pageX - this.loc.left, e.pageY - this.loc.top], this.hexagonNeighbours[i].points)){
-                    gv.containerSelectController.switchHaive(i);
+        if(!gv.containerSelectView.state.choose){
+            let rect = document.getElementById("center-hexagon").getBoundingClientRect();
+            this.loc = {
+                top:rect.top,
+                left:rect.left
+            };
+            if(this.hexagonNeighbours !== undefined){
+                for(let i = 0; i < this.hexagonNeighbours.length; i++){
+                    if(this.isInside([e.pageX - this.loc.left, e.pageY - this.loc.top], this.hexagonNeighbours[i].points)){
+                        gv.containerSelectController.switchHaive(i);
+                    }
                 }
             }
         }

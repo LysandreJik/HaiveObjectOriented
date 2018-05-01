@@ -13,14 +13,18 @@ export class ContainerSelectModel{
     }
 
     setCurrentlySelectedHaive(haive){
+        console.log("Initial", this._state.getCurrentlySelectedHaive());
         this._state.setCurrentlySelectedHaive(haive);
+        console.log("After", this._state.getCurrentlySelectedHaive());
+        this.updateState("Changed currently selected haive to "  + haive.getName());
     }
 
     updateState(description){
         timeline.updateState(this._state, description);
+        this.refreshModel();
     }
 
     refreshModel(){
-        this._state = timeline.getTemporaryState(); 
+        this._state = timeline.getTemporaryState();
     }
 }
