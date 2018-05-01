@@ -89,12 +89,12 @@ export class SingleContainers extends React.Component{
     getContainerHover(){
         let container = containerSelectModel.getCurrentlySelectedHaive().getContainer(this.props.loc);
         if(container === null){
-            return <span className="initial-button-text">"SELECT A CONTAINER"</span>;
+            return <span className="initial-button-text">SELECT A CONTAINER</span>;
         }else{
             return(
                 <div style={{height:"100%"}}>
                     <button className="container-hover">DESIGN STRUCTURE</button>
-                    <button className="container-hover">REMOVE CONTAINER</button>
+                    <button className="container-hover" onClick={() => containerSelectController.removeContainer(this.props.loc)}>REMOVE CONTAINER</button>
                 </div>
             );
         }

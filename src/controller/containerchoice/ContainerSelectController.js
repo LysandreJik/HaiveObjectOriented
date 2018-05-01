@@ -63,4 +63,14 @@ export class ContainerSelectController{
 
     }
 
+    removeContainer(loc){
+        let container = this.model.getCurrentlySelectedHaive().getContainer(loc);
+        console.log(gv.availableContainers.containers.map(function(i){return i.getContainerSubType().name}));
+        gv.availableContainers.addContainer(container);
+        console.log(gv.availableContainers.containers.map(function(i){return i.getContainerSubType().name}));
+        this.model.getCurrentlySelectedHaive().removeContainer(loc);
+
+        this.model.updateState("Removed container from "+loc+" of "+this.model.getCurrentlySelectedHaive().getName());
+    }
+
 }
