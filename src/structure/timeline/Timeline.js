@@ -16,12 +16,9 @@ export default class Timeline{
         this._states.push(state);
         console.log(JSON.stringify(this.getStates().map(function(i){return i.getID()+": "+i.getDescription()+" "+i;}), null, 2));
 
-        if(gv.haiveSelectorModel !== undefined){
-            gv.haiveSelectorModel.refreshModel();
-        }
+        gv.haiveSelectorModel.refreshModel();
 
         if(gv.containerSelectModel !== undefined){
-            console.log(gv.containerSelectModel);
             gv.containerSelectModel.refreshModel();
         }
     }
