@@ -21,13 +21,15 @@ import PipetteTipContainer from "../../structure/containers/PipetteTipContainer"
 import {CONTAINER_SUBTYPES, getContainerPositionFromID, getContainerSubtypeFromName} from "../../../const/structure";
 
 const gv = require('../../../const/global');
+const timeline = require('../../../const/global').timeline;
 
 /**
  * Controller class for the container select. Any action taken on the container select screen is redirected and managed here.
  */
 export class ContainerSelectController{
-    constructor(){
+    constructor(model){
         gv.containerSelectController = this;
+        this.model = model;
     }
 
     switchHaive(loc){
@@ -50,11 +52,13 @@ export class ContainerSelectController{
     placeContainer(loc, container){
         container = gv.availableContainers.getFirstContainerByType(container);
         console.log("Placing ", container, "on ", loc);
-        console.log(gv.currentlySelectedHaive.getContainers());
-        gv.currentlySelectedHaive.setContainer(container, loc);
-        console.log(gv.currentlySelectedHaive.getContainers());
+        console.log(this.model.getCurrentlySelectedHaive().getContainers());
+        this.model.getCurrentlySelectedHaive().setContainer(container, loc);
+        console.log(this.model.getCurrentlySelectedHaive().getContainers());
         gv.availableContainers.removeContainer(container);
         gv.containerSelectView.setState({choose: false, loc: -1}) ;
+        this.model.updateState("Placed container "+container.getContainerSubType().name+" at "+loc);
+
     }
 
 }

@@ -31,6 +31,14 @@ export class HaiveSelectorModel{
         return this.dashHaives;
     }
 
+    setCurrentlySelectedHaive(haive){
+        this.state.setCurrentlySelectedHaive(haive);
+    }
+
+    getCurrentlySelectedHaive(){
+        return this.state.getCurrentlySelectedHaive();
+    }
+
     refreshModel(){
         this.state = timeline.getTemporaryState();
         this.storeHaives = this.state.getStoreHaives();
@@ -180,6 +188,7 @@ export class HaiveSelectorModel{
     updateState(description){
         this.updateNeighbours();
         timeline.updateState(this.state, description);
+        this.refreshModel();
     }
 
     updateNeighbours(){
@@ -246,6 +255,7 @@ export class HaiveSelectorModel{
     
     addStoreHaive(haive){
         this.storeHaives.push(haive);
+        console.log("Added haive to store with containers : ", haive.getContainers());
     }
 
     removeStoreHaive(x){

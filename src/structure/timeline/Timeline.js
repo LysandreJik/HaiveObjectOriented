@@ -15,7 +15,15 @@ export default class Timeline{
         state.save(description);
         this._states.push(state);
         console.log(JSON.stringify(this.getStates().map(function(i){return i.getID()+": "+i.getDescription()+" "+i;}), null, 2));
-        gv.haiveSelectorModel.refreshModel();
+
+        if(gv.haiveSelectorModel !== undefined){
+            gv.haiveSelectorModel.refreshModel();
+        }
+
+        if(gv.containerSelectModel !== undefined){
+            console.log(gv.containerSelectModel);
+            gv.containerSelectModel.refreshModel();
+        }
     }
 
     getTemporaryState(){

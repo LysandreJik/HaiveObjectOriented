@@ -27,6 +27,7 @@ import { ProtocolDesign } from '../view/protocoldesignview';
 import { Login } from '../view/login';
 import { CreateAccount } from '../view/login';
 import { MyAssets } from "../view/myassets";
+import {ContainersAvailable} from "../model/containersavailable";
 
 const gv = require('../../const/global');
 const gi = require('../../const/globalImages').gi;
@@ -52,6 +53,10 @@ export class WebInterfaceController{
 	createAccount(){
 		return createAccount;
 	}
+
+	initAvailableContainers(){
+	    new ContainersAvailable();
+    }
 
 	hoverMisc(type, func){
 		gv.mainApp.setState({hover:type, hoverFunc:func});

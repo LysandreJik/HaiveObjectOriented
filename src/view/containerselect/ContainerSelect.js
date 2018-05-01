@@ -3,32 +3,34 @@ import {CONTAINER_POSITIONS, HAIVE_TYPES} from "../../../const/structure";
 import {ContainerSelectController} from "../../controller/containerchoice/ContainerSelectController";
 import {SingleContainers} from "./SingleContainer";
 import {ContainerSelectItem} from "./ContainerSelectItem";
+import {ContainerSelectModel} from "../../model/containerchoice/ContainerSelectModel";
 const gi = require('../../../const/globalImages').gi;
 const gv = require('../../../const/global');
 const SVG = require('svg.js');
 
 var hexagon;
+var timeline = gv.timeline;
 
 export class ContainerSelect extends React.Component{
     constructor(props){
         super(props);
         gv.containerSelectView = this;
-        this.state = {haive: gv.currentlySelectedHaive, choose: false, loc: -1};
-        new ContainerSelectController();
+        this.model = new ContainerSelectModel();
+        this.state = {haive: this.model.getCurrentlySelectedHaive(), choose: false, loc: -1};
+        this.controller = new ContainerSelectController(this.model);
+        console.log(this.state.haive);
     }
 
-
     render(){
-        console.log(this.state.choose);
         return(
             <div className="container-select-background">
                 <CenterHexagon hexagon={this.state.haive}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.TOP_LEFT} hexagon={hexagon}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_LEFT} hexagon={hexagon}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_LEFT} hexagon={hexagon}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.TOP_RIGHT} hexagon={hexagon}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_RIGHT} hexagon={hexagon}/>
-                <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_RIGHT} hexagon={hexagon}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.TOP_LEFT} hexagon={hexagon} haive={this.state.haive}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_LEFT} hexagon={hexagon} haive={this.state.haive}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_LEFT} hexagon={hexagon} haive={this.state.haive}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.TOP_RIGHT} hexagon={hexagon} haive={this.state.haive}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_RIGHT} hexagon={hexagon} haive={this.state.haive}/>
+                <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_RIGHT} hexagon={hexagon} haive={this.state.haive}/>
                 {this.state.choose ? <ContainerSelectItem cancel={gv.containerSelectController.cancelSelection} loc={this.state.loc}/> : "" }
             </div>
         );
@@ -45,8 +47,6 @@ export class CenterHexagon extends React.Component{
         this.mouseMoved = this.mouseMoved.bind(this);
         this.mouseClicked = this.mouseClicked.bind(this);
         hexagon = this;
-        gv.containerSelectView.setState({update:true});
-        console.log(this.props.hexagon.getNeighbours());
         this.logo = this.getHaiveTypeImage(this.props.hexagon.getType());
 
     }
@@ -67,6 +67,7 @@ export class CenterHexagon extends React.Component{
     }
 
     componentDidMount(){
+        gv.containerSelectView.setState({update:true});
         this.dimensions = {
             height:document.getElementById("center-hexagon").clientHeight,
             width:document.getElementById("center-hexagon").clientWidth
@@ -175,7 +176,6 @@ export class CenterHexagon extends React.Component{
         this.bottomLeft = this.rotate({x:this.bottomRight.x, y:this.bottomRight.y}, -60);
         this.middleLeft = this.rotate({x:this.bottomLeft.x, y:this.bottomLeft.y}, -60);
         this.topLeft = this.rotate({x:this.middleLeft.x, y:this.middleLeft.y}, -60);
-        console.log("top left defined");
 
         // let test = parent.draw.polyline([[this.d/2+this.topLeft.x, this.d/2-this.topLeft.y], [this.d/2, this.d/2]]);
         // test.fill('none');

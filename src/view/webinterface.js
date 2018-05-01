@@ -43,7 +43,7 @@ export class App extends React.Component{
 		super(props);
 		this.updateApp = this.updateApp.bind(this);
 		this.state = {hover:"none", hoverFunc:null};
-
+        webInterfaceController.initAvailableContainers();
 		gv.mainApp = this;
 	}
 

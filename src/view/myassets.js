@@ -17,39 +17,17 @@ __/\\\________/\\\_____/\\\\\\\\\_____/\\\\\\\\\\\__/\\\________/\\\__/\\\\\\\\\
 */
 
 import {HaiveSelector} from "./dashboard/haiveselector";
-
-const ProtocolConceptionModel = require('../model/protocolconceptionmodel').ProtocolConceptionModel;
-const ProtocolConceptionController = require('../controller/protocolconceptioncontroller').ProtocolConceptionController;
-
-const ProtocolDesignModel = require('../model/protocoldesignmodel').ProtocolDesignModel;
-const ProtocolDesignController = require('../controller/protocoldesigncontroller').ProtocolDesignController;
-
-const ContainerSelectModel = require('../model/containerchoice/containermodel').ContainerSelectModel;
-const ContainerSelectController = require('../controller/containerchoice/containercontroller').ContainerSelectController;
-
 import { AddLiquids } from '../view/protocolconceptionview';
 import { ProtocolDesign } from '../view/protocoldesignview';
-
 import React from 'react';
 import {ContainerSelect} from "./containerselect/ContainerSelect";
 
 const gv = require('../../const/global');
 
-let containerSelectController = new ContainerSelectController();
-let containerSelectModel = new ContainerSelectModel({controller:containerSelectController});
 let containerSelect = <div className="myassetsmaincontent" id={"myassetsmaincontent"}><ContainerSelect/></div>;
-
-let protocolConceptionController = new ProtocolConceptionController();
-let protocolConceptionModel = new ProtocolConceptionModel({controller:protocolConceptionController});
 let protocolconception = <div className="myassetsmaincontent" id={"myassetsmaincontentcontainers"}><AddLiquids/></div>;
-
-let protocolDesignController = new ProtocolDesignController();
-let protocolDesignModel = new ProtocolDesignModel({controller:protocolDesignController});
 let protocoldesign = <div className="myassetsmaincontent" id={"myassetsmaincontent"}><ProtocolDesign/></div>;
-
-let haive = <div className="myassetsmaincontent" id={"myassetsmaincontenthaivess"}>
-    <HaiveSelector/>
-</div>;
+let haive = <div className="myassetsmaincontent" id={"myassetsmaincontenthaivess"}><HaiveSelector/></div>;
 
 
 export class MyAssets extends React.Component{
@@ -87,10 +65,9 @@ export class MyAssets extends React.Component{
 
         document.getElementById('myassetsbarbuttons'+Math.floor(selected)).classList.add('myassetsbarbuttonselected');
 
-        console.log("Dragging ; ", gv.protocolDesignController.isDragging);
-        if(gv.protocolDesignController.isDragging){
-            gv.protocolDesignController.cancelBlockDropped();
-        }
+        // if(gv.protocolDesignController.isDragging){
+        //     gv.protocolDesignController.cancelBlockDropped();
+        // }
     }
 
     render(){

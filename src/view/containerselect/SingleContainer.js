@@ -1,6 +1,6 @@
 import React from 'react';
 import {CONTAINER_POSITIONS} from "../../../const/structure";
-import {containerSelectController, currentlySelectedHaive} from "../../../const/global";
+import {containerSelectController, containerSelectModel} from "../../../const/global";
 const gi = require('../../../const/globalImages').gi;
 
 export class SingleContainers extends React.Component{
@@ -78,7 +78,7 @@ export class SingleContainers extends React.Component{
     }
 
     getContainer(){
-        let container = currentlySelectedHaive.getContainer(this.props.loc);
+        let container = containerSelectModel.getCurrentlySelectedHaive().getContainer(this.props.loc);
         if(container === null){
             return "NONE SELECTED";
         }else{
@@ -87,11 +87,16 @@ export class SingleContainers extends React.Component{
     }
 
     getContainerHover(){
-        let container = currentlySelectedHaive.getContainer(this.props.loc);
+        let container = containerSelectModel.getCurrentlySelectedHaive().getContainer(this.props.loc);
         if(container === null){
-            return "SELECT A CONTAINER";
+            return <span className="initial-button-text">"SELECT A CONTAINER"</span>;
         }else{
-            return container.getContainerSubType().name;
+            return(
+                <div style={{height:"100%"}}>
+                    <button className="container-hover">DESIGN STRUCTURE</button>
+                    <button className="container-hover">REMOVE CONTAINER</button>
+                </div>
+            );
         }
     }
 
@@ -119,7 +124,7 @@ export class SingleContainers extends React.Component{
                 <div id={'single-container-svg-'+this.props.loc} className={"single-container-svg"}></div>
                 <div id={'text-wrapper-'+this.props.loc} className="text-wrapper">
                     <div className="initial-button-wrapper"><span className="initial-button-text">{this.getContainer()}</span></div>
-                    <div className="initial-button-wrapper-right"><span className="initial-button-text">{this.getContainerHover()}</span></div>
+                    <div className="initial-button-wrapper-right">{this.getContainerHover()}</div>
                 </div>
             </div>
         );

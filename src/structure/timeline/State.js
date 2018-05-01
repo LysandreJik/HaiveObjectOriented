@@ -4,6 +4,7 @@ export default class State{
         this._haives = args.haives;
         this._held = args.held;
         this._copied = args.copied;
+        this._currentlySelectedHaive = args.currentlySelectedHaive;
         this._id = "Not saved";
     }
 
@@ -18,12 +19,22 @@ export default class State{
             storeHaives.push(this._storeHaives[i].getClone());
         }
 
+        let currentlySelectedHaive;
+        if(this._currentlySelectedHaive !== undefined){
+            for(let i = 0; i < haives.length; i++){
+                if(haives[i].getX() === this._currentlySelectedHaive.getX() && haives[i].getY() === this._currentlySelectedHaive.getY()){
+                    currentlySelectedHaive = haives[i];
+                }
+            }
+        }
+
         return new State({
             storeHaives: storeHaives,
             haives: haives,
             held: {liquid: this._held.liquid, quantity: this._held.quantity, magnitude: this._held.magnitude},
             copied: this._copied,
-            id: this._id
+            id: this._id,
+            currentlySelectedHaive: currentlySelectedHaive
         });
     }
 
@@ -39,6 +50,14 @@ export default class State{
                 return this.getStoreHaives()[i];
             }
         }
+    }
+
+    getCurrentlySelectedHaive(){
+        return this._currentlySelectedHaive;
+    }
+
+    setCurrentlySelectedHaive(haive){
+        this._currentlySelectedHaive = haive;
     }
 
     getStoreHaives(){

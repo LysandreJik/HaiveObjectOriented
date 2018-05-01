@@ -37,10 +37,10 @@ export class HexagonHoverTypes extends React.Component{
 	    if(gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]) == null){
 	        return <div></div>
         }else{
-	    	var haive = gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]);
-
+	    	let haive_id = gv.haiveSelectorModel.getTileHaive(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]);
+            var haive = gv.timeline.getTemporaryState().getHaiveFromID(haive_id.getID());
 	    	try{
-                haive = gv.timeline.getTemporaryState().getHaiveFromID(haive.getID());
+
 			}catch(e){
 	    		console.error("Error in HexagonHoverTypes !");
                 console.log(this.props.keyId.split('_')[0], this.props.keyId.split('_')[1]);
@@ -63,13 +63,15 @@ export class HexagonHoverTypes extends React.Component{
                     <button className="btnghost" onClick={
                         function(){
                             gv.myAssets.setSelected(2);
-                            gv.currentlySelectedHaive = haive;
-                            gv.protocolDesignController.timeline = gv.timeline;
-                            if(gv.currentlySelectedHaive.getContainers().length > 0){
+                            //gv.protocolDesignController.timeline = gv.timeline;
+                            gv.haiveSelectorModel.setCurrentlySelectedHaive(haive);
+                            if(gv.haiveSelectorModel.getCurrentlySelectedHaive().getContainers().length > 0){
                                 gv.myAssets.setState({button:[false, false, false]});
                             }else{
                                 gv.myAssets.setState({button:[false, false, true]});
                             }
+
+                            gv.haiveSelectorModel.updateState("Set currently selected haive to "+gv.haiveSelectorModel.getCurrentlySelectedHaive().getName());
                         }
                     }>START</button>{"\u00a0\u00a0\u00a0"}
                     <button className="btnghost" onClick={
