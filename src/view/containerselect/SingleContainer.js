@@ -1,6 +1,6 @@
 import React from 'react';
 import {CONTAINER_POSITIONS} from "../../../const/structure";
-import {containerSelectController} from "../../../const/global";
+import {containerSelectController, currentlySelectedHaive} from "../../../const/global";
 const gi = require('../../../const/globalImages').gi;
 
 export class SingleContainers extends React.Component{
@@ -34,12 +34,11 @@ export class SingleContainers extends React.Component{
             }
         }
 
+        this.onItemHover = this.onItemHover.bind(this);
+        this.onItemLeave = this.onItemLeave.bind(this);
         this.selectContainer = this.selectContainer.bind(this);
         this.updateDimensions = this.updateDimensions.bind(this);
-        this.hideContainerChoice = this.hideContainerChoice.bind(this);
-        this.displayContainerChoice = this.displayContainerChoice.bind(this);
-
-        this.state = {global:"empty"};
+        this.state = {hovering: false};
     }
 
     componentDidMount(){
@@ -74,16 +73,36 @@ export class SingleContainers extends React.Component{
         this.polyline.plot([[2, 2], [this.dimensions.width-2, 2], [this.dimensions.width-2, this.dimensions.height-2], [2, this.dimensions.height-2], [2, 2]]);
     }
 
-    displayContainerChoice(){
-        this.setState({global:"type_selection"});
-    }
-
-    hideContainerChoice(){
-        this.setState({global:"empty"});
-    }
-
     selectContainer(){
         containerSelectController.selectContainer(this.props.loc);
+    }
+
+    getContainer(){
+        let container = currentlySelectedHaive.getContainer(this.props.loc);
+        if(container === null){
+            return "NONE SELECTED";
+        }else{
+            return container.getContainerSubType().name;
+        }
+    }
+
+    getContainerHover(){
+        let container = currentlySelectedHaive.getContainer(this.props.loc);
+        if(container === null){
+            return "SELECT A CONTAINER";
+        }else{
+            return container.getContainerSubType().name;
+        }
+    }
+
+    onItemHover(){
+        this.props.hexagon.showHoverContainer(this.props.loc);
+        $('#text-wrapper-'+this.props.loc).animate({left:"-100%"}, 200  );
+    }
+
+    onItemLeave(){
+        this.props.hexagon.showHoverContainer();
+        $('#text-wrapper-'+this.props.loc).animate({left:"0"}, 200);
     }
 
     render(){
@@ -94,19 +113,14 @@ export class SingleContainers extends React.Component{
                 className="single-container"
                 style={this.style}
                 onClick={this.selectContainer}
-                onMouseOver={this.props.hexagon === undefined  ? function(){console.log("Entered !")} : function(){parent.props.hexagon.showHoverContainer(parent.props.loc)}}
-                onMouseLeave={this.props.hexagon === undefined  ? function(){console.log("Left !")} : function(){parent.props.hexagon.showHoverContainer()}}
+                onMouseOver={this.onItemHover}
+                onMouseLeave={this.onItemLeave}
             >
                 <div id={'single-container-svg-'+this.props.loc} className={"single-container-svg"}></div>
-                {this.state.global === "empty" ?
-                    <div className="initial-button-wrapper"><span className="initial-button-text">SELECT CONTAINER</span></div>
-                :
-                    <div className="initial-button-wrapper">
-                        <img className="single-container-container-img-1 animated fadeIn" src={gi.getImage("DISPENSER_DEPTH")}></img>
-                        <img className="single-container-container-img-2 animated fadeIn"  src={gi.getImage("LIQUID" )}></img>
-                    </div>
-                }
-
+                <div id={'text-wrapper-'+this.props.loc} className="text-wrapper">
+                    <div className="initial-button-wrapper"><span className="initial-button-text">{this.getContainer()}</span></div>
+                    <div className="initial-button-wrapper-right"><span className="initial-button-text">{this.getContainerHover()}</span></div>
+                </div>
             </div>
         );
     }

@@ -222,7 +222,13 @@
 
 
 
-
+.text-wrapper{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
 
 .container-select-background{
     position: absolute;
@@ -254,8 +260,24 @@
     pointer-events: none;
 }
 
+.initial-button-wrapper-right{
+    position: absolute;
+    font-family: "Uni";
+    left:100%;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 3vw;
+    transition: all 1s;
+    pointer-events: none;
+}
+
 @media screen and (min-width: 1200px) {
     .initial-button-wrapper {
+        font-size: 36px;
+    }
+
+    .initial-button-wrapper-right {
         font-size: 36px;
     }
 }
@@ -282,6 +304,7 @@
     height:20vh;
     text-align: center;
     background-color: #5B5F68;
+    overflow: hidden;
 }
 
 .single-container-svg{
