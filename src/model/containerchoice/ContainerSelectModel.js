@@ -3,9 +3,8 @@ const timeline = require('../../../const/global').timeline;
 
 export class ContainerSelectModel{
     constructor(){
-        this._state = timeline.getTemporaryState();
+        this.refreshModel();
         gv.containerSelectModel = this;
-        console.log(this._state);
     }
 
     getCurrentlySelectedHaive(){
@@ -21,10 +20,10 @@ export class ContainerSelectModel{
 
     updateState(description){
         timeline.updateState(this._state, description);
-        this.refreshModel();
     }
 
     refreshModel(){
         this._state = timeline.getTemporaryState();
+        console.log(this._state);
     }
 }

@@ -8,7 +8,7 @@ export default class Haive{
         this._description = args.description;
         this._x = args.x;
         this._y = args.y;
-        this._getObjectID = Haive.genID();
+        this._objectID = Haive.genID();
 
         if(args.containers === undefined){
             this._containers = {
@@ -37,6 +37,10 @@ export default class Haive{
         }
 
         //TODO HAIVE POSITION
+    }
+
+    getObjectID(){
+        return this._objectID;
     }
 
     static genID(){
@@ -259,7 +263,9 @@ export default class Haive{
     clearNeighbours(){
 
         //console.log("Clearing neighbours of ", this);
-        //console.log(this.getNeighbours());
+        let parent = this;
+        console.log("CLEARING NEIGHBOURS");
+        console.log(Object.keys(parent.getNeighbours()).map(function(key, index) {if(parent.getNeighbours()[key] !== null){return parent.getNeighbours()[key].getObjectID()}}));
 
         if(this.getNeighbour(CONTAINER_POSITIONS.TOP_LEFT) !== null){
             this.getNeighbour(CONTAINER_POSITIONS.TOP_LEFT).setNeighbour(null, CONTAINER_POSITIONS.BOTTOM_RIGHT);

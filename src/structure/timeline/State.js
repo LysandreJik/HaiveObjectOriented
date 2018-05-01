@@ -68,6 +68,10 @@ export default class State{
         return this._haives;
     }
 
+    setHaives(haives){
+        this._haives = haives;
+    }
+
     getHeld(){
         return this._held;
     }

@@ -59,6 +59,18 @@ export class HaiveSelectorModel{
         }
 
         this.tileHaives = tempTiles;
+        this.updateNeighbours();
+
+        console.log("Starting state with ", "[" + this.dashHaives.map(
+            function(i){
+                if(i.getNeighbours() !== undefined){
+                    return i.getObjectID()+" ["+ Object.keys(i.getNeighbours()).map(function(key, index) {if(i.getNeighbours()[key] !== null){return i.getNeighbours()[key].getObjectID()+" "}})+"]"
+                }else{
+                    return i.getObjectID();
+                }
+
+            }
+        )+"]");
     }
 
     updateEmptyTiles(){
@@ -184,6 +196,7 @@ export class HaiveSelectorModel{
             this.setTileHaive(0, 0, null);
         }
 
+        this.updateNeighbours();
         gv.haiveSelectorView.refresh();
         gv.mainAppController.saveState();
 
@@ -191,6 +204,7 @@ export class HaiveSelectorModel{
 
     updateState(description){
         this.updateNeighbours();
+        console.log("length", this.dashHaives.length);
         timeline.updateState(this.state, description);
     }
 
@@ -228,6 +242,7 @@ export class HaiveSelectorModel{
         let x = haive.getX();
         let y = haive.getY();
 
+
         let middleLeft, middleRight, topLeft, topRight, bottomLeft, bottomRight;
 
         if(y % 2 == 0){
@@ -246,12 +261,12 @@ export class HaiveSelectorModel{
             topRight = this.getDashHaive(x+1, y-1);
         }
 
-        middleLeft !== undefined ? haive.setNeighbour(middleLeft, CONTAINER_POSITIONS.MIDDLE_LEFT) : "";
-        middleRight !== undefined ? haive.setNeighbour(middleRight, CONTAINER_POSITIONS.MIDDLE_RIGHT) : "";
-        topLeft !== undefined ? haive.setNeighbour(topLeft, CONTAINER_POSITIONS.TOP_LEFT) : "";
-        topRight !== undefined ? haive.setNeighbour(topRight, CONTAINER_POSITIONS.TOP_RIGHT) : "";
-        bottomLeft !== undefined ? haive.setNeighbour(bottomLeft, CONTAINER_POSITIONS.BOTTOM_LEFT) : "";
-        bottomRight !== undefined ? haive.setNeighbour(bottomRight, CONTAINER_POSITIONS.BOTTOM_RIGHT) : "";
+        middleLeft !== undefined ? haive.setNeighbour(middleLeft, CONTAINER_POSITIONS.MIDDLE_LEFT) : haive.setNeighbour(null, CONTAINER_POSITIONS.MIDDLE_LEFT);
+        middleRight !== undefined ? haive.setNeighbour(middleRight, CONTAINER_POSITIONS.MIDDLE_RIGHT) : haive.setNeighbour(null, CONTAINER_POSITIONS.MIDDLE_RIGHT);
+        topLeft !== undefined ? haive.setNeighbour(topLeft, CONTAINER_POSITIONS.TOP_LEFT) : haive.setNeighbour(null, CONTAINER_POSITIONS.TOP_LEFT);
+        topRight !== undefined ? haive.setNeighbour(topRight, CONTAINER_POSITIONS.TOP_RIGHT) : haive.setNeighbour(null, CONTAINER_POSITIONS.TOP_RIGHT);
+        bottomLeft !== undefined ? haive.setNeighbour(bottomLeft, CONTAINER_POSITIONS.BOTTOM_LEFT) : haive.setNeighbour(null, CONTAINER_POSITIONS.BOTTOM_LEFT);
+        bottomRight !== undefined ? haive.setNeighbour(bottomRight, CONTAINER_POSITIONS.BOTTOM_RIGHT) : haive.setNeighbour(null, CONTAINER_POSITIONS.BOTTOM_RIGHT);
     }
 
     getTileNeighbours(x, y){
@@ -295,6 +310,15 @@ export class HaiveSelectorModel{
                 if(this.tileHaives[i][0] !== null && this.tileHaives[i][0] !== "empty"){
                     this.tileHaives[i][0].setX(null);
                     this.tileHaives[i][0].setY(null);
+
+                    let dash = this.getDashHaive(x, y);
+                    if(dash !== undefined){
+                        console.log(dash);
+                        dash.clearNeighbours();
+                        console.log(dash);
+                        this.removeDashHaive(dash);
+                    }
+
                 }
                 this.tileHaives[i][0] = null;
             }
@@ -315,6 +339,15 @@ export class HaiveSelectorModel{
 
     getDashHaive(x, y){
         return this.dashHaives.filter(function(i){if(i.getX() == x && i.getY() == y){return i;}})[0];
+    }
+
+    removeDashHaive(haive){
+        console.log("Removing dash haive");
+        console.log(this.dashHaives.length);
+        console.log("Neighbours", this.dashHaives.map(function(item){return {id:item.getObjectID(), name: item.getName(), n:item.getNeighbours()}}));
+        this.dashHaives = this.dashHaives.filter(item => item !== haive);
+        this.state.setHaives(this.dashHaives);
+        console.log(this.dashHaives.length);
     }
 
     getTileHaive(x, y){

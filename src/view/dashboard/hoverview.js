@@ -80,6 +80,8 @@ export class HexagonHoverTypes extends React.Component{
                     		gv.haiveSelectorView.refresh("hover", "none");
                     		gv.haiveSelectorModel.addStoreHaive(haive);
                     		gv.haiveSelectorModel.removeTileHaive(parent.props.keyId.split('_')[0], parent.props.keyId.split('_')[1]);
+                    		console.log(gv.haiveSelectorModel.getDashHaives());
+                    		gv.haiveSelectorModel.updateNeighbours();
                             gv.haiveSelectorModel.updateState(desc);
                     	}
 
