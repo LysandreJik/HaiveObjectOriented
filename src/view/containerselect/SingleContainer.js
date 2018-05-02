@@ -74,7 +74,10 @@ export class SingleContainers extends React.Component{
     }
 
     selectContainer(){
-        containerSelectController.selectContainer(this.props.loc);
+        let container = containerSelectModel.getCurrentlySelectedHaive().getContainer(this.props.loc);
+        if(container === null){
+            containerSelectController.selectContainer(this.props.loc);
+        }
     }
 
     getContainer(){
@@ -89,7 +92,7 @@ export class SingleContainers extends React.Component{
     getContainerHover(){
         let container = containerSelectModel.getCurrentlySelectedHaive().getContainer(this.props.loc);
         if(container === null){
-            return <span className="initial-button-text">SELECT A CONTAINER</span>;
+            return <div style={{width: "100%", height: "100%"}} onClick={this.selectContainer}><span className="initial-button-text">SELECT A CONTAINER</span></div>;
         }else{
             return(
                 <div style={{height:"100%"}}>
@@ -117,7 +120,6 @@ export class SingleContainers extends React.Component{
                 id={"single-container"+this.props.loc}
                 className="single-container"
                 style={this.style}
-                onClick={this.selectContainer}
                 onMouseOver={this.onItemHover}
                 onMouseLeave={this.onItemLeave}
             >

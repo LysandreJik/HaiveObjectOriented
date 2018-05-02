@@ -69,8 +69,12 @@ export class ContainerSelectController{
         gv.availableContainers.addContainer(container);
         console.log(gv.availableContainers.containers.map(function(i){return i.getContainerSubType().name}));
         this.model.getCurrentlySelectedHaive().removeContainer(loc);
-
+        gv.containerSelectView.setState({choose: false, loc: -1}) ;
         this.model.updateState("Removed container from "+loc+" of "+this.model.getCurrentlySelectedHaive().getName());
+    }
+
+    designContainerStructure(loc){
+        gv.containerSelectView.setState({design: loc});
     }
 
 }

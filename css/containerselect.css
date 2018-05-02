@@ -228,6 +228,7 @@
     background-color: transparent;
     border: 1px solid #95CAFF;
     color: white;
+    transition: 0.2s all;
 }
 
 .container-hover:hover{
@@ -269,7 +270,6 @@
     color: white;
     font-size: 3vw;
     transition: all 1s;
-    pointer-events: none;
 }
 
 .initial-button-wrapper-right{
@@ -281,7 +281,6 @@
     color: white;
     font-size: 3vw;
     transition: all 1s;
-    pointer-events: none;
 }
 
 @media screen and (min-width: 1200px) {
