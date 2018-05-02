@@ -96,7 +96,7 @@ export class SingleContainers extends React.Component{
         }else{
             return(
                 <div style={{height:"100%"}}>
-                    <button className="container-hover">DESIGN STRUCTURE</button>
+                    <button className="container-hover" onClick={containerSelectController.designContainerStructure}>DESIGN STRUCTURE</button>
                     <button className="container-hover" onClick={() => containerSelectController.removeContainer(this.props.loc)}>REMOVE CONTAINER</button>
                 </div>
             );

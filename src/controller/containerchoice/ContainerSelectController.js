@@ -30,6 +30,9 @@ export class ContainerSelectController{
     constructor(model){
         gv.containerSelectController = this;
         this.model = model;
+
+        this.designContainerStructure = this.designContainerStructure.bind(this);
+        this.stopContainerStructureDesign = this.stopContainerStructureDesign.bind(this);
     }
 
     switchHaive(loc){
@@ -74,7 +77,16 @@ export class ContainerSelectController{
     }
 
     designContainerStructure(loc){
-        gv.containerSelectView.setState({design: loc});
+        console.log("1");
+        gv.containerSelectView.designContainer(loc);
+        gv.containerSelectView.setState({design: true});
+
+        setTimeout(this.stopContainerStructureDesign, 3000);
+    }
+
+    stopContainerStructureDesign(){
+        gv.containerSelectView.stopContainerDesign();
+        setTimeout(function(){gv.containerSelectView.setState({design: false});}, 1000);
     }
 
 }

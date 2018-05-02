@@ -4,6 +4,7 @@ import {ContainerSelectController} from "../../controller/containerchoice/Contai
 import {SingleContainers} from "./SingleContainer";
 import {ContainerSelectItem} from "./ContainerSelectItem";
 import {ContainerSelectModel} from "../../model/containerchoice/ContainerSelectModel";
+import {ContainerStructureDesign} from "./ContainerStructureDesign";
 const gi = require('../../../const/globalImages').gi;
 const gv = require('../../../const/global');
 const SVG = require('svg.js');
@@ -16,13 +17,24 @@ export class ContainerSelect extends React.Component{
         super(props);
         gv.containerSelectView = this;
         this.model = new ContainerSelectModel();
-        this.state = {haive: this.model.getCurrentlySelectedHaive(), choose: false, loc: -1};
+        this.state = {haive: this.model.getCurrentlySelectedHaive(), choose: false, loc: -1, design: false};
         this.controller = new ContainerSelectController(this.model);
     }
 
+    designContainer(loc){
+        console.log(2);
+        $("#container-select-background").animate({top:"-100%"});
+    }
+
+    stopContainerDesign(){
+        $("#structure-design-maindiv").fadeOut(200);
+        $("#container-select-background").animate({top:"0"});
+    }
+
     render(){
+        console.log(this.state.design);
         return(
-            <div className="container-select-background">
+            <div id={"container-select-background"} className="container-select-background">
                 <CenterHexagon hexagon={this.state.haive}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.TOP_LEFT} hexagon={hexagon} haive={this.state.haive}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_LEFT} hexagon={hexagon} haive={this.state.haive}/>
@@ -31,6 +43,7 @@ export class ContainerSelect extends React.Component{
                 <SingleContainers loc={CONTAINER_POSITIONS.MIDDLE_RIGHT} hexagon={hexagon} haive={this.state.haive}/>
                 <SingleContainers loc={CONTAINER_POSITIONS.BOTTOM_RIGHT} hexagon={hexagon} haive={this.state.haive}/>
                 {this.state.choose ? <ContainerSelectItem cancel={gv.containerSelectController.cancelSelection} loc={this.state.loc}/> : "" }
+                {this.state.design ? <ContainerStructureDesign/> : ""       }
             </div>
         );
     }

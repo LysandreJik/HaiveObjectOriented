@@ -1,0 +1,13 @@
+.structure-design-maindiv{
+    /* top:100%; */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.container-structure-design-svg {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}
