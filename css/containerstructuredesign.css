@@ -44,3 +44,9 @@
     color:#fff !important;
     border:2px solid #95CAFF !important;
 }
+
+.disabled{
+    background-color:#aaaaaa !important;
+    color:#fff !important;
+    border:2px solid #777 !important;
+}

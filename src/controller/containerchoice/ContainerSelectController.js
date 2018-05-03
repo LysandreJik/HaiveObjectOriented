@@ -89,4 +89,8 @@ export class ContainerSelectController{
         setTimeout(function(){gv.containerSelectView.setState({design: false});}, 1000);
     }
 
+    clickedOnCircle(container, circle){
+
+    }
+
 }

@@ -64,6 +64,14 @@ export default class Container{
         return this._tips;
     }
 
+    getTip(x, y){
+        if(y !== undefined){
+            return this._tips[x][y];
+        }else{
+            return this._tips[Math.floor(x/this.getHeight())][x % this.getHeight()];
+        }
+    }
+
     getAvailableTips(){
         let availableTips = [];
         for(let tipColumn in this._tips){
@@ -77,15 +85,22 @@ export default class Container{
         return availableTips;
     }
 
-    bookTip(){
-        for(let tipColumn in this._tips){
-            for(let tipRow in this._tips[tipColumn]){
-                if(this._tips[tipColumn][tipRow].isAvailable()){
-                    this._tips[tipColumn][tipRow].book();
-                    return this._tips[tipColumn][tipRow];
+    bookTip(x, y){
+        if(x === undefined){
+            for(let tipColumn in this._tips){
+                for(let tipRow in this._tips[tipColumn]){
+                    if(this._tips[tipColumn][tipRow].isAvailable()){
+                        this._tips[tipColumn][tipRow].book();
+                        return this._tips[tipColumn][tipRow];
+                    }
                 }
             }
+        }else if(y === undefined){
+            this._tips[Math.floor(x/this.getHeight())][x % this.getHeight()].book();
+        }else{
+            this._tips[x][y].book();
         }
+
     }
 
 

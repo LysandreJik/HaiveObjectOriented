@@ -1,4 +1,5 @@
 import React from 'react';
+import LiquidContainer from "../../structure/containers/LiquidContainer";
 const SVG = require('svg.js');
 
 export class ContainerStructureDesign extends React.Component{
@@ -26,7 +27,6 @@ export class ContainerStructureDesign extends React.Component{
         for(let i = 0; i < this.props.container.getWidth(); i++){
             for(let j = 0; j < this.props.container.getHeight(); j++){
                 this.circles.push({xIndex: i, yIndex: j, x: start.x+i*(distance.x + distance.x*ratio), y:start.y+j*(distance.y + distance.y*ratio), radius:distance.x*ratio});
-                console.log(this.circles[i]);
             }
         }
 
@@ -39,16 +39,18 @@ export class ContainerStructureDesign extends React.Component{
             for(let i = 0; i < this.circles.length; i++){
                 this.circleSVGDark.push(this.draw.circle(this.circles[i].radius).move(this.circles[i].x+2, this.circles[i].y+2));
                 this.circleSVGLight.push(this.draw.circle(this.circles[i].radius).move(this.circles[i].x, this.circles[i].y));
-                this.circleSVGLight[i].fill({color: "#000", opacity: 0});
+
+                this.circleSVGLight[i].fill({color: this.props.container.getTip(i).isDirty() ? "#747BFE" : this.props.container.getTip(i).isAvailable() ? "#000" : '#75aaff', opacity: this.props.container.getTip(i).isAvailable() ? 0 : 1});
                 this.circleSVGDark[i].fill('none');
                 this.circleSVGLight[i].stroke({ color: '#75aaff', width: 4, linecap: 'round', linejoin: 'round'});
                 this.circleSVGDark[i].stroke({ color: '#747BFE', width: 4, linecap: 'round', linejoin: 'round'});
                 this.circleSVGLight[i].click(function(){parent.clickedOnCircle({x: parent.circles[i].xIndex, y: parent.circles[i].yIndex})});
-                this.circleSVGLight[i].mouseover(function(){parent.circleSVGLight[i].animate(100, '>').fill({color: "#000", opacity: 0.2})});
-                this.circleSVGLight[i].mouseout(function(){parent.circleSVGLight[i].animate(100, '>').fill({color: "#000", opacity: 0})});
+                this.circleSVGLight[i].mouseover(function(){parent.circleSVGLight[i].animate(50, '>').fill({color: "#000", opacity: 0.2})});
+                this.circleSVGLight[i].mouseout(function(){parent.circleSVGLight[i].animate(50, '>').fill({color: parent.props.container.getTip(i).isDirty() ? "#747BFE" : parent.props.container.getTip(i).isAvailable() ? "#000" : '#75aaff', opacity: parent.props.container.getTip(i).isAvailable() ? 0 : 1})});
             }
         }else{
             for(let i = 0; i < this.circles.length; i++){
+                this.circleSVGLight[i].fill({color: this.props.container.getTip(i).isDirty() ? "#747BFE" : this.props.container.getTip(i).isAvailable() ? "#000" : '#75aaff', opacity: this.props.container.getTip(i).isAvailable() ? 0 : 1});
                 this.circleSVGLight[i].radius(this.circles[i].radius/2).move(this.circles[i].x, this.circles[i].y);
                 this.circleSVGDark[i].radius(this.circles[i].radius/2).move(this.circles[i].x+2, this.circles[i].y+2);
             }
@@ -57,7 +59,9 @@ export class ContainerStructureDesign extends React.Component{
     }
 
     clickedOnCircle(circle){
-        console.log("Clicked on circle", circle);
+        this.props.container.bookTip(circle.x, circle.y);
+        this.getCircles();
+        this.setState({updatedContainer: this.state.updatedContainer});
     }
 
     componentDidMount(){
@@ -88,11 +92,6 @@ export class ContainerStructureDesign extends React.Component{
         }
 
         this.getCircles(true);
-
-
-
-
-
         window.addEventListener("resize", this.updateDimensions);
     }
 
@@ -137,7 +136,14 @@ export class ContainerStructureDesign extends React.Component{
                 ok lol
                 <div id={"container-structure-design-svg"} className={"container-structure-design-svg"}></div>
                 <button onClick={this.selectPlaceTubes} className={(this.state.toggle === "tubes" ? "selected " : "") +"btnghost container-structure-design-left-button"}>Place tubes</button >
-                <button onClick={this.selectPlaceLiquids} className={(this.state.toggle === "liquids" ? "selected " : "") +"btnghost container-structure-design-right-button"}>Place liquids</button>
+                <button
+                    onClick={this.props.container instanceof LiquidContainer ? this.selectPlaceLiquids : ""}
+                    className={
+                        (this.state.toggle === "liquids" ? "selected " : "") +
+                        (this.props.container instanceof LiquidContainer ? "" : "disabled ") +
+                        "btnghost container-structure-design-right-button"}>
+                    Place liquids
+                </button>
             </div>
         );
     }
