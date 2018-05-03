@@ -10,12 +10,14 @@ export class ContainerStructureDesign extends React.Component{
             {x: 9, y: 71}
         ];
 
-
+        this.state = {toggle: "tubes"};
         this.updateDimensions = this.updateDimensions.bind(this);
         this.getCircles = this.getCircles.bind(this);
+        this.selectPlaceTubes = this.selectPlaceTubes.bind(this);
+        this.selectPlaceLiquids = this.selectPlaceLiquids.bind(this);
     }
 
-    getCircles(){
+    getCircles(init){
         let start = {x:(this.max.x*this.ratio)/10, y: (this.max.y*this.ratio)/10};
         let ratio = 2;
         let distance = {x:(8*start.x)/(this.props.container.getWidth()*ratio + this.props.container.getWidth() - 1), y:(8*start.y)/(this.props.container.getHeight()*ratio + this.props.container.getHeight() - 1)};
@@ -24,24 +26,34 @@ export class ContainerStructureDesign extends React.Component{
         for(let i = 0; i < this.props.container.getWidth(); i++){
             for(let j = 0; j < this.props.container.getHeight(); j++){
                 this.circles.push({xIndex: i, yIndex: j, x: start.x+i*(distance.x + distance.x*ratio), y:start.y+j*(distance.y + distance.y*ratio), radius:distance.x*ratio});
+                console.log(this.circles[i]);
             }
         }
 
         let parent = this;
-        this.circleSVGDark = [];
-        this.circleSVGLight = [];
 
-        for(let i = 0; i < this.circles.length; i++){
-            this.circleSVGDark.push(this.draw.circle(this.circles[i].radius).move(this.circles[i].x+2, this.circles[i].y+2));
-            this.circleSVGLight.push(this.draw.circle(this.circles[i].radius).move(this.circles[i].x, this.circles[i].y));
-            this.circleSVGLight[i].fill({color: "#000", opacity: 0});
-            this.circleSVGDark[i].fill('none');
-            this.circleSVGLight[i].stroke({ color: '#75aaff', width: 4, linecap: 'round', linejoin: 'round'});
-            this.circleSVGDark[i].stroke({ color: '#747BFE', width: 4, linecap: 'round', linejoin: 'round'});
-            this.circleSVGLight[i].click(function(){parent.clickedOnCircle({x: parent.circles[i].xIndex, y: parent.circles[i].yIndex})});
-            this.circleSVGLight[i].mouseover(function(){parent.circleSVGLight[i].animate(100, '>').fill({color: "#000", opacity: 0.2})});
-            this.circleSVGLight[i].mouseout(function(){parent.circleSVGLight[i].animate(100, '>').fill({color: "#000", opacity: 0})});
+
+        if(init){
+            this.circleSVGDark = [];
+            this.circleSVGLight = [];
+            for(let i = 0; i < this.circles.length; i++){
+                this.circleSVGDark.push(this.draw.circle(this.circles[i].radius).move(this.circles[i].x+2, this.circles[i].y+2));
+                this.circleSVGLight.push(this.draw.circle(this.circles[i].radius).move(this.circles[i].x, this.circles[i].y));
+                this.circleSVGLight[i].fill({color: "#000", opacity: 0});
+                this.circleSVGDark[i].fill('none');
+                this.circleSVGLight[i].stroke({ color: '#75aaff', width: 4, linecap: 'round', linejoin: 'round'});
+                this.circleSVGDark[i].stroke({ color: '#747BFE', width: 4, linecap: 'round', linejoin: 'round'});
+                this.circleSVGLight[i].click(function(){parent.clickedOnCircle({x: parent.circles[i].xIndex, y: parent.circles[i].yIndex})});
+                this.circleSVGLight[i].mouseover(function(){parent.circleSVGLight[i].animate(100, '>').fill({color: "#000", opacity: 0.2})});
+                this.circleSVGLight[i].mouseout(function(){parent.circleSVGLight[i].animate(100, '>').fill({color: "#000", opacity: 0})});
+            }
+        }else{
+            for(let i = 0; i < this.circles.length; i++){
+                this.circleSVGLight[i].radius(this.circles[i].radius/2).move(this.circles[i].x, this.circles[i].y);
+                this.circleSVGDark[i].radius(this.circles[i].radius/2).move(this.circles[i].x+2, this.circles[i].y+2);
+            }
         }
+
     }
 
     clickedOnCircle(circle){
@@ -75,7 +87,7 @@ export class ContainerStructureDesign extends React.Component{
             this.polyline.animate(50, '>').plot(this.points.slice(0, i).map(function(item){return [item.x, item.y]}));
         }
 
-        this.getCircles();
+        this.getCircles(true);
 
 
 
@@ -111,11 +123,21 @@ export class ContainerStructureDesign extends React.Component{
         this.getCircles();
     }
 
+    selectPlaceTubes(){
+        this.setState({toggle: "tubes"});
+    }
+
+    selectPlaceLiquids(){
+        this.setState({toggle: "liquids"});
+    }
+
     render(){
         return(
             <div id="structure-design-maindiv" className="structure-design-maindiv">
                 ok lol
                 <div id={"container-structure-design-svg"} className={"container-structure-design-svg"}></div>
+                <button onClick={this.selectPlaceTubes} className={(this.state.toggle === "tubes" ? "selected " : "") +"btnghost container-structure-design-left-button"}>Place tubes</button >
+                <button onClick={this.selectPlaceLiquids} className={(this.state.toggle === "liquids" ? "selected " : "") +"btnghost container-structure-design-right-button"}>Place liquids</button>
             </div>
         );
     }

@@ -7,7 +7,40 @@
 
 .container-structure-design-svg {
     position: absolute;
-    top:50%;
+    top:45%;
     left:50%;
     transform: translate(-50%, -50%);
+}
+
+.container-structure-design-buttons{
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.container-structure-design-left-button{
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-102%);
+    width: 20%;
+    min-width: 200px;
+    transition: all 0.2s;
+}
+
+.container-structure-design-right-button{
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(2%);
+    width: 20%;
+    min-width: 200px;
+    transition: all 0.2s;
+}
+
+.selected{
+    background-color:#95CAFF !important;
+    color:#fff !important;
+    border:2px solid #95CAFF !important;
 }
