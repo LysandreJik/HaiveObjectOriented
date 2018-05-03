@@ -16,14 +16,13 @@ export class ContainerStructureDesign extends React.Component{
     }
 
     getCircles(){
-        console.log(this.props.size);
         let start = {x:(this.max.x*this.ratio)/10, y: (this.max.y*this.ratio)/10};
         let ratio = 2;
-        let distance = {x:(8*start.x)/(this.props.size.width*ratio + this.props.size.width - 1), y:(8*start.y)/(this.props.size.height*ratio + this.props.size.height - 1)};
+        let distance = {x:(8*start.x)/(this.props.container.getWidth()*ratio + this.props.container.getWidth() - 1), y:(8*start.y)/(this.props.container.getHeight()*ratio + this.props.container.getHeight() - 1)};
         this.circles = [];
 
-        for(let i = 0; i < this.props.size.width; i++){
-            for(let j = 0; j < this.props.size.height; j++){
+        for(let i = 0; i < this.props.container.getWidth(); i++){
+            for(let j = 0; j < this.props.container.getHeight(); j++){
                 this.circles.push({xIndex: i, yIndex: j, x: start.x+i*(distance.x + distance.x*ratio), y:start.y+j*(distance.y + distance.y*ratio), radius:distance.x*ratio});
             }
         }
